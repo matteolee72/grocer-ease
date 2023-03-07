@@ -13,6 +13,9 @@ public class NotificationsViewModel extends ViewModel {
         mText.setValue("This is notifications fragment");
     }
 
+    //I am a penis face
+
+
     public LiveData<String> getText() {
         return mText;
     }
