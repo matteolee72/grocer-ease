@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "647560136789",
+    "project_id": "camscanner-c4c6e",
+    "storage_bucket": "camscanner-c4c6e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:647560136789:android:584674641c883d299a2cdc",
+        "android_client_info": {
+          "package_name": "com.example.grocerease"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "647560136789-pq9q0fietkjkdiqi9sqhs03n2vsm8qv0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.grocerease",
+            "certificate_hash": "8e8d5e9b2527027680020196d2fd08ac6aca09d1"
+          }
+        },
+        {
+          "client_id": "647560136789-r6vor5b1o3pbnhnctr502fmid23fjle1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBPd-pDrIBPZNi4tWVV6kXH_b1Pdk_5-5I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "647560136789-r6vor5b1o3pbnhnctr502fmid23fjle1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
