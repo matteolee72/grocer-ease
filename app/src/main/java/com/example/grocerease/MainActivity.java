@@ -12,3 +12,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 }
+
+
+
+//{
+//    "id" : 12345678,
+//    "name" : marinara sauce 1
+//    "calories": 5
+//    "protein": 10
+//    "carbohydrates": 20
+//    "sugar" : 5
+//        }
