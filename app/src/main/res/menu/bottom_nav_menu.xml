@@ -5,12 +5,12 @@
         android:title="Home"
         android:icon="@drawable/home"/>
     <item
-        android:id="@+id/person"
+        android:id="@+id/scan"
         android:title="Scan"
         android:icon="@drawable/qr_code_scanner"/>
 
     <item
-        android:id="@+id/settings"
+        android:id="@+id/profile"
         android:title="Profile"
         android:icon="@drawable/person"/>
 </menu>
