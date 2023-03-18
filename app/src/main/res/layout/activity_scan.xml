@@ -14,4 +14,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editText_debug_code"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter the barcode number"
+        android:inputType="number"
+        app:layout_constraintBottom_toTopOf="@+id/button_scan_activity"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

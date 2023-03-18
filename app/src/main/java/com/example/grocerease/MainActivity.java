@@ -14,6 +14,8 @@ import com.google.android.material.navigation.NavigationBarView;
 
 public class MainActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener{
 
+    public static final String FIRSTBARCODEKEY = "firstBarcode";
+    public static final String SECONDBARCODEKEY = "secondBarcode";
     NavigationBarView navigationBarView;
 
     @Override
@@ -41,7 +43,6 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
                 Intent intent = new Intent(MainActivity.this, ScanActivity.class);
                 startActivity(intent);
             case R.id.profile:
-
                 return true;
         }
         return false;
