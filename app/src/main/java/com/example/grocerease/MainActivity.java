@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
@@ -22,7 +23,7 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
 
         navigationBarView = findViewById(R.id.bottomNavigationView);
         navigationBarView.setOnItemSelectedListener(this);
-        navigationBarView.setSelectedItemId(R.id.profile);
+        navigationBarView.setSelectedItemId(R.id.home);
 
     }
 
@@ -30,10 +31,17 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.home:
-//                getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, oneItemPage).commit();
+                // Select back this page, so no changes
+                // By default, this code block should not be activated on reselect
+                Log.i("mainNavigation", "Home button pressed, this shouldn't happen");
                 return true;
             case R.id.scan:
+                // Start the scan page when the scan button is pressed
+                Log.i("mainNavigation", "Scan button pressed");
+                Intent intent = new Intent(MainActivity.this, ScanActivity.class);
+                startActivity(intent);
             case R.id.profile:
+
                 return true;
         }
         return false;
