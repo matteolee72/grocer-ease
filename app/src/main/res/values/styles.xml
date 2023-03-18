@@ -2,8 +2,7 @@
 <resources>
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/cardview_light_background</item>
-        <item name="colorPrimaryDark">@color/cardview_dark_background</item>
-        <item name="colorAccent">@color/material_on_background_emphasis_medium</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 </resources>

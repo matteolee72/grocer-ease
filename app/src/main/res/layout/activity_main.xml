@@ -5,39 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/view"
-        android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:background="@color/purple_700"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:layout_width="240dp"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="GrocerEase"
-            android:textSize="40dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/imageView"
-            app:layout_constraintHorizontal_bias="0.213"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginEnd="16dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@drawable/face" />
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
+    <include
+        layout="@layout/header"
+        android:id="@+id/view">
+    </include>
 
     <TextView
         android:id="@+id/history_title"
@@ -47,6 +18,7 @@
         android:textSize="40dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -55,7 +27,7 @@
     </TextView>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
+        android:id="@+id/cardView1_activity_main"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_marginStart="16dp"
@@ -71,20 +43,20 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/card1_imageview_activity_main"
                 android:layout_width="80dp"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@tools:sample/backgrounds/scenic" />
+                tools:srcCompat="@drawable/image" />
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/card1_textview_activity_main"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Marinara Sauce"
-                app:layout_constraintStart_toEndOf="@+id/imageView2"
+                app:layout_constraintStart_toEndOf="@+id/card1_imageview_activity_main"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -92,7 +64,7 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardView1"
+        android:id="@+id/cardView2_activity_main"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_marginStart="16dp"
@@ -102,14 +74,14 @@
         app:cardElevation="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView">
+        app:layout_constraintTop_toBottomOf="@+id/cardView1_activity_main">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/imageView3"
+                android:id="@+id/card2_imageview_activity_main"
                 android:layout_width="80dp"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
@@ -118,11 +90,11 @@
                 tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
             <TextView
-                android:id="@+id/textView4"
+                android:id="@+id/card2_textview_activity_main"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Marinara Sauce"
-                app:layout_constraintStart_toEndOf="@+id/imageView3"
+                app:layout_constraintStart_toEndOf="@+id/card2_imageview_activity_main"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -131,7 +103,7 @@
 
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardView2"
+        android:id="@+id/cardView3_activity_main"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_marginStart="16dp"
@@ -141,14 +113,14 @@
         app:cardElevation="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView1">
+        app:layout_constraintTop_toBottomOf="@+id/cardView2_activity_main">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/imageView5"
+                android:id="@+id/card3_imageview_activity_main"
                 android:layout_width="80dp"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
@@ -157,28 +129,16 @@
                 tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
             <TextView
-                android:id="@+id/textView6"
+                android:id="@+id/card3_textview_activity_main"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Marinara Sauce"
-                app:layout_constraintStart_toEndOf="@+id/imageView5"
+                app:layout_constraintStart_toEndOf="@+id/card3_imageview_activity_main"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
-
-    <FrameLayout
-        android:id="@+id/flFragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView2">
-
-    </FrameLayout>
-
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"

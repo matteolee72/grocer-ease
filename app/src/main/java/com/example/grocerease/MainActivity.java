@@ -25,18 +25,14 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         navigationBarView.setSelectedItemId(R.id.profile);
 
     }
-    one_item_page oneItemPage = new one_item_page();
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.home:
-                getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, oneItemPage).commit();
+//                getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, oneItemPage).commit();
                 return true;
             case R.id.scan:
-                Intent intent = new Intent(MainActivity.this, TestActivity.class);
-                startActivity(intent);
-                return true;
             case R.id.profile:
                 return true;
         }
