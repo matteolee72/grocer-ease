@@ -49,7 +49,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:text="Marinara Sauce"
+                    android:text="Item Name"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/card1_imageview_activity_main"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -59,20 +59,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:text="600 kcal"
+                    android:text="xxx kcal"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/card1_imageview_activity_main"
-                    app:layout_constraintTop_toBottomOf="@+id/card1_textview_activity_main" />
+                    app:layout_constraintTop_toBottomOf="@+id/itemName" />
 
                 <TextView
                     android:id="@+id/mass"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:text="150 g"
+                    android:text="xxx g"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/calories"
-                    app:layout_constraintTop_toBottomOf="@+id/card1_textview_activity_main" />
+                    app:layout_constraintTop_toBottomOf="@+id/itemName" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -91,7 +91,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="32dp"
                     android:lines="2"
-                    android:text="Carbs\n 100g"
+                    android:text="Carbs\nxxxg"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -103,7 +103,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
                     android:lines="2"
-                    android:text="Protein\n 100g"
+                    android:text="Protein\nxxxg"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/fats"
                     app:layout_constraintStart_toEndOf="@+id/carbs"
@@ -115,7 +115,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="32dp"
                     android:lines="2"
-                    android:text="Fats\n 100g"
+                    android:text="Fats\nxxxg"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -154,5 +154,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button8" />
+
+    <TextView
+        android:id="@+id/debug_barcodeNum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="144dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button9" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

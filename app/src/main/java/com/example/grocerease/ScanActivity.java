@@ -4,10 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-
+import android.widget.Toast;
 
 
 public class ScanActivity extends AppCompatActivity {
@@ -23,13 +24,21 @@ public class ScanActivity extends AppCompatActivity {
         debug_barcodenumber = findViewById(R.id.editText_debug_code);
         debug_scanbutton = findViewById(R.id.button_scan_activity);
 
-        String barcodeNum = debug_barcodenumber.getText().toString();
         debug_scanbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ScanActivity.this, SingleItemAnalyze.class);
-                intent.putExtra(MainActivity.FIRSTBARCODEKEY, barcodeNum);
-                startActivity(intent);
+                String barcodeNum = debug_barcodenumber.getText().toString();
+                Log.i("ScanActivity", "Barcode Number: " + barcodeNum);
+
+                if (!barcodeNum.isEmpty()) {
+                    Intent intent = new Intent(ScanActivity.this, SingleItemAnalyze.class);
+                    intent.putExtra(MainActivity.FIRSTBARCODEKEY, barcodeNum);
+                    startActivity(intent);
+                }
+                else {
+                    Toast.makeText(ScanActivity.this, "Enter a barcode number", Toast.LENGTH_LONG).show();
+                }
+
             }
         });
     }
