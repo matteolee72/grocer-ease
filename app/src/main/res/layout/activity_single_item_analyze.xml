@@ -10,6 +10,7 @@
         layout="@layout/header" />
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardView3"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_marginStart="16dp"
@@ -74,8 +75,6 @@
                     app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
 
-
-
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -122,17 +121,6 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
 
-                <!--                <EditText-->
-                <!--                    android:id="@+id/editTextTextMultiLine"-->
-                <!--                    android:layout_width="wrap_content"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:ems="10"-->
-                <!--                    android:gravity="start|top"-->
-                <!--                    android:inputType="textMultiLine"-->
-                <!--                    tools:layout_editor_absoluteX="153dp"-->
-                <!--                    tools:layout_editor_absoluteY="69dp" />-->
-
-
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -145,23 +133,26 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Scan"
-        tools:layout_editor_absoluteX="154dp"
-        tools:layout_editor_absoluteY="365dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView3" />
 
     <Button
         android:id="@+id/button8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="History"
-        tools:layout_editor_absoluteX="157dp"
-        tools:layout_editor_absoluteY="431dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button7" />
 
     <Button
         android:id="@+id/button9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Favourites"
-        tools:layout_editor_absoluteX="160dp"
-        tools:layout_editor_absoluteY="502dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button8" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
