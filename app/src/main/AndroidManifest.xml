@@ -12,6 +12,9 @@
         android:theme="@style/Theme.Grocerease.NoActionBar"
         tools:targetApi="31">
         <activity
+            android:name=".DatabaseAddActivity"
+            android:exported="false" />
+        <activity
             android:name=".TwoItemCompare"
             android:exported="false" />
         <activity
