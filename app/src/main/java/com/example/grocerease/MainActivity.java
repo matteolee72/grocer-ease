@@ -43,6 +43,8 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
                 Intent intent = new Intent(MainActivity.this, ScanActivity.class);
                 startActivity(intent);
             case R.id.profile:
+                Intent intent1 = new Intent(MainActivity.this, DatabaseAddActivity.class);
+                startActivity(intent1);
                 return true;
         }
         return false;
