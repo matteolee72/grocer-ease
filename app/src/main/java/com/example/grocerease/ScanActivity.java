@@ -21,8 +21,14 @@ public class ScanActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan);
 
+        Intent singleItemToScan = getIntent();
+        String barcodeNum1 = singleItemToScan.getStringExtra(MainActivity.FIRSTBARCODEKEY);
+        Log.i("SingleItemAnalyse", "Barcode received: "+ barcodeNum1);
+
         debug_barcodenumber = findViewById(R.id.editText_debug_code);
         debug_scanbutton = findViewById(R.id.button_scan_activity);
+
+
 
         debug_scanbutton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -31,9 +37,17 @@ public class ScanActivity extends AppCompatActivity {
                 Log.i("ScanActivity", "Barcode Number: " + barcodeNum);
 
                 if (!barcodeNum.isEmpty()) {
-                    Intent intent = new Intent(ScanActivity.this, SingleItemAnalyze.class);
-                    intent.putExtra(MainActivity.FIRSTBARCODEKEY, barcodeNum);
-                    startActivity(intent);
+                    if (barcodeNum1 == null){
+                        Intent intent = new Intent(ScanActivity.this, SingleItemAnalyze.class);
+                        intent.putExtra(MainActivity.FIRSTBARCODEKEY, barcodeNum); //Using putExtra, implement mPreferences next
+                        startActivity(intent);
+                    }
+                    else{
+                        Intent intent = new Intent(ScanActivity.this, TwoItemCompare.class);
+                        intent.putExtra(MainActivity.FIRSTBARCODEKEY, barcodeNum1); //Using putExtra, implement mPreferences next
+                        intent.putExtra(MainActivity.SECONDBARCODEKEY, barcodeNum);
+                        startActivity(intent);
+                    }
                 }
                 else {
                     Toast.makeText(ScanActivity.this, "Enter a barcode number", Toast.LENGTH_LONG).show();

@@ -10,7 +10,7 @@
         layout="@layout/header" />
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardView3"
+        android:id="@+id/food_card_view_1"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_marginStart="16dp"
@@ -129,31 +129,31 @@
     </androidx.cardview.widget.CardView>
 
     <Button
-        android:id="@+id/button7"
+        android:id="@+id/scan_button_single"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Scan"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView3" />
+        app:layout_constraintTop_toBottomOf="@+id/food_card_view_1" />
 
     <Button
-        android:id="@+id/button8"
+        android:id="@+id/history_button_single"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="History"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button7" />
+        app:layout_constraintTop_toBottomOf="@+id/scan_button_single" />
 
     <Button
-        android:id="@+id/button9"
+        android:id="@+id/fav_button_single"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Favourites"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button8" />
+        app:layout_constraintTop_toBottomOf="@+id/history_button_single" />
 
     <TextView
         android:id="@+id/debug_barcodeNum"
@@ -163,6 +163,6 @@
         android:text="TextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button9" />
+        app:layout_constraintTop_toBottomOf="@+id/fav_button_single" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

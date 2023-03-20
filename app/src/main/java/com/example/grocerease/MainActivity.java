@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
                 Log.i("mainNavigation", "Scan button pressed");
                 Intent intent = new Intent(MainActivity.this, ScanActivity.class);
                 startActivity(intent);
+                return true;
             case R.id.profile:
                 Intent intent1 = new Intent(MainActivity.this, DatabaseAddActivity.class);
                 startActivity(intent1);

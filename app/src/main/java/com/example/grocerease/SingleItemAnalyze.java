@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -73,14 +75,15 @@ public class SingleItemAnalyze extends AppCompatActivity {
 
             debug_barcodeNumber.setText(barcodeNum);
         }
+
+        Button scan_button = findViewById(R.id.scan_button_single);
+        scan_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SingleItemAnalyze.this, ScanActivity.class);
+                intent.putExtra(MainActivity.FIRSTBARCODEKEY, barcodeNum);
+                startActivity(intent);
+            }
+        });
     }
 }
-
-//{
-//    "id" : 12345678,
-//    "name" : marinara sauce 1
-//    "calories": 5
-//    "protein": 10
-//    "carbohydrates": 20
-//    "sugar" : 5
-//        }
