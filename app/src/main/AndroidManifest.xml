@@ -16,9 +16,11 @@
             android:exported="false" />
         <activity
             android:name=".SingleItemAnalyze"
+            android:parentActivityName=".ScanActivity"
             android:exported="false" />
         <activity
             android:name=".ScanActivity"
+            android:parentActivityName=".MainActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
