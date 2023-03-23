@@ -47,7 +47,6 @@ public class DatabaseAddActivity extends AppCompatActivity {
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference();
 
-
         addToDatabaseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
