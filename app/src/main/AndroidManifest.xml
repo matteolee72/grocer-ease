@@ -17,10 +17,11 @@
             android:exported="false" />
         <activity
             android:name=".TwoItemCompare"
+            android:parentActivityName=".MainActivity"
             android:exported="false" />
         <activity
             android:name=".SingleItemAnalyze"
-            android:parentActivityName=".ScanActivity"
+            android:parentActivityName=".MainActivity"
             android:exported="false" />
         <activity
             android:name=".ScanActivity"

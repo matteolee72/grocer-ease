@@ -3,6 +3,7 @@ package com.example.grocerease;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -19,7 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 public class DatabaseAddActivity extends AppCompatActivity {
     // Instantiate all the variables
     EditText foodID, foodName, foodProtein, foodTotalFat, foodSaturatedFat, foodTransFat,
-            foodCholesterol, foodCarbohydrate, foodTotalSugar, foodDietaryFibre, foodSodium, foodIron;
+            foodCholesterol, foodCarbohydrate, foodTotalSugar, foodDietaryFibre, foodSodium, foodIron, foodCalories;
     Button addToDatabaseButton;
     FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
@@ -41,9 +42,17 @@ public class DatabaseAddActivity extends AppCompatActivity {
         foodDietaryFibre = findViewById(R.id.foodDietaryFibre);
         foodSodium = findViewById(R.id.foodSodium);
         foodIron = findViewById(R.id.foodIron);
+        foodCalories = findViewById(R.id.foodCalories);
 
         addToDatabaseButton = findViewById(R.id.addToDatabaseButton);
 
+        Intent previousData = getIntent();
+        String foodIDIn = previousData.getStringExtra(MainActivity.FIRSTBARCODEKEY);
+        if (!foodIDIn.isEmpty()) {
+            foodID.setText(foodIDIn);
+        }
+        // Initialize a database object instance
+        // Initialize a reference to the database
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference();
 
@@ -62,8 +71,9 @@ public class DatabaseAddActivity extends AppCompatActivity {
                 String foodDietaryFibreStr = foodDietaryFibre.getText().toString();
                 String foodSodiumStr = foodSodium.getText().toString();
                 String foodIronStr = foodIron.getText().toString();
+                String foodCaloriesStr = foodCalories.getText().toString();
 
-                DatabaseItemObject foodItem = new DatabaseItemObject(foodNameStr, foodProteinStr, foodTotalFatStr, foodSaturatedFatStr, foodTransFatStr, foodCholesterolStr, foodCarbohydrateStr, foodTotalSugarStr, foodDietaryFibreStr, foodSodiumStr, foodIronStr);
+                DatabaseItemObject foodItem = new DatabaseItemObject(foodNameStr, foodProteinStr, foodTotalFatStr, foodSaturatedFatStr, foodTransFatStr, foodCholesterolStr, foodCarbohydrateStr, foodTotalSugarStr, foodDietaryFibreStr, foodSodiumStr, foodIronStr, foodCaloriesStr);
                 Log.d("databaseAddActivity", foodIDStr);
                 Log.d("databaseAddActivity", foodItem.toString());
                 if (foodIDStr.isEmpty()) {
@@ -71,12 +81,6 @@ public class DatabaseAddActivity extends AppCompatActivity {
                 }
                 else {
                     databaseReference.child(foodIDStr).setValue(foodItem);
-                    databaseReference.child(foodIDStr).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<DataSnapshot> task) {
-                            Log.d("firebase", String.valueOf(task.getResult().getValue()));
-                        }
-                    });
                 }
             }
         });

@@ -1,6 +1,8 @@
 package com.example.grocerease;
 
-public class DatabaseItemObject {
+import java.io.Serializable;
+
+public class DatabaseItemObject implements Serializable {
     private String foodName;
     private String foodProtein;
     private String foodTotalFat;
@@ -12,11 +14,12 @@ public class DatabaseItemObject {
     private String foodDietaryFibre;
     private String foodSodium;
     private String foodIron;
+    private String foodCalories;
 
     public DatabaseItemObject() {
     }
 
-    public DatabaseItemObject(String foodName, String foodProtein, String foodTotalFat, String foodSaturatedFat, String foodTransFat, String foodCholesterol, String foodCarbohydrate, String foodTotalSugar, String foodDietaryFibre, String foodSodium, String foodIron) {
+    public DatabaseItemObject(String foodName, String foodProtein, String foodTotalFat, String foodSaturatedFat, String foodTransFat, String foodCholesterol, String foodCarbohydrate, String foodTotalSugar, String foodDietaryFibre, String foodSodium, String foodIron, String foodCalories) {
         this.foodName = foodName;
         this.foodProtein = foodProtein;
         this.foodTotalFat = foodTotalFat;
@@ -28,11 +31,12 @@ public class DatabaseItemObject {
         this.foodDietaryFibre = foodDietaryFibre;
         this.foodSodium = foodSodium;
         this.foodIron = foodIron;
+        this.foodCalories = foodCalories;
     }
 
     @Override
     public String toString() {
-        return "databaseItemObject{" +
+        return "DatabaseItemObject{" +
                 "foodName='" + foodName + '\'' +
                 ", foodProtein='" + foodProtein + '\'' +
                 ", foodTotalFat='" + foodTotalFat + '\'' +
@@ -44,6 +48,7 @@ public class DatabaseItemObject {
                 ", foodDietaryFibre='" + foodDietaryFibre + '\'' +
                 ", foodSodium='" + foodSodium + '\'' +
                 ", foodIron='" + foodIron + '\'' +
+                ", foodCalories='" + foodCalories + '\'' +
                 '}';
     }
 
@@ -71,6 +76,9 @@ public class DatabaseItemObject {
         return foodCholesterol;
     }
 
+    public String getFoodCalories() {
+        return foodCalories;
+    }
     public String getFoodCarbohydrate() {
         return foodCarbohydrate;
     }

@@ -21,46 +21,20 @@ import com.journeyapps.barcodescanner.ScanOptions;
 
 
 public class ScanActivity extends AppCompatActivity {
-
-    EditText debug_barcodenumber;
-    Button debug_scanbutton;
+    // Prepare a variable to store the incoming barcode number
     String barcodeNum;
 
-    ActivityResultLauncher<ScanOptions> barLauncher = registerForActivityResult(new ScanContract(), result->
-    {
-        if(result.getContents() != null)
-        {
-            AlertDialog.Builder builder = new AlertDialog.Builder(ScanActivity.this);
-            builder.setTitle("Result");
-            builder.setMessage(result.getContents());
-            Log.d("scanactivity", result.getContents());
-            Intent singleItemToScan = getIntent();
-            String firstBarcode = singleItemToScan.getStringExtra(MainActivity.FIRSTBARCODEKEY);
 
-            barcodeNum = result.getContents();
+    // When the activity is created, get the previously scanned information if it exists
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_scan);
+        // Immediately launch the scancode function to retrieve the code using the barcode scanner
+        scanCode();
+    }
 
-            if (firstBarcode == null){
-                Intent intent = new Intent(ScanActivity.this, SingleItemAnalyze.class);
-                intent.putExtra(MainActivity.FIRSTBARCODEKEY, barcodeNum); //Using putExtra, implement mPreferences next
-                startActivity(intent);
-            }
-            else{
-                // If firstBarcode contains something, then we assume that we are now
-                // scanning the second barcode. So we run this block of code.
-                Intent intent = new Intent(ScanActivity.this, TwoItemCompare.class);
-                intent.putExtra(MainActivity.FIRSTBARCODEKEY, firstBarcode); //Using putExtra, implement mPreferences next
-                intent.putExtra(MainActivity.SECONDBARCODEKEY, barcodeNum);
-                startActivity(intent);
-            }
-            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    dialogInterface.dismiss();
-                }
-            }).show();
-        }
-    });
-
+    // Set the settings to create the scanning activity and eventually call the barLauncher
     public void scanCode() {
         ScanOptions options = new ScanOptions();
         options.setPrompt("Volume up to flash on");
@@ -69,56 +43,41 @@ public class ScanActivity extends AppCompatActivity {
         options.setCaptureActivity(CaptureAct.class);
         barLauncher.launch(options);
     }
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_scan);
 
-        Intent singleItemToScan = getIntent();
-        String firstBarcode = singleItemToScan.getStringExtra(MainActivity.FIRSTBARCODEKEY);
-        Log.i("SingleItemAnalyse", "Barcode received: "+ firstBarcode);
+    // Determine what to do when the barcode launcher receives the barcode
+    ActivityResultLauncher<ScanOptions> barLauncher = registerForActivityResult(new ScanContract(), result->
+    {
+        // Check if we get a valid output from the barcode scanner
+        if(result.getContents() != null)
+        {
+            // Prepare a new intent singleItemToScan so we can get the result from the previous
+            // activity and store it to firstFoodItem
+            Intent singleItemToScan = getIntent();
+            DatabaseItemObject firstFoodItem = (DatabaseItemObject) singleItemToScan.getSerializableExtra(MainActivity.FIRSTBARCODEKEY);
 
-        debug_barcodenumber = findViewById(R.id.editText_debug_code);
-        debug_scanbutton = findViewById(R.id.button_scan_activity);
+            // Make a log of what we receive from the server
+            barcodeNum = result.getContents();
+            Log.d("scanActivity", barcodeNum);
 
-        scanCode();
-
-
-        debug_scanbutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                scanCode();
-                Log.i("ScanActivity", "Barcode Number: " + barcodeNum);
-
-                // If the barcodeNum is not empty
-                // ie there already a barcode stored in it due to the barcode scanning earlier
-                if (true) {
-                    // We check if the stored first barcode from the 1 item page is passed into
-                    // this function.
-                    if (firstBarcode == null){
-                        Intent intent = new Intent(ScanActivity.this, SingleItemAnalyze.class);
-                        intent.putExtra(MainActivity.FIRSTBARCODEKEY, barcodeNum); //Using putExtra, implement mPreferences next
-                        startActivity(intent);
-                    }
-                    else{
-                        // If firstBarcode contains something, then we assume that we are now
-                        // scanning the second barcode. So we run this block of code.
-                        Intent intent = new Intent(ScanActivity.this, TwoItemCompare.class);
-                        intent.putExtra(MainActivity.FIRSTBARCODEKEY, firstBarcode); //Using putExtra, implement mPreferences next
-                        intent.putExtra(MainActivity.SECONDBARCODEKEY, barcodeNum);
-                        startActivity(intent);
-                    }
-                }
-
+            // If firstFoodItem contains nothing, then we assume that we are scanning the first barcode
+            // so we pass the barcode number that we scan and pass it to the next activity
+            if (firstFoodItem == null){
+                Intent intent = new Intent(ScanActivity.this, SingleItemAnalyze.class);
+                intent.putExtra(MainActivity.FIRSTBARCODEKEY, barcodeNum); //Using putExtra, implement mPreferences next
+                startActivity(intent);
             }
-            // creating new scancode class to setup camera
-            // stuff here not necessary, can change
+            else{
+                // If firstFoodItem contains something, then we assume that we are now
+                // scanning the second barcode. So we run this block of code.
+                Intent intent = new Intent(ScanActivity.this, TwoItemCompare.class);
+                intent.putExtra(MainActivity.FIRSTBARCODEKEY, firstFoodItem); //Using putExtra, implement mPreferences next
+                intent.putExtra(MainActivity.SECONDBARCODEKEY, barcodeNum);
+                startActivity(intent);
+            }
+        }
+    });
 
 
-            // TO BE TESTED
-            // able to retrieve data from barcode
-            // if barcode is correct, we return result
 
-        });
-    }
+
 }

@@ -34,7 +34,31 @@
             android:ems="10"
             android:inputType="textPersonName"
             android:hint="ID" />
+    </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/foodCaloriesLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/foodIDLinearLayout">
+
+        <TextView
+            android:id="@+id/foodCaloriesTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Calories"
+            android:textSize="20dp" />
+
+        <EditText
+            android:id="@+id/foodCalories"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:ems="10"
+            android:hint="Calories"
+            android:inputType="textPersonName" />
     </LinearLayout>
 
     <LinearLayout
@@ -42,7 +66,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/foodIDLinearLayout"
+        app:layout_constraintTop_toBottomOf="@+id/foodCaloriesLinearLayout"
         android:id="@id/foodNameLinearLayout">
 
         <TextView

@@ -1,7 +1,10 @@
 package com.example.grocerease;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,19 +12,29 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class TwoItemCompare extends AppCompatActivity {
-
     TextView itemName_1,mass_1,calories_1, carbs_1, protein_1, fats_1;
     TextView itemName_2,mass_2,calories_2, carbs_2, protein_2, fats_2;
 
-    // -----==DEBUG START==------
-    // TODO: Implement database here
-    Map<String, HashMap> database;
-    HashMap<String, String> item;
-    TextView debug_barcodeNumber;
+    private DatabaseReference databaseReference;
+    DatabaseItemObject foodObject1;
+    DatabaseItemObject foodObject2;
+    String barcodeNum2;
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(TwoItemCompare.this, MainActivity.class);
+        startActivity(intent);
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,59 +54,59 @@ public class TwoItemCompare extends AppCompatActivity {
         carbs_2 = findViewById(R.id.carbs_2);
         protein_2 = findViewById(R.id.protein_2);
         fats_2 = findViewById(R.id.fats_2);
-        // ------- DEBUG -------
-        debug_barcodeNumber = findViewById(R.id.debug_barcodeNum);
-
-        database = new HashMap<>();
-        item = new HashMap<>();
-        item.put("name", "Marinara Sauce");
-        item.put("calories", "100 kcal");
-        item.put("mass", "200 g");
-        item.put("carbohydrates", "300 g");
-        item.put("protein", "400 g");
-        item.put("fats", "500 g");
-        HashMap<String, String> item1 = new HashMap<>();
-        item1.put("name", "Carbonara Sauce");
-        item1.put("calories", "500 kcal");
-        item1.put("mass", "400 g");
-        item1.put("carbohydrates", "300 g");
-        item1.put("protein", "200 g");
-        item1.put("fats", "100 g");
-        database.put("123456", item);
-        database.put("654321", item1);
-        // ------- DEBUG -------
 
         Intent intent = getIntent();
-        String barcodeNum1 = intent.getStringExtra(MainActivity.FIRSTBARCODEKEY);
-        String barcodeNum2 = intent.getStringExtra(MainActivity.SECONDBARCODEKEY);
-        Log.i("TwoItemCompare", "Barcode received: "+ barcodeNum1);
+        foodObject1 = (DatabaseItemObject) intent.getSerializableExtra(MainActivity.FIRSTBARCODEKEY);
+        barcodeNum2 = intent.getStringExtra(MainActivity.SECONDBARCODEKEY);
+        Log.i("TwoItemCompare", "Barcode received: "+ foodObject1.toString());
         Log.i("TwoItemCompare", "Barcode received: "+ barcodeNum2);
 
-        HashMap item_dict1 = database.get(barcodeNum1);
-        HashMap item_dict2 = database.get(barcodeNum2);
-        if (item_dict1 == null) {
-            Toast.makeText(TwoItemCompare.this, barcodeNum2 + " is not in database", Toast.LENGTH_LONG).show();
-        }
-        else {
-            Log.i("SingleItemAnalyse", "item_dict" + item_dict1.toString());
-            itemName_1.setText(item_dict1.get("name").toString());
-            calories_1.setText(item_dict1.get("calories").toString());
-            mass_1.setText(item_dict1.get("mass").toString());
-            carbs_1.setText(item_dict1.get("carbohydrates").toString());
-            protein_1.setText(item_dict1.get("protein").toString());
-            fats_1.setText(item_dict1.get("fats").toString());
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseReference.child(barcodeNum2).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (!task.isSuccessful()) {
+                    Log.e("firebase", "Error getting data", task.getException());
+                } else if (task.getResult().getValue(Object.class) == null) {
+                    Log.e("firebase", "Item does not exist in database");
+                    Toast.makeText(TwoItemCompare.this, barcodeNum2.toString() + " is not in database", Toast.LENGTH_LONG).show();
+                    AlertDialog.Builder builder = new AlertDialog.Builder(TwoItemCompare.this);
+                    builder.setMessage("Would you like to add it to the database?").setTitle("Item does not exist in the database");
 
-            itemName_2.setText(item_dict2.get("name").toString());
-            calories_2.setText(item_dict2.get("calories").toString());
-            mass_2.setText(item_dict2.get("mass").toString());
-            carbs_2.setText(item_dict2.get("carbohydrates").toString());
-            protein_2.setText(item_dict2.get("protein").toString());
-            fats_2.setText(item_dict2.get("fats").toString());
+                    builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            Intent addActivityIntent = new Intent(TwoItemCompare.this, DatabaseAddActivity.class);
+                            addActivityIntent.putExtra(MainActivity.FIRSTBARCODEKEY, barcodeNum2);
+                            startActivity(addActivityIntent);
+                        }
+                    });
+                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                        }
 
-            //debug_barcodeNumber.setText(barcodeNum1);
-        }
+                    });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                }
+                else {
+                    foodObject2 = task.getResult().getValue(DatabaseItemObject.class);
+                    Log.i("TwoItemCompare", "Object1 from intent" + foodObject1.toString());
+                    Log.i("TwoItemCompare", "Object2 from database" + foodObject2.toString());
+                    itemName_1.setText(foodObject1.getFoodName());
+                    calories_1.setText(foodObject1.getFoodCalories());
+                    mass_1.setText(":)");
+                    carbs_1.setText(foodObject1.getFoodCarbohydrate());
+                    protein_1.setText(foodObject1.getFoodProtein());
+                    fats_1.setText(foodObject1.getFoodTotalFat());
 
-        Button scan_button = findViewById(R.id.scan_button_single);
-
+                    itemName_2.setText(foodObject2.getFoodName());
+                    calories_2.setText(foodObject2.getFoodCalories());
+                    mass_2.setText(":)");
+                    carbs_2.setText(foodObject2.getFoodCarbohydrate());
+                    protein_2.setText(foodObject2.getFoodProtein());
+                    fats_2.setText(foodObject2.getFoodTotalFat());
+                }
+            }
+        });
     }
 }
