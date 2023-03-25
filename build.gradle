@@ -1,9 +1,12 @@
 buildscript{
-    repositories{        google() // Google's Maven Repo
-                    mavenCentral() // Maven Central Repo
+    repositories{
+
+        google() // Google's Maven Repo
+        mavenCentral() // Maven Central Repo
     }
     dependencies{
         classpath 'com.google.gms:google-services:4.3.15'
+
 
     }
     }

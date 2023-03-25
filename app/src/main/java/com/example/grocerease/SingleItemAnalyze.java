@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +15,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.Registry;
+import com.bumptech.glide.annotation.GlideModule;
+import com.bumptech.glide.module.AppGlideModule;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -21,6 +27,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+
+import java.io.InputStream;
+import java.time.Instant;
 
 public class SingleItemAnalyze extends AppCompatActivity {
     private DatabaseReference databaseReference;
@@ -57,9 +66,8 @@ public class SingleItemAnalyze extends AppCompatActivity {
 
         // StorageReference provides a handle to the firebase storage service
         storage = FirebaseStorage.getInstance();
-        foodImageStorageReference = storage.getReferenceFromUrl("gs://camscanner-c4c6e.appspot.com/12128669_XL1_20220418.jpg");
+        foodImageStorageReference = storage.getReference().child("12128669_XL1_20220418.jpg");
         ImageView imageView = findViewById(R.id.card1_foodImage_ImageView);
-
 
 
         // DatabaseReference provides a handle to the firebase database such that we can access the
@@ -92,6 +100,7 @@ public class SingleItemAnalyze extends AppCompatActivity {
                     dialog.show();
                 }
                 else {
+
                     foodObject = task.getResult().getValue(DatabaseItemObject.class);
                     // Get the result from the database and populate a foodObject of type DatabaseItemObject
                     itemName.setText(foodObject.getFoodName());
@@ -99,6 +108,9 @@ public class SingleItemAnalyze extends AppCompatActivity {
                     carbs.setText("Total Sugar\n" + foodObject.getFoodTotalSugar());
                     protein.setText("Protein\n" + foodObject.getFoodProtein());
                     fats.setText("Fats\n" + foodObject.getFoodTotalFat());
+                    GlideApp.with(getApplicationContext())
+                            .load(foodImageStorageReference)
+                            .into(imageView);
                 }
             }
         });

@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
     public static final String SECONDBARCODEKEY = "secondBarcode";
     NavigationBarView navigationBarView;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,7 +27,6 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         navigationBarView = findViewById(R.id.bottomNavigationView);
         navigationBarView.setOnItemSelectedListener(this);
         navigationBarView.setSelectedItemId(R.id.home);
-
     }
 
     @Override
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
                 Intent intent = new Intent(MainActivity.this, ScanActivity.class);
                 startActivity(intent);
                 return true;
-            case R.id.profile:
+            case R.id.profile: // database add activity instead of profile
                 Intent intent1 = new Intent(MainActivity.this, DatabaseAddActivity.class);
                 startActivity(intent1);
                 return true;
@@ -51,14 +51,3 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         return false;
     }
 }
-
-
-
-//{
-//    "id" : 12345678,
-//    "name" : marinara sauce 1
-//    "calories": 5
-//    "protein": 10
-//    "carbohydrates": 20
-//    "sugar" : 5
-//        }

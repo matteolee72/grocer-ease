@@ -29,7 +29,7 @@ public class ScanActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_scan);
+        setContentView(R.layout.activity_scan); //outdated
         // Immediately launch the scancode function to retrieve the code using the barcode scanner
         scanCode();
     }
@@ -43,6 +43,8 @@ public class ScanActivity extends AppCompatActivity {
         options.setCaptureActivity(CaptureAct.class);
         barLauncher.launch(options);
     }
+
+
 
     // Determine what to do when the barcode launcher receives the barcode
     ActivityResultLauncher<ScanOptions> barLauncher = registerForActivityResult(new ScanContract(), result->

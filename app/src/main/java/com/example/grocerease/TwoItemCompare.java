@@ -75,7 +75,7 @@ public class TwoItemCompare extends AppCompatActivity {
                     builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             Intent addActivityIntent = new Intent(TwoItemCompare.this, DatabaseAddActivity.class);
-                            addActivityIntent.putExtra(MainActivity.FIRSTBARCODEKEY, barcodeNum2);
+                            addActivityIntent.putExtra(MainActivity.FIRSTBARCODEKEY, barcodeNum2); // just because FIRSTBARCODEKEY is what add activity uses
                             startActivity(addActivityIntent);
                         }
                     });
