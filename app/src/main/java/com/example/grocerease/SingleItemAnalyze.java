@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,9 +19,13 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 public class SingleItemAnalyze extends AppCompatActivity {
     private DatabaseReference databaseReference;
+    private StorageReference foodImageStorageReference;
+    private FirebaseStorage storage;
     TextView itemName, calories, mass, carbs, protein, fats;
     DatabaseItemObject foodObject;
     Button scan_button;
@@ -49,6 +54,13 @@ public class SingleItemAnalyze extends AppCompatActivity {
         Intent intent = getIntent();
         String barcodeNum = intent.getStringExtra(MainActivity.FIRSTBARCODEKEY);
         Log.i("SingleItemAnalyse", "Intent barcode received: "+ barcodeNum);
+
+        // StorageReference provides a handle to the firebase storage service
+        storage = FirebaseStorage.getInstance();
+        foodImageStorageReference = storage.getReferenceFromUrl("gs://camscanner-c4c6e.appspot.com/12128669_XL1_20220418.jpg");
+        ImageView imageView = findViewById(R.id.card1_foodImage_ImageView);
+
+
 
         // DatabaseReference provides a handle to the firebase database such that we can access the
         // information contained at the key <barcodeNum>

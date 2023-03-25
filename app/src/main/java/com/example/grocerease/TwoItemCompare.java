@@ -35,7 +35,6 @@ public class TwoItemCompare extends AppCompatActivity {
         startActivity(intent);
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,7 +70,7 @@ public class TwoItemCompare extends AppCompatActivity {
                     Log.e("firebase", "Item does not exist in database");
                     Toast.makeText(TwoItemCompare.this, barcodeNum2.toString() + " is not in database", Toast.LENGTH_LONG).show();
                     AlertDialog.Builder builder = new AlertDialog.Builder(TwoItemCompare.this);
-                    builder.setMessage("Would you like to add it to the database?").setTitle("Item does not exist in the database");
+                    builder.setMessage("Would you like to add it to the database?").setTitle("Item does not exist in database");
 
                     builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {

@@ -72,8 +72,10 @@ public class DatabaseAddActivity extends AppCompatActivity {
                 String foodSodiumStr = foodSodium.getText().toString();
                 String foodIronStr = foodIron.getText().toString();
                 String foodCaloriesStr = foodCalories.getText().toString();
-
-                DatabaseItemObject foodItem = new DatabaseItemObject(foodNameStr, foodProteinStr, foodTotalFatStr, foodSaturatedFatStr, foodTransFatStr, foodCholesterolStr, foodCarbohydrateStr, foodTotalSugarStr, foodDietaryFibreStr, foodSodiumStr, foodIronStr, foodCaloriesStr);
+                //----------------==DEBUG==------------------
+                String foodImageURL = "http://www.google.com";
+                //--------------==END DEBUG==----------------
+                DatabaseItemObject foodItem = new DatabaseItemObject(foodNameStr, foodProteinStr, foodTotalFatStr, foodSaturatedFatStr, foodTransFatStr, foodCholesterolStr, foodCarbohydrateStr, foodTotalSugarStr, foodDietaryFibreStr, foodSodiumStr, foodIronStr, foodCaloriesStr, foodImageURL);
                 Log.d("databaseAddActivity", foodIDStr);
                 Log.d("databaseAddActivity", foodItem.toString());
                 if (foodIDStr.isEmpty()) {

@@ -15,11 +15,12 @@ public class DatabaseItemObject implements Serializable {
     private String foodSodium;
     private String foodIron;
     private String foodCalories;
+    private String foodImageURL;
 
     public DatabaseItemObject() {
     }
 
-    public DatabaseItemObject(String foodName, String foodProtein, String foodTotalFat, String foodSaturatedFat, String foodTransFat, String foodCholesterol, String foodCarbohydrate, String foodTotalSugar, String foodDietaryFibre, String foodSodium, String foodIron, String foodCalories) {
+    public DatabaseItemObject(String foodName, String foodProtein, String foodTotalFat, String foodSaturatedFat, String foodTransFat, String foodCholesterol, String foodCarbohydrate, String foodTotalSugar, String foodDietaryFibre, String foodSodium, String foodIron, String foodCalories, String foodImageURL) {
         this.foodName = foodName;
         this.foodProtein = foodProtein;
         this.foodTotalFat = foodTotalFat;
@@ -32,6 +33,8 @@ public class DatabaseItemObject implements Serializable {
         this.foodSodium = foodSodium;
         this.foodIron = foodIron;
         this.foodCalories = foodCalories;
+        this.foodImageURL = foodImageURL;
+
     }
 
     @Override
@@ -49,53 +52,46 @@ public class DatabaseItemObject implements Serializable {
                 ", foodSodium='" + foodSodium + '\'' +
                 ", foodIron='" + foodIron + '\'' +
                 ", foodCalories='" + foodCalories + '\'' +
+                ", foodImageURL='" + foodImageURL + '\'' +
                 '}';
     }
-
     public String getFoodName() {
         return foodName;
     }
-
     public String getFoodProtein() {
         return foodProtein;
     }
-
     public String getFoodTotalFat() {
         return foodTotalFat;
     }
-
     public String getFoodSaturatedFat() {
         return foodSaturatedFat;
     }
-
     public String getFoodTransFat() {
         return foodTransFat;
     }
-
     public String getFoodCholesterol() {
         return foodCholesterol;
     }
-
     public String getFoodCalories() {
         return foodCalories;
     }
     public String getFoodCarbohydrate() {
         return foodCarbohydrate;
     }
-
     public String getFoodTotalSugar() {
         return foodTotalSugar;
     }
-
     public String getFoodDietaryFibre() {
         return foodDietaryFibre;
     }
-
     public String getFoodSodium() {
         return foodSodium;
     }
-
     public String getFoodIron() {
         return foodIron;
+    }
+    public String getFoodImageURL() {
+        return foodImageURL;
     }
 }
