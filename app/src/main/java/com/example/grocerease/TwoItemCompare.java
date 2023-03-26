@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,6 +18,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,11 +27,13 @@ import java.util.Map;
 public class TwoItemCompare extends AppCompatActivity {
     TextView itemName_1,mass_1,calories_1, carbs_1, protein_1, fats_1;
     TextView itemName_2,mass_2,calories_2, carbs_2, protein_2, fats_2;
-
+    private StorageReference foodImageStorageReference;
     private DatabaseReference databaseReference;
+    private FirebaseStorage storage;
     DatabaseItemObject foodObject1;
     DatabaseItemObject foodObject2;
     String barcodeNum2;
+
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(TwoItemCompare.this, MainActivity.class);
@@ -40,12 +45,15 @@ public class TwoItemCompare extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_two_item_compare);
 
+        storage = FirebaseStorage.getInstance();
+
         itemName_1 = findViewById(R.id.food_name_1);
         calories_1 = findViewById(R.id.calories_1);
         mass_1 = findViewById(R.id.food_mass_1);
         carbs_1 = findViewById(R.id.carbs_1);
         protein_1 = findViewById(R.id.protein_1);
         fats_1 = findViewById(R.id.fats_1);
+        ImageView food_image_1 = findViewById(R.id.food_image_1);
 
         itemName_2 = findViewById(R.id.food_name_2);
         calories_2 = findViewById(R.id.calories_2);
@@ -53,6 +61,7 @@ public class TwoItemCompare extends AppCompatActivity {
         carbs_2 = findViewById(R.id.carbs_2);
         protein_2 = findViewById(R.id.protein_2);
         fats_2 = findViewById(R.id.fats_2);
+        ImageView food_image_2 = findViewById(R.id.food_image_2);
 
         Intent intent = getIntent();
         foodObject1 = (DatabaseItemObject) intent.getSerializableExtra(MainActivity.FIRSTBARCODEKEY);
@@ -97,6 +106,11 @@ public class TwoItemCompare extends AppCompatActivity {
                     carbs_1.setText(foodObject1.getFoodCarbohydrate());
                     protein_1.setText(foodObject1.getFoodProtein());
                     fats_1.setText(foodObject1.getFoodTotalFat());
+                    String foodImageLink1 = foodObject1.getFoodImageURL();
+                    foodImageStorageReference = storage.getReference().child(foodImageLink1);
+                    GlideApp.with(getApplicationContext())
+                            .load(foodImageStorageReference)
+                            .into(food_image_1); //implement placeholder
 
                     itemName_2.setText(foodObject2.getFoodName());
                     calories_2.setText(foodObject2.getFoodCalories());
@@ -104,6 +118,11 @@ public class TwoItemCompare extends AppCompatActivity {
                     carbs_2.setText(foodObject2.getFoodCarbohydrate());
                     protein_2.setText(foodObject2.getFoodProtein());
                     fats_2.setText(foodObject2.getFoodTotalFat());
+                    String foodImageLink2 = foodObject2.getFoodImageURL();
+                    foodImageStorageReference = storage.getReference().child(foodImageLink2);
+                    GlideApp.with(getApplicationContext())
+                            .load(foodImageStorageReference)
+                            .into(food_image_2); //implement placeholder
                 }
             }
         });

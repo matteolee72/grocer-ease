@@ -82,7 +82,7 @@ public class DatabaseAddActivity extends AppCompatActivity {
                     Toast.makeText(DatabaseAddActivity.this, "Key in a food ID value", Toast.LENGTH_LONG).show();
                 }
                 else {
-                    databaseReference.child(foodIDStr).setValue(foodItem);
+                    databaseReference.child(foodIDStr).setValue(foodItem); //key is foodIDStr, value is foodItem
                 }
             }
         });

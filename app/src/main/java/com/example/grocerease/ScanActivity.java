@@ -44,7 +44,7 @@ public class ScanActivity extends AppCompatActivity {
         barLauncher.launch(options);
     }
 
-
+    //TODO fix onBackButtonPressed() from scan activity camera - currently displays the old scan page instead of going to main
 
     // Determine what to do when the barcode launcher receives the barcode
     ActivityResultLauncher<ScanOptions> barLauncher = registerForActivityResult(new ScanContract(), result->

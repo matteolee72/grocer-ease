@@ -64,15 +64,15 @@ public class SingleItemAnalyze extends AppCompatActivity {
         String barcodeNum = intent.getStringExtra(MainActivity.FIRSTBARCODEKEY);
         Log.i("SingleItemAnalyse", "Intent barcode received: "+ barcodeNum);
 
-        // StorageReference provides a handle to the firebase storage service
-        storage = FirebaseStorage.getInstance();
-        foodImageStorageReference = storage.getReference().child("12128669_XL1_20220418.jpg");
         ImageView imageView = findViewById(R.id.card1_foodImage_ImageView);
 
 
         // DatabaseReference provides a handle to the firebase database such that we can access the
         // information contained at the key <barcodeNum>
         databaseReference = FirebaseDatabase.getInstance().getReference();
+        // StorageReference provides a handle to the firebase storage service
+        storage = FirebaseStorage.getInstance();
+
         databaseReference.child(barcodeNum).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
@@ -108,9 +108,11 @@ public class SingleItemAnalyze extends AppCompatActivity {
                     carbs.setText("Total Sugar\n" + foodObject.getFoodTotalSugar());
                     protein.setText("Protein\n" + foodObject.getFoodProtein());
                     fats.setText("Fats\n" + foodObject.getFoodTotalFat());
+                    String foodImageLink = foodObject.getFoodImageURL();
+                    foodImageStorageReference = storage.getReference().child(foodImageLink);
                     GlideApp.with(getApplicationContext())
                             .load(foodImageStorageReference)
-                            .into(imageView);
+                            .into(imageView); //implement placeholder
                 }
             }
         });

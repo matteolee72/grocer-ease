@@ -36,7 +36,6 @@ public class DatabaseItemObject implements Serializable {
         this.foodImageURL = foodImageURL;
 
     }
-
     @Override
     public String toString() {
         return "DatabaseItemObject{" +
