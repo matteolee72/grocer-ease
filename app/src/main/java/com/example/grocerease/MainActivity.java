@@ -12,6 +12,7 @@ import com.google.android.material.navigation.NavigationBarView;
 
 public class MainActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener{
 
+    // Setting final Strings to be used as keys for passing data between Activities
     public static final String FIRSTBARCODEKEY = "firstBarcode";
     public static final String SECONDBARCODEKEY = "secondBarcode";
     public static final String USEROBJECTKEY = "userObjectKey";
