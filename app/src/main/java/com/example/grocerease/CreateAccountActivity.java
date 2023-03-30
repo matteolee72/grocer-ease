@@ -76,8 +76,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                                 UserDatabaseObject newUser =  new UserDatabaseObject(password_input);
                                 databaseReference.child("Users").child(username_input).setValue(newUser);
                                 // Move to QuizActivity, pass username and password
-                                //* TODO: Change this to QuizActivity *//
-                                Intent intent = new Intent(CreateAccountActivity.this,MainActivity.class);
+                                Intent intent = new Intent(CreateAccountActivity.this,QuizActivity.class);
                                 intent.putExtra(NEWUSERNAME, username_input);
                                 intent.putExtra(NEWPASSWORD, password_input);
                                 startActivity(intent);

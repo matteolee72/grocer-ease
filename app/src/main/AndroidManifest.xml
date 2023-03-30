@@ -23,6 +23,9 @@
             android:name="CreateAccountActivity"
             android:exported="false"/>
         <activity
+            android:name=".QuizActivity"
+            android:exported="false"/>
+        <activity
             android:name=".DatabaseAddActivity"
             android:exported="false" />
         <activity

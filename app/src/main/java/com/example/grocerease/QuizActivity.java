@@ -1,5 +1,9 @@
 package com.example.grocerease;
 
+import static com.example.grocerease.CreateAccountActivity.NEWPASSWORD;
+import static com.example.grocerease.CreateAccountActivity.NEWUSERNAME;
+
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -42,6 +46,10 @@ public class QuizActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
+
+        //getting the username of the user that just created an account
+        Intent intent = getIntent();
+        String username = intent.getStringExtra(NEWUSERNAME);
 
         //get blood pressure from RadioGroup
         RadioGroup bloodPressureGroup = findViewById(R.id.bloodPressureGroup);
@@ -93,22 +101,21 @@ public class QuizActivity extends AppCompatActivity {
                 RadioButton radioWeightGoalsButton = findViewById(WeightGoalsID);
                 int userSexID = userSex.getCheckedRadioButtonId();
                 RadioButton radioButtonUserSex = findViewById(userSexID);
-                Log.d("radiobutton5", "onCreate: " + radioButtonUserSex);
+
                 if(radioBloodPressureButton == null
                         || radioBloodSugarButton == null
                         || radioHighCholesterolButton == null
                         || radioWeightGoalsButton == null
                         || radioButtonUserSex == null
-                        || userHeight.getText().toString() == ""
-                        || userWeight.getText().toString() == ""
-                        || userObjectName == null
+                        || userHeight.getText().toString().isEmpty()
+                        || userWeight.getText().toString().isEmpty()
+                        || userObjectName.getText().toString().isEmpty()
                         || isDateChanged == false){
                     Toast.makeText(QuizActivity.this, "Please ensure that all fields have been filled", Toast.LENGTH_LONG).show();
                 }
                 else{
                     //setting all attributes of the UserPreference Object
                     bloodPressure = radioBloodPressureButton.getText().toString();
-                    Log.d("radiobuttonbloodpressure", "onCreate: " + radioBloodPressureButton);
                     bloodSugarLevels = radioBloodSugarButton.getText().toString();
                     highCholesterol = radioHighCholesterolButton.getText().toString();
                     weightGoals = radioWeightGoalsButton.getText().toString();
@@ -116,14 +123,20 @@ public class QuizActivity extends AppCompatActivity {
                     height = Integer.parseInt(userHeight.getText().toString());
                     weight = Integer.parseInt(userWeight.getText().toString());
                     name = userObjectName.getText().toString();
-                    cal.set(Calendar.YEAR, userBirthday.getYear() - 1900);
+                    cal.set(Calendar.YEAR, userBirthday.getYear());
                     cal.set(Calendar.MONTH, userBirthday.getMonth());
                     cal.set(Calendar.DAY_OF_MONTH, userBirthday.getDayOfMonth());
                     birthday = cal.getTime();
                     //instantiating new UserPreferencesObject
                     UserPreferencesObject UserObject = new UserPreferencesObject(bloodPressure,bloodSugarLevels,highCholesterol,weightGoals,name,sex,height,weight,birthday);
                     //adding it to the DataBase
-                    databaseReference.child("Users").child("marcus").child("Preferences").setValue(UserObject);
+                    databaseReference.child("Users").child(username).child("Preferences").setValue(UserObject);
+
+                    //going back to main activity
+                    Intent intent = new Intent(QuizActivity.this,MainActivity.class);
+                    intent.putExtra(NEWUSERNAME, username);
+                    startActivity(intent);
+
                 }
             }
         });
