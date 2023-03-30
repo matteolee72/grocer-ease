@@ -8,11 +8,17 @@ public class UserDatabaseObject implements Serializable {
     private String userFavourites;
     private String userHistory;
     private String userPreferences;
-
-    // No Arg Constructor
-    public UserDatabaseObject() {
+    public UserDatabaseObject(){
     }
-    // With Arg Constructor
+    // Partial Arg Constructor - we use this in the create account page
+    public UserDatabaseObject(String userPassword) {
+        this.userName = null;
+        this.userPassword = userPassword;
+        this.userFavourites = null;
+        this.userHistory = null;
+        this.userPreferences = null;
+    }
+    // With Arg Constructor -  we use this once a user has filled in their username/password
     public UserDatabaseObject(String userName, String userPassword, String userFavourites, String userHistory, String userPreferences) {
         this.userName = userName;
         this.userPassword = userPassword;

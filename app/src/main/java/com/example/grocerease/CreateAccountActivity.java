@@ -72,6 +72,10 @@ public class CreateAccountActivity extends AppCompatActivity {
                                 Log.e("firebase", "Error getting data", task.getException());}
                             else if (task.getResult().getValue(Object.class) == null) {
                                 Log.e("firebase", "Valid Username and Password");
+                                // Add user to database with partial arg constructor
+                                UserDatabaseObject newUser =  new UserDatabaseObject(password_input);
+                                databaseReference.child("Users").child(username_input).setValue(newUser);
+                                // Move to QuizActivity, pass username and password
                                 //* TODO: Change this to QuizActivity *//
                                 Intent intent = new Intent(CreateAccountActivity.this,MainActivity.class);
                                 intent.putExtra(NEWUSERNAME, username_input);
