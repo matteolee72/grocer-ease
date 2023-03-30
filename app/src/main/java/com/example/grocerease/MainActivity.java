@@ -8,14 +8,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 
-import com.google.android.material.bottomnavigation.BottomNavigationItemView;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
 public class MainActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener{
 
+    // Setting final Strings to be used as keys for passing data between Activities
     public static final String FIRSTBARCODEKEY = "firstBarcode";
     public static final String SECONDBARCODEKEY = "secondBarcode";
+    public static final String USEROBJECTKEY = "userObjectKey";
     NavigationBarView navigationBarView;
 
 
