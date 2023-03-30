@@ -4,16 +4,16 @@ import java.io.Serializable;
 
 public class DatabaseItemObject implements Serializable {
     private String foodName;
-    private String foodProtein;
+    private String foodProtein;// higher
     private String foodTotalFat;
     private String foodSaturatedFat;
     private String foodTransFat;
     private String foodCholesterol;
     private String foodCarbohydrate;
     private String foodTotalSugar;
-    private String foodDietaryFibre;
+    private String foodDietaryFibre;// higher
     private String foodSodium;
-    private String foodIron;
+    private String foodIron;// higher
     private String foodCalories;
     private String foodImageURL;
 

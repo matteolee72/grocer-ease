@@ -32,7 +32,9 @@ import java.io.InputStream;
 import java.time.Instant;
 
 public class SingleItemAnalyze extends AppCompatActivity {
+    //realtime database
     private DatabaseReference databaseReference;
+    //for images
     private StorageReference foodImageStorageReference;
     private FirebaseStorage storage;
     TextView itemName, calories, mass, carbs, protein, fats;
