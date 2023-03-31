@@ -54,6 +54,7 @@ public class LoginActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<DataSnapshot> task) {
                             if (!task.isSuccessful()) {
                                 Log.e("firebase", "Error getting data", task.getException());
+
                             } else if (task.getResult().getValue(Object.class) == null) {
                                 Log.e("firebase", "User does not exist in database");
                                 Toast.makeText(LoginActivity.this, "Username not in Database", Toast.LENGTH_LONG).show();

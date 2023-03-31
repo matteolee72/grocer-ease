@@ -1,20 +1,11 @@
 package com.example.grocerease;
 
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.ActivityResultRegistry;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.DefaultLifecycleObserver;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
 
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
@@ -55,7 +46,7 @@ public class ScanActivity extends AppCompatActivity {
             // Prepare a new intent singleItemToScan so we can get the result from the previous
             // activity and store it to firstFoodItem
             Intent singleItemToScan = getIntent();
-            DatabaseItemObject firstFoodItem = (DatabaseItemObject) singleItemToScan.getSerializableExtra(MainActivity.FIRSTBARCODEKEY);
+            FoodDatabaseObject firstFoodItem = (FoodDatabaseObject) singleItemToScan.getSerializableExtra(MainActivity.FIRSTBARCODEKEY);
 
             // Make a log of what we receive from the server
             barcodeNum = result.getContents();

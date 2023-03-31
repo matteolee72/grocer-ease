@@ -2,7 +2,7 @@ package com.example.grocerease;
 
 import java.io.Serializable;
 
-public class DatabaseItemObject implements Serializable {
+public class FoodDatabaseObject implements Serializable {
     private String foodName;
     private String foodProtein;// higher
     private String foodTotalFat;
@@ -17,10 +17,10 @@ public class DatabaseItemObject implements Serializable {
     private String foodCalories;
     private String foodImageURL;
 
-    public DatabaseItemObject() {
+    public FoodDatabaseObject() {
     }
 
-    public DatabaseItemObject(String foodName, String foodProtein, String foodTotalFat, String foodSaturatedFat, String foodTransFat, String foodCholesterol, String foodCarbohydrate, String foodTotalSugar, String foodDietaryFibre, String foodSodium, String foodIron, String foodCalories, String foodImageURL) {
+    public FoodDatabaseObject(String foodName, String foodProtein, String foodTotalFat, String foodSaturatedFat, String foodTransFat, String foodCholesterol, String foodCarbohydrate, String foodTotalSugar, String foodDietaryFibre, String foodSodium, String foodIron, String foodCalories, String foodImageURL) {
         this.foodName = foodName;
         this.foodProtein = foodProtein;
         this.foodTotalFat = foodTotalFat;

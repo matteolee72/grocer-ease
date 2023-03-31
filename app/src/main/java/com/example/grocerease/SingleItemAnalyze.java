@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,11 +14,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.Registry;
-import com.bumptech.glide.annotation.GlideModule;
-import com.bumptech.glide.module.AppGlideModule;
-import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -28,9 +22,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import java.io.InputStream;
-import java.time.Instant;
-
 public class SingleItemAnalyze extends AppCompatActivity {
     //realtime database
     private DatabaseReference databaseReference;
@@ -38,7 +29,7 @@ public class SingleItemAnalyze extends AppCompatActivity {
     private StorageReference foodImageStorageReference;
     private FirebaseStorage storage;
     TextView itemName, calories, mass, carbs, protein, fats;
-    DatabaseItemObject foodObject;
+    FoodDatabaseObject foodObject;
     Button scan_button;
 
     @Override
@@ -75,7 +66,7 @@ public class SingleItemAnalyze extends AppCompatActivity {
         // StorageReference provides a handle to the firebase storage service
         storage = FirebaseStorage.getInstance();
 
-        databaseReference.child(barcodeNum).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+        databaseReference.child("Food").child(barcodeNum).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if (!task.isSuccessful()) {
@@ -103,7 +94,7 @@ public class SingleItemAnalyze extends AppCompatActivity {
                 }
                 else {
 
-                    foodObject = task.getResult().getValue(DatabaseItemObject.class);
+                    foodObject = task.getResult().getValue(FoodDatabaseObject.class);
                     // Get the result from the database and populate a foodObject of type DatabaseItemObject
                     itemName.setText(foodObject.getFoodName());
                     calories.setText(foodObject.getFoodCalories());

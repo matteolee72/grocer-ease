@@ -1,6 +1,5 @@
 package com.example.grocerease;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -11,9 +10,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -75,7 +71,7 @@ public class DatabaseAddActivity extends AppCompatActivity {
                 //----------------==DEBUG==------------------
                 String foodImageURL = "http://www.google.com";
                 //--------------==END DEBUG==----------------
-                DatabaseItemObject foodItem = new DatabaseItemObject(foodNameStr, foodProteinStr, foodTotalFatStr, foodSaturatedFatStr, foodTransFatStr, foodCholesterolStr, foodCarbohydrateStr, foodTotalSugarStr, foodDietaryFibreStr, foodSodiumStr, foodIronStr, foodCaloriesStr, foodImageURL);
+                FoodDatabaseObject foodItem = new FoodDatabaseObject(foodNameStr, foodProteinStr, foodTotalFatStr, foodSaturatedFatStr, foodTransFatStr, foodCholesterolStr, foodCarbohydrateStr, foodTotalSugarStr, foodDietaryFibreStr, foodSodiumStr, foodIronStr, foodCaloriesStr, foodImageURL);
                 Log.d("databaseAddActivity", foodIDStr);
                 Log.d("databaseAddActivity", foodItem.toString());
                 if (foodIDStr.isEmpty()) {
