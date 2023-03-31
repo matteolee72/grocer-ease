@@ -54,7 +54,6 @@ public class QuizActivity extends AppCompatActivity {
         //get blood pressure from RadioGroup
         RadioGroup bloodPressureGroup = findViewById(R.id.bloodPressureGroup);
 
-        
         //get blood sugar from RadioGroup
         RadioGroup bloodSugarLevelsGroup = findViewById(R.id.bloodSugarLevelsGroup);
 
@@ -66,7 +65,6 @@ public class QuizActivity extends AppCompatActivity {
         EditText userObjectName = findViewById(R.id.UserObjectName);
 
         RadioGroup userSex = findViewById(R.id.UserSex);
-
 
         EditText userHeight = findViewById(R.id.editTextHeight);
         EditText userWeight = findViewById(R.id.editTextWeight);
@@ -128,13 +126,12 @@ public class QuizActivity extends AppCompatActivity {
                     cal.set(Calendar.DAY_OF_MONTH, userBirthday.getDayOfMonth());
                     birthday = cal.getTime();
                     //instantiating new UserPreferencesObject
-                    UserPreferencesObject UserObject = new UserPreferencesObject(bloodPressure,bloodSugarLevels,highCholesterol,weightGoals,name,sex,height,weight,birthday);
+                    UserPreferencesObject UserPrefObject = new UserPreferencesObject(bloodPressure,bloodSugarLevels,highCholesterol,weightGoals,name,sex,height,weight,birthday);
                     //adding it to the DataBase
-                    databaseReference.child("Users").child(username).child("Preferences").setValue(UserObject);
-
+                    databaseReference.child("Users").child(username).child("Preferences").setValue(UserPrefObject);
                     //going back to main activity
                     Intent intent = new Intent(QuizActivity.this,MainActivity.class);
-                    intent.putExtra(NEWUSERNAME, username);
+                    intent.putExtra(MainActivity.USEROBJECTKEY, username);
                     startActivity(intent);
 
                 }

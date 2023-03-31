@@ -17,12 +17,21 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
     public static final String SECONDBARCODEKEY = "secondBarcode";
     public static final String USEROBJECTKEY = "userObjectKey";
     NavigationBarView navigationBarView;
-
+    private PreferencesHelper preferencesHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Log.d("in Main Activity", "onCreate: ");
+
+        Intent intent = getIntent();
+        String username = intent.getStringExtra(MainActivity.USEROBJECTKEY);
+        // reference to the local preferences
+        preferencesHelper = new PreferencesHelper(this);
+        // adding username to preferences to allow for access throughout the application
+        preferencesHelper.writeString("username",username);
 
         navigationBarView = findViewById(R.id.bottomNavigationView);
         navigationBarView.setOnItemSelectedListener(this);

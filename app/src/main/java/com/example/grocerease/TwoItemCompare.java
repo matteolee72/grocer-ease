@@ -70,7 +70,7 @@ public class TwoItemCompare extends AppCompatActivity {
         Log.i("TwoItemCompare", "Barcode received: "+ barcodeNum2);
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
-        databaseReference.child(barcodeNum2).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+        databaseReference.child("Food").child(barcodeNum2).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if (!task.isSuccessful()) {

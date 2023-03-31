@@ -62,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
                                 String database_password = userObject.getUserPassword();
                                 if (database_password.equals(password_input)) {
                                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                    intent.putExtra(MainActivity.USEROBJECTKEY, userObject);
+                                    intent.putExtra(MainActivity.USEROBJECTKEY, username_input);
                                     startActivity(intent);
                                 } else {
                                     Log.e("firebase", "Password does not correspond to user");

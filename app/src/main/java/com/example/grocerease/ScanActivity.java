@@ -24,7 +24,6 @@ public class ScanActivity extends AppCompatActivity {
     // Prepare a variable to store the incoming barcode number
     String barcodeNum;
 
-
     // When the activity is created, get the previously scanned information if it exists
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,9 +42,7 @@ public class ScanActivity extends AppCompatActivity {
         options.setCaptureActivity(CaptureAct.class);
         barLauncher.launch(options);
     }
-
     //TODO fix onBackButtonPressed() from scan activity camera - currently displays the old scan page instead of going to main
-
     // Determine what to do when the barcode launcher receives the barcode
     ActivityResultLauncher<ScanOptions> barLauncher = registerForActivityResult(new ScanContract(), result->
     {
@@ -60,6 +57,9 @@ public class ScanActivity extends AppCompatActivity {
             // Make a log of what we receive from the server
             barcodeNum = result.getContents();
             Log.d("scanActivity", barcodeNum);
+
+
+
 
             // If firstFoodItem contains nothing, then we assume that we are scanning the first barcode
             // so we pass the barcode number that we scan and pass it to the next activity

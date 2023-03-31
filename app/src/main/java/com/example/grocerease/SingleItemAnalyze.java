@@ -32,6 +32,7 @@ import java.io.InputStream;
 import java.time.Instant;
 
 public class SingleItemAnalyze extends AppCompatActivity {
+
     //realtime database
     private DatabaseReference databaseReference;
     //for images
@@ -39,8 +40,10 @@ public class SingleItemAnalyze extends AppCompatActivity {
     private FirebaseStorage storage;
     TextView itemName, calories, mass, carbs, protein, fats;
     DatabaseItemObject foodObject;
+    UserDatabaseObject user;
     Button scan_button;
 
+    private PreferencesHelper preferencesHelper;
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(SingleItemAnalyze.this, MainActivity.class);
@@ -51,6 +54,10 @@ public class SingleItemAnalyze extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_item_analyze);
+
+        preferencesHelper = new PreferencesHelper(this);
+
+        String username = preferencesHelper.readString("username","null_user_error");
 
         // Get a handle on all the items on the page
         itemName = findViewById(R.id.itemName);
@@ -68,14 +75,13 @@ public class SingleItemAnalyze extends AppCompatActivity {
 
         ImageView imageView = findViewById(R.id.card1_foodImage_ImageView);
 
-
         // DatabaseReference provides a handle to the firebase database such that we can access the
         // information contained at the key <barcodeNum>
         databaseReference = FirebaseDatabase.getInstance().getReference();
         // StorageReference provides a handle to the firebase storage service
         storage = FirebaseStorage.getInstance();
-
-        databaseReference.child(barcodeNum).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+        
+        databaseReference.child("Food").child(barcodeNum).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if (!task.isSuccessful()) {
@@ -103,7 +109,11 @@ public class SingleItemAnalyze extends AppCompatActivity {
                 }
                 else {
 
-                    foodObject = task.getResult().getValue(DatabaseItemObject.class);
+                    foodObject = task.getResult().getValue(DatabaseItemObject.class); // get food object from database
+                    user =  (UserDatabaseObject) databaseReference.child(username).get().getResult().getValue();
+                    UserHistoryObject userHistory = user.getUserHistory();
+                    Log.d("userHistory", "onComplete: "+ userHistory);
+
                     // Get the result from the database and populate a foodObject of type DatabaseItemObject
                     itemName.setText(foodObject.getFoodName());
                     calories.setText(foodObject.getFoodCalories());

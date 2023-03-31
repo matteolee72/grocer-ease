@@ -26,7 +26,6 @@ public class CreateAccountActivity extends AppCompatActivity {
     // Setting final Strings to pass Username and Password to Quiz Activity
     public static final String NEWUSERNAME = "newUserName";
     public static final String NEWPASSWORD = "newPassword";
-
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -60,7 +59,6 @@ public class CreateAccountActivity extends AppCompatActivity {
                     Toast.makeText(CreateAccountActivity.this,
                             "Your passwords are not the same", Toast.LENGTH_LONG).show();
                 }
-
                 // Check if username is already in taken
                 else {
                     // Checking is username in database
