@@ -7,6 +7,15 @@ public class UserHistoryObject implements Serializable {
     private ArrayList<String> foodHistory;
     private int size = 5;
 
+    public String getID(int i){
+        return foodHistory.get(i);
+    }
+    public void removeID(int i){}
+
+    public int getSize(){
+        return size;
+    }
+
     public ArrayList<String> getFoodHistory() {return foodHistory;}
     public boolean isFull(){
         if (foodHistory.size()==size){return true;}
