@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
     // Setting final Strings to be used as keys for passing data between Activities
     public static final String FIRSTBARCODEKEY = "firstBarcode";
     public static final String SECONDBARCODEKEY = "secondBarcode";
-    public static final String USEROBJECTKEY = "userObjectKey";
+    public static final String USEROBJECTKEY = "userObjectKey"; //for retrieval of the entire user object
     NavigationBarView navigationBarView;
     private PreferencesHelper preferencesHelper;
 
@@ -27,11 +27,8 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         Log.d("in Main Activity", "onCreate: ");
 
         Intent intent = getIntent();
-        String username = intent.getStringExtra(MainActivity.USEROBJECTKEY);
-        // reference to the local preferences
-        preferencesHelper = new PreferencesHelper(this);
-        // adding username to preferences to allow for access throughout the application
-        preferencesHelper.writeString("username",username);
+        UserDatabaseObject userObject = (UserDatabaseObject) intent.getSerializableExtra(MainActivity.USEROBJECTKEY);
+        Log.d("user object has reached main", "onCreate: "+userObject.getUserName());
 
         navigationBarView = findViewById(R.id.bottomNavigationView);
         navigationBarView.setOnItemSelectedListener(this);

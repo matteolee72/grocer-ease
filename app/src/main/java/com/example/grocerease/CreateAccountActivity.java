@@ -21,6 +21,8 @@ public class CreateAccountActivity extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private EditText username,password,retype_password;
     private Button submit_button;
+
+
     UserDatabaseObject userObject;
 
     // Setting final Strings to pass Username and Password to Quiz Activity
@@ -73,11 +75,13 @@ public class CreateAccountActivity extends AppCompatActivity {
                                 // Add user to database with partial arg constructor
                                 UserDatabaseObject newUser =  new UserDatabaseObject(password_input);
                                 databaseReference.child("Users").child(username_input).setValue(newUser);
-                                // Move to QuizActivity, pass username and password
+                                // Move to QuizActivity, pass userObject whole
+                                Log.d("new user password from object is ", newUser.getUserPassword());
                                 Intent intent = new Intent(CreateAccountActivity.this,QuizActivity.class);
-                                intent.putExtra(NEWUSERNAME, username_input);
-                                intent.putExtra(NEWPASSWORD, password_input);
+                                intent.putExtra(NEWUSERNAME,username_input);
+                                intent.putExtra(MainActivity.USEROBJECTKEY, newUser);
                                 startActivity(intent);
+                                finish();
                             }
                             else {
                                 Log.e("firebase", "Username already exists in database");

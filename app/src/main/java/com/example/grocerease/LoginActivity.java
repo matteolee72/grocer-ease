@@ -24,10 +24,15 @@ public class LoginActivity extends AppCompatActivity {
     private Button login_button, create_account_button;
     UserDatabaseObject userObject;
 
+    private PreferencesHelper preferencesHelper;
+
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        // reference to the local preferences
+        preferencesHelper = new PreferencesHelper(this);
 
         // Getting the Views of buttons and edittext fields
         username = findViewById(R.id.username_edittext);
@@ -61,9 +66,12 @@ public class LoginActivity extends AppCompatActivity {
                                 userObject = task.getResult().getValue(UserDatabaseObject.class);
                                 String database_password = userObject.getUserPassword();
                                 if (database_password.equals(password_input)) {
+                                    // adding username to preferences to allow for access throughout the application
+                                    preferencesHelper.writeString("username",username_input);
                                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                    intent.putExtra(MainActivity.USEROBJECTKEY, username_input);
+                                    intent.putExtra(MainActivity.USEROBJECTKEY, userObject); //passing the entire user object through
                                     startActivity(intent);
+                                    finish();
                                 } else {
                                     Log.e("firebase", "Password does not correspond to user");
                                     Toast.makeText(LoginActivity.this, "Username or Password is Incorrect", Toast.LENGTH_LONG).show();

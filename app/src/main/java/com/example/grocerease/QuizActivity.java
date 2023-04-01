@@ -35,22 +35,32 @@ public class QuizActivity extends AppCompatActivity {
     private Date birthday;
 
     Button quizSubmitButton;
-
     FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
+
+    private PreferencesHelper preferencesHelper;
 
     Calendar cal = Calendar.getInstance();
 
     private Boolean isDateChanged = false;
 
+    //TODO: Create default constructor for preferences and handle them appropriately in singleItemAnalyze and compare
+    // e.g user creates account but does NOT fill in preferences, need to know how to display their preferences still.
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
 
+        // reference to the local preferences
+        preferencesHelper = new PreferencesHelper(this);
+
         //getting the username of the user that just created an account
         Intent intent = getIntent();
         String username = intent.getStringExtra(NEWUSERNAME);
+        preferencesHelper.writeString("username",username);
 
+        UserDatabaseObject userObject = (UserDatabaseObject) intent.getSerializableExtra(MainActivity.USEROBJECTKEY);
+        Log.d("new user password is", userObject.getUserPassword());
         //get blood pressure from RadioGroup
         RadioGroup bloodPressureGroup = findViewById(R.id.bloodPressureGroup);
 
@@ -127,13 +137,15 @@ public class QuizActivity extends AppCompatActivity {
                     birthday = cal.getTime();
                     //instantiating new UserPreferencesObject
                     UserPreferencesObject UserPrefObject = new UserPreferencesObject(bloodPressure,bloodSugarLevels,highCholesterol,weightGoals,name,sex,height,weight,birthday);
+                    String pw = userObject.getUserPassword();
+                    Log.d("user pw from object is", pw);
                     //adding it to the DataBase
                     databaseReference.child("Users").child(username).child("Preferences").setValue(UserPrefObject);
                     //going back to main activity
                     Intent intent = new Intent(QuizActivity.this,MainActivity.class);
-                    intent.putExtra(MainActivity.USEROBJECTKEY, username);
+                    intent.putExtra(MainActivity.USEROBJECTKEY, userObject);
                     startActivity(intent);
-
+                    finish();
                 }
             }
         });
