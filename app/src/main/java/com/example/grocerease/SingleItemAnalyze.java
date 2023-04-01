@@ -42,6 +42,9 @@ public class SingleItemAnalyze extends AppCompatActivity {
     DatabaseItemObject foodObject;
     UserDatabaseObject user;
     Button scan_button;
+    private String username;
+
+    private UserDatabaseObject userObject;
 
     private PreferencesHelper preferencesHelper;
     @Override
@@ -55,9 +58,11 @@ public class SingleItemAnalyze extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_item_analyze);
 
+        // reference to the local preferences
         preferencesHelper = new PreferencesHelper(this);
-
-        String username = preferencesHelper.readString("username","null_user_error");
+        if (preferencesHelper != null) {
+            username = preferencesHelper.readString("username","error");
+        }
 
         // Get a handle on all the items on the page
         itemName = findViewById(R.id.itemName);
@@ -71,6 +76,9 @@ public class SingleItemAnalyze extends AppCompatActivity {
         // so that we can pass the information to the database reference
         Intent intent = getIntent();
         String barcodeNum = intent.getStringExtra(MainActivity.FIRSTBARCODEKEY);
+        userObject = (UserDatabaseObject) intent.getSerializableExtra(MainActivity.USEROBJECTKEY);
+        Log.d("userName is", "onCreate: " + userObject.getUserName());
+
         Log.i("SingleItemAnalyse", "Intent barcode received: "+ barcodeNum);
 
         ImageView imageView = findViewById(R.id.card1_foodImage_ImageView);
@@ -110,11 +118,14 @@ public class SingleItemAnalyze extends AppCompatActivity {
                 else {
 
                     foodObject = task.getResult().getValue(DatabaseItemObject.class); // get food object from database
-                    user =  (UserDatabaseObject) databaseReference.child(username).get().getResult().getValue();
-                    UserHistoryObject userHistory = user.getUserHistory();
-                    Log.d("userHistory", "onComplete: "+ userHistory);
-
                     // Get the result from the database and populate a foodObject of type DatabaseItemObject
+
+                    //add barcode to history if not full
+                    UserHistoryObject userHistory = userObject.getUserHistory();
+                    if (userHistory.isFull() == false){
+                        userHistory.addToHistory(barcodeNum);
+                        databaseReference.child("Users").child(username).child("userHistory").setValue(userHistory);
+                    }
                     itemName.setText(foodObject.getFoodName());
                     calories.setText(foodObject.getFoodCalories());
                     carbs.setText("Total Sugar\n" + foodObject.getFoodTotalSugar());
@@ -122,9 +133,10 @@ public class SingleItemAnalyze extends AppCompatActivity {
                     fats.setText("Fats\n" + foodObject.getFoodTotalFat());
                     String foodImageLink = foodObject.getFoodImageURL();
                     foodImageStorageReference = storage.getReference().child(foodImageLink);
+                    Log.d("food image", "onComplete: " + foodImageStorageReference);
                     GlideApp.with(getApplicationContext())
                             .load(foodImageStorageReference)
-                            .into(imageView); //implement placeholder
+                            .into(imageView); //TODO: implement placeholder
                 }
             }
         });

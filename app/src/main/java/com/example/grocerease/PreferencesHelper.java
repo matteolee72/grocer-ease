@@ -9,7 +9,6 @@ public class PreferencesHelper {
     public PreferencesHelper(Context context) {
         sharedPreferences = context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
     }
-
     public void writeString(String key, String value) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(key, value);

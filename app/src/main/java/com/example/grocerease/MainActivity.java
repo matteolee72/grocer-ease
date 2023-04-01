@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
     public static final String USEROBJECTKEY = "userObjectKey"; //for retrieval of the entire user object
     NavigationBarView navigationBarView;
     private PreferencesHelper preferencesHelper;
+    private UserDatabaseObject userObject;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,10 +28,10 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         Log.d("in Main Activity", "onCreate: ");
 
         Intent intent = getIntent();
-        UserDatabaseObject userObject = (UserDatabaseObject) intent.getSerializableExtra(MainActivity.USEROBJECTKEY);
+        userObject = (UserDatabaseObject) intent.getSerializableExtra(MainActivity.USEROBJECTKEY);
         Log.d("user object has reached main", "onCreate: "+userObject.getUserName());
 
-        navigationBarView = findViewById(R.id.bottomNavigationView);
+        navigationBarView =findViewById(R.id.bottomNavigationView);
         navigationBarView.setOnItemSelectedListener(this);
         navigationBarView.setSelectedItemId(R.id.home);
     }
@@ -47,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
                 // Start the scan page when the scan button is pressed
                 Log.i("mainNavigation", "Scan button pressed");
                 Intent intent = new Intent(MainActivity.this, ScanActivity.class);
+                intent.putExtra(MainActivity.USEROBJECTKEY,userObject);
                 startActivity(intent);
                 return true;
             case R.id.profile: // database add activity instead of profile

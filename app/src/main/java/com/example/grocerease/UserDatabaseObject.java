@@ -7,7 +7,7 @@ public class UserDatabaseObject implements Serializable {
     private String userPassword;
     private String userFavourites;
     private UserHistoryObject userHistory;
-    private String userPreferences;
+    private UserPreferencesObject userPreferences;
     public UserDatabaseObject(){
     }
     // Partial Arg Constructor - we use this in the create account page
@@ -19,7 +19,7 @@ public class UserDatabaseObject implements Serializable {
         this.userPreferences = null;
     }
     // With Arg Constructor -  we use this once a user has filled in their username/password
-    public UserDatabaseObject(String userName, String userPassword, String userFavourites, UserHistoryObject userHistory, String userPreferences) {
+    public UserDatabaseObject(String userName, String userPassword, String userFavourites, UserHistoryObject userHistory, UserPreferencesObject userPreferences) {
         this.userName = userName;
         this.userPassword = userPassword;
         this.userFavourites = userFavourites;
@@ -31,5 +31,5 @@ public class UserDatabaseObject implements Serializable {
     public String getUserPassword() {return userPassword;}
     public String getUserFavourites() {return userFavourites;}
     public UserHistoryObject getUserHistory() {return userHistory;}
-    public String getUserPreferences() {return userPreferences;}
+    public UserPreferencesObject getUserPreferences() {return userPreferences;}
 }

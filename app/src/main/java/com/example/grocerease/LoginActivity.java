@@ -47,6 +47,7 @@ public class LoginActivity extends AppCompatActivity {
                 // Getting the inputs in the text edit fields
                 String username_input = username.getText().toString();
                 String password_input = password.getText().toString();
+                Log.d("username and password", username_input + password_input);
                 // Getting the database reference associated with username
                 if (username_input.trim().equals("")){
                     Toast.makeText(LoginActivity.this,

@@ -68,6 +68,9 @@ public class UserPreferencesObject implements Serializable {
         return birthday;
     }
 
+    public UserPreferencesObject(){
+
+    }
     public UserPreferencesObject(String bloodPressure, String bloodSugarLevels, String highCholesterol, String weightGoals, String name, String sex, int height, int weight, Date birthday){
         this.bloodPressure = bloodPressure;
         this.bloodSugarLevels = bloodSugarLevels;

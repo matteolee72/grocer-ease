@@ -140,7 +140,7 @@ public class QuizActivity extends AppCompatActivity {
                     String pw = userObject.getUserPassword();
                     Log.d("user pw from object is", pw);
                     //adding it to the DataBase
-                    databaseReference.child("Users").child(username).child("Preferences").setValue(UserPrefObject);
+                    databaseReference.child("Users").child(username).child("userPreferences").setValue(UserPrefObject);
                     //going back to main activity
                     Intent intent = new Intent(QuizActivity.this,MainActivity.class);
                     intent.putExtra(MainActivity.USEROBJECTKEY, userObject);

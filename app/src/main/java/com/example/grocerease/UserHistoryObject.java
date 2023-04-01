@@ -9,10 +9,9 @@ public class UserHistoryObject implements Serializable {
 
     public ArrayList<String> getFoodHistory() {return foodHistory;}
     public boolean isFull(){
-        if (foodHistory.contains("0")){return false;}
-        else {return true;}
+        if (foodHistory.size()==size){return true;}
+        else {return false;}
     }
-
     public ArrayList<String> addToHistory(String foodItem){
         if (!foodHistory.contains(foodItem)) {
             if (isFull()) {
@@ -24,10 +23,10 @@ public class UserHistoryObject implements Serializable {
     }
     public UserHistoryObject() {
         this.foodHistory = new ArrayList<>();
-        for (int i = 0; i<size;i++){
-            foodHistory.add("0");
-
-        }
+//        for (int i = 0; i<size;i++){
+//            foodHistory.add("0");
+//
+//        }
     }
 
 }

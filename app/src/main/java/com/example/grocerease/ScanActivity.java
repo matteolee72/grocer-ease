@@ -23,6 +23,7 @@ import com.journeyapps.barcodescanner.ScanOptions;
 public class ScanActivity extends AppCompatActivity {
     // Prepare a variable to store the incoming barcode number
     String barcodeNum;
+    private UserDatabaseObject userObject;
 
     // When the activity is created, get the previously scanned information if it exists
     @Override
@@ -30,6 +31,9 @@ public class ScanActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan); //outdated
         // Immediately launch the scancode function to retrieve the code using the barcode scanner
+
+        Intent intent = getIntent();
+        userObject = (UserDatabaseObject) intent.getSerializableExtra(MainActivity.USEROBJECTKEY);
         scanCode();
     }
 
@@ -59,19 +63,19 @@ public class ScanActivity extends AppCompatActivity {
             Log.d("scanActivity", barcodeNum);
 
 
-
-
             // If firstFoodItem contains nothing, then we assume that we are scanning the first barcode
             // so we pass the barcode number that we scan and pass it to the next activity
             if (firstFoodItem == null){
                 Intent intent = new Intent(ScanActivity.this, SingleItemAnalyze.class);
-                intent.putExtra(MainActivity.FIRSTBARCODEKEY, barcodeNum); //Using putExtra, implement mPreferences next
+                intent.putExtra(MainActivity.USEROBJECTKEY,userObject);
+                intent.putExtra(MainActivity.FIRSTBARCODEKEY, barcodeNum);
                 startActivity(intent);
             }
             else{
                 // If firstFoodItem contains something, then we assume that we are now
                 // scanning the second barcode. So we run this block of code.
                 Intent intent = new Intent(ScanActivity.this, TwoItemCompare.class);
+                intent.putExtra(MainActivity.USEROBJECTKEY,userObject);
                 intent.putExtra(MainActivity.FIRSTBARCODEKEY, firstFoodItem); //Using putExtra, implement mPreferences next
                 intent.putExtra(MainActivity.SECONDBARCODEKEY, barcodeNum);
                 startActivity(intent);
