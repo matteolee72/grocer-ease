@@ -2,6 +2,8 @@ package com.example.grocerease;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,7 +18,9 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
     public static final String FIRSTBARCODEKEY = "firstBarcode";
     public static final String SECONDBARCODEKEY = "secondBarcode";
     public static final String USEROBJECTKEY = "userObjectKey";
+    public static final String USERNAME = "userName";
     NavigationBarView navigationBarView;
+    RecyclerView recyclerView;
 
 
     @Override
@@ -24,9 +28,20 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        recyclerView = findViewById(R.id.historyRecyclerView);
         navigationBarView = findViewById(R.id.bottomNavigationView);
         navigationBarView.setOnItemSelectedListener(this);
         navigationBarView.setSelectedItemId(R.id.home);
+
+        Intent intent = getIntent();
+        UserDatabaseObject userDatabaseObject = (UserDatabaseObject) intent.getSerializableExtra(MainActivity.USEROBJECTKEY);
+        String userName = intent.getStringExtra(MainActivity.USERNAME);
+        UserHistoryData userHistoryData = new UserHistoryData(userName);
+
+        RecyclerView.Adapter<HistoryAdapter.ViewHolder> historyAdapter = new HistoryAdapter(this, userHistoryData);
+        recyclerView.setAdapter(historyAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
     }
 
     @Override

@@ -1,12 +1,13 @@
 package com.example.grocerease;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class UserDatabaseObject implements Serializable {
     private String userName;
     private String userPassword;
     private String userFavourites;
-    private String userHistory;
+    private ArrayList<String> userHistory;
     private String userPreferences;
     public UserDatabaseObject(){
     }
@@ -19,7 +20,7 @@ public class UserDatabaseObject implements Serializable {
         this.userPreferences = null;
     }
     // With Arg Constructor -  we use this once a user has filled in their username/password
-    public UserDatabaseObject(String userName, String userPassword, String userFavourites, String userHistory, String userPreferences) {
+    public UserDatabaseObject(String userName, String userPassword, String userFavourites, ArrayList<String> userHistory, String userPreferences) {
         this.userName = userName;
         this.userPassword = userPassword;
         this.userFavourites = userFavourites;
@@ -30,6 +31,6 @@ public class UserDatabaseObject implements Serializable {
     public String getUserName() {return userName;}
     public String getUserPassword() {return userPassword;}
     public String getUserFavourites() {return userFavourites;}
-    public String getUserHistory() {return userHistory;}
+    public ArrayList<String> getUserHistory() {return userHistory;}
     public String getUserPreferences() {return userPreferences;}
 }
