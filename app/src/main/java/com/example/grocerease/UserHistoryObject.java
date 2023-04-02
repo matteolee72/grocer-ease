@@ -8,12 +8,12 @@ public class UserHistoryObject implements Serializable {
     private int size = 5;
 
     public String getID(int i){
-        return foodHistory.get(i);
+        return this.getFoodHistory().get(i);
     }
     public void removeID(int i){}
 
     public int getSize(){
-        return size;
+        return foodHistory.size();
     }
 
     public ArrayList<String> getFoodHistory() {return foodHistory;}

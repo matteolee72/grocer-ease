@@ -8,7 +8,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,17 +20,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class TwoItemCompare extends AppCompatActivity {
     TextView itemName_1,mass_1,calories_1, carbs_1, protein_1, fats_1;
     TextView itemName_2,mass_2,calories_2, carbs_2, protein_2, fats_2;
     private StorageReference foodImageStorageReference;
     private DatabaseReference databaseReference;
     private FirebaseStorage storage;
-    DatabaseItemObject foodObject1;
-    DatabaseItemObject foodObject2;
+    FoodDatabaseObject foodObject1;
+    FoodDatabaseObject foodObject2;
     String barcodeNum2;
 
     @Override
@@ -64,7 +60,7 @@ public class TwoItemCompare extends AppCompatActivity {
         ImageView food_image_2 = findViewById(R.id.food_image_2);
 
         Intent intent = getIntent();
-        foodObject1 = (DatabaseItemObject) intent.getSerializableExtra(MainActivity.FIRSTBARCODEKEY);
+        foodObject1 = (FoodDatabaseObject) intent.getSerializableExtra(MainActivity.FIRSTBARCODEKEY);
         barcodeNum2 = intent.getStringExtra(MainActivity.SECONDBARCODEKEY);
         Log.i("TwoItemCompare", "Barcode received: "+ foodObject1.toString());
         Log.i("TwoItemCompare", "Barcode received: "+ barcodeNum2);
@@ -97,7 +93,7 @@ public class TwoItemCompare extends AppCompatActivity {
                     dialog.show();
                 }
                 else {
-                    foodObject2 = task.getResult().getValue(DatabaseItemObject.class);
+                    foodObject2 = task.getResult().getValue(FoodDatabaseObject.class);
                     Log.i("TwoItemCompare", "Object1 from intent" + foodObject1.toString());
                     Log.i("TwoItemCompare", "Object2 from database" + foodObject2.toString());
                     itemName_1.setText(foodObject1.getFoodName());

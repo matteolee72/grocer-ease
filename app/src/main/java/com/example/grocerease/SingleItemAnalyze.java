@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,11 +14,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.Registry;
-import com.bumptech.glide.annotation.GlideModule;
-import com.bumptech.glide.module.AppGlideModule;
-import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -27,9 +21,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-
-import java.io.InputStream;
-import java.time.Instant;
 
 public class SingleItemAnalyze extends AppCompatActivity {
 
@@ -39,7 +30,7 @@ public class SingleItemAnalyze extends AppCompatActivity {
     private StorageReference foodImageStorageReference;
     private FirebaseStorage storage;
     TextView itemName, calories, mass, carbs, protein, fats;
-    DatabaseItemObject foodObject;
+    FoodDatabaseObject foodObject;
     UserDatabaseObject user;
     Button scan_button;
     private String username;
@@ -77,7 +68,7 @@ public class SingleItemAnalyze extends AppCompatActivity {
         Intent intent = getIntent();
         String barcodeNum = intent.getStringExtra(MainActivity.FIRSTBARCODEKEY);
         userObject = (UserDatabaseObject) intent.getSerializableExtra(MainActivity.USEROBJECTKEY);
-        Log.d("userName is", "onCreate: " + userObject.getUserName());
+        //Log.d("userName is", "onCreate: " + userObject.getUserName());
 
         Log.i("SingleItemAnalyse", "Intent barcode received: "+ barcodeNum);
 
@@ -117,8 +108,8 @@ public class SingleItemAnalyze extends AppCompatActivity {
                 }
                 else {
 
-                    foodObject = task.getResult().getValue(DatabaseItemObject.class); // get food object from database
-                    // Get the result from the database and populate a foodObject of type DatabaseItemObject
+                    foodObject = task.getResult().getValue(FoodDatabaseObject.class); // get food object from database
+                    // Get the result from the database and populate a foodObject of type FoodDatabaseObject
 
                     //add barcode to history if not full
                     UserHistoryObject userHistory = userObject.getUserHistory();
