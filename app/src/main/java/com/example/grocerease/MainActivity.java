@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
     // Setting final Strings to be used as keys for passing data between Activities
     public static final String FIRSTBARCODEKEY = "firstBarcode";
     public static final String SECONDBARCODEKEY = "secondBarcode";
-    public static final String USEROBJECTKEY = "userObjectKey"; //for retrieval of the entire user object
+    public static final String USEROBJECTKEY = "userObjectKey"; // for retrieval of the entire user object
     NavigationBarView navigationBarView;
     private PreferencesHelper preferencesHelper;
     private UserDatabaseObject userObject;
