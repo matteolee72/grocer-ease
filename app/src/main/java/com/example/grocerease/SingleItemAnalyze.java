@@ -41,7 +41,7 @@ public class SingleItemAnalyze extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(SingleItemAnalyze.this, MainActivity.class);
-        // TODO: Pass Username back to MainActivity
+        intent.putExtra(MainActivity.USEROBJECTKEY,userObject);
         // TODO: Discuss pushing of stuff through intents
         startActivity(intent);
     }

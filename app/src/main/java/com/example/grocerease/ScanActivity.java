@@ -41,6 +41,7 @@ public class ScanActivity extends AppCompatActivity {
     // Determine what to do when the barcode launcher receives the barcode
     ActivityResultLauncher<ScanOptions> barLauncher = registerForActivityResult(new ScanContract(), result->
     {
+
         // Check if we get a valid output from the barcode scanner
         if(result.getContents() != null)
         {
@@ -61,6 +62,7 @@ public class ScanActivity extends AppCompatActivity {
                 intent.putExtra(MainActivity.USEROBJECTKEY,userObject);
                 intent.putExtra(MainActivity.FIRSTBARCODEKEY, barcodeNum);
                 startActivity(intent);
+                finish();
             }
             else{
                 // If firstFoodItem contains something, then we assume that we are now
@@ -70,6 +72,7 @@ public class ScanActivity extends AppCompatActivity {
                 intent.putExtra(MainActivity.FIRSTBARCODEKEY, firstFoodItem); //Using putExtra, implement mPreferences next
                 intent.putExtra(MainActivity.SECONDBARCODEKEY, barcodeNum);
                 startActivity(intent);
+                finish();
             }
         }
     });
