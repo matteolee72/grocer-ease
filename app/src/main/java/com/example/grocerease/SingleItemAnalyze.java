@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,11 +14,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.Registry;
-import com.bumptech.glide.annotation.GlideModule;
-import com.bumptech.glide.module.AppGlideModule;
-import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -28,20 +22,27 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import java.io.InputStream;
-import java.time.Instant;
-
 public class SingleItemAnalyze extends AppCompatActivity {
+
+    //realtime database
     private DatabaseReference databaseReference;
+    //for images
     private StorageReference foodImageStorageReference;
     private FirebaseStorage storage;
     TextView itemName, calories, mass, carbs, protein, fats;
-    DatabaseItemObject foodObject;
+    FoodDatabaseObject foodObject;
+    UserDatabaseObject user;
     Button scan_button;
+    private String username;
 
+    private UserDatabaseObject userObject;
+
+    private PreferencesHelper preferencesHelper;
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(SingleItemAnalyze.this, MainActivity.class);
+        intent.putExtra(MainActivity.USEROBJECTKEY,userObject);
+        // TODO: Discuss pushing of stuff through intents
         startActivity(intent);
     }
 
@@ -49,6 +50,12 @@ public class SingleItemAnalyze extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_item_analyze);
+
+        // reference to the local preferences
+        preferencesHelper = new PreferencesHelper(this);
+        if (preferencesHelper != null) {
+            username = preferencesHelper.readString("username","error");
+        }
 
         // Get a handle on all the items on the page
         itemName = findViewById(R.id.itemName);
@@ -62,18 +69,20 @@ public class SingleItemAnalyze extends AppCompatActivity {
         // so that we can pass the information to the database reference
         Intent intent = getIntent();
         String barcodeNum = intent.getStringExtra(MainActivity.FIRSTBARCODEKEY);
+        userObject = (UserDatabaseObject) intent.getSerializableExtra(MainActivity.USEROBJECTKEY);
+        //Log.d("userName is", "onCreate: " + userObject.getUserName());
+
         Log.i("SingleItemAnalyse", "Intent barcode received: "+ barcodeNum);
 
         ImageView imageView = findViewById(R.id.card1_foodImage_ImageView);
-
 
         // DatabaseReference provides a handle to the firebase database such that we can access the
         // information contained at the key <barcodeNum>
         databaseReference = FirebaseDatabase.getInstance().getReference();
         // StorageReference provides a handle to the firebase storage service
         storage = FirebaseStorage.getInstance();
-
-        databaseReference.child(barcodeNum).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+        
+        databaseReference.child("Food").child(barcodeNum).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if (!task.isSuccessful()) {
@@ -101,8 +110,15 @@ public class SingleItemAnalyze extends AppCompatActivity {
                 }
                 else {
 
-                    foodObject = task.getResult().getValue(DatabaseItemObject.class);
-                    // Get the result from the database and populate a foodObject of type DatabaseItemObject
+                    foodObject = task.getResult().getValue(FoodDatabaseObject.class); // get food object from database
+                    // Get the result from the database and populate a foodObject of type FoodDatabaseObject
+
+                    //add barcode to history if not full
+                    UserHistoryObject userHistory = userObject.getUserHistory();
+                    if (userHistory.isFull() == false){
+                        userHistory.addToHistory(barcodeNum);
+                        databaseReference.child("Users").child(username).child("userHistory").setValue(userHistory);
+                    }
                     itemName.setText(foodObject.getFoodName());
                     calories.setText(foodObject.getFoodCalories());
                     carbs.setText("Total Sugar\n" + foodObject.getFoodTotalSugar());
@@ -110,9 +126,10 @@ public class SingleItemAnalyze extends AppCompatActivity {
                     fats.setText("Fats\n" + foodObject.getFoodTotalFat());
                     String foodImageLink = foodObject.getFoodImageURL();
                     foodImageStorageReference = storage.getReference().child(foodImageLink);
+                    Log.d("food image", "onComplete: " + foodImageStorageReference);
                     GlideApp.with(getApplicationContext())
                             .load(foodImageStorageReference)
-                            .into(imageView); //implement placeholder
+                            .into(imageView); //TODO: implement placeholder
                 }
             }
         });
