@@ -22,59 +22,42 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-public class SingleItemAnalyze extends AppCompatActivity {
-
-    //realtime database
+public class SingleItemActivity extends AppCompatActivity {
     private DatabaseReference databaseReference;
-    //for images
     private StorageReference foodImageStorageReference;
     private FirebaseStorage storage;
-
-    UserDatabaseObject user;
-    
-    TextView itemName, company, mass, calories, percentage, totalfat, saturatedfat, transfat, cholesterol,
-            sodium, totalcarbs, dietaryfibres, totalsugars, protein, iron;
+    TextView itemName, itemCompany, mass, calories, percentage, totalFat, saturatedFat, transFat, cholesterol,
+            sodium, totalCarbohydrates, dietaryFibres, totalSugars, protein, iron;
     FoodDatabaseObject foodObject;
-    
     Button scan_button;
-    private String username;
 
-    private UserDatabaseObject userObject;
-
-    private PreferencesHelper preferencesHelper;
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(SingleItemAnalyze.this, MainActivity.class);
-        intent.putExtra(MainActivity.USEROBJECTKEY,userObject);
-        // TODO: Discuss pushing of stuff through intents
+        Intent intent = new Intent(SingleItemActivity.this, MainActivity.class);
         startActivity(intent);
     }
+
+    // use calculate to find normal sugar content and saturated fat content per 100g, and color code
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.single_item_activity);
 
-        // reference to the local preferences
-        preferencesHelper = new PreferencesHelper(this);
-        if (preferencesHelper != null) {
-            username = preferencesHelper.readString("username","error");
-        }
-
         // Get a handle on all the items on the page
         itemName = findViewById(R.id.itemName);
-        company = findViewById(R.id.itemCompany);
+        itemCompany = findViewById(R.id.itemCompany);
         mass = findViewById(R.id.grams_of_contents);
         calories = findViewById(R.id.number_of_calories);
         percentage = findViewById(R.id.perc_of_daily_intake_value);
-        totalfat = findViewById(R.id.total_fat_value);
-        saturatedfat = findViewById(R.id.saturated_fat_value);
-        transfat = findViewById(R.id.trans_fat_value);
+        totalFat = findViewById(R.id.total_fat_value);
+        saturatedFat = findViewById(R.id.saturated_fat_value);
+        transFat = findViewById(R.id.trans_fat_value);
         cholesterol = findViewById(R.id.cholesterol_value);
         sodium = findViewById(R.id.sodium_value);
-        totalcarbs = findViewById(R.id.total_carbohydrates_value);
-        dietaryfibres = findViewById(R.id.dietary_fibres_value);
-        totalsugars = findViewById(R.id.total_sugars_value);
+        totalCarbohydrates = findViewById(R.id.total_carbohydrates_value);
+        dietaryFibres = findViewById(R.id.dietary_fibres_value);
+        totalSugars = findViewById(R.id.total_sugars_value);
         protein = findViewById(R.id.protein_value);
         iron = findViewById(R.id.iron_value);
 
@@ -82,12 +65,10 @@ public class SingleItemAnalyze extends AppCompatActivity {
         // so that we can pass the information to the database reference
         Intent intent = getIntent();
         String barcodeNum = intent.getStringExtra(MainActivity.FIRSTBARCODEKEY);
-        userObject = (UserDatabaseObject) intent.getSerializableExtra(MainActivity.USEROBJECTKEY);
-        //Log.d("userName is", "onCreate: " + userObject.getUserName());
-
         Log.i("SingleItemAnalyse", "Intent barcode received: "+ barcodeNum);
 
         ImageView imageView = findViewById(R.id.card1_foodImage_ImageView);
+
 
         // DatabaseReference provides a handle to the firebase database such that we can access the
         // information contained at the key <barcodeNum>
@@ -95,21 +76,20 @@ public class SingleItemAnalyze extends AppCompatActivity {
         // StorageReference provides a handle to the firebase storage service
         storage = FirebaseStorage.getInstance();
 
-
-        databaseReference.child("Food").child(barcodeNum).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+        databaseReference.child(barcodeNum).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if (!task.isSuccessful()) {
                     Log.e("firebase", "Error getting data", task.getException());
                 } else if (task.getResult().getValue(Object.class) == null) {
                     Log.e("firebase", "Item does not exist in database");
-                    Toast.makeText(SingleItemAnalyze.this, barcodeNum + " is not in database", Toast.LENGTH_LONG).show();
-                    AlertDialog.Builder builder = new AlertDialog.Builder(SingleItemAnalyze.this);
+                    Toast.makeText(SingleItemActivity.this, barcodeNum + " is not in database", Toast.LENGTH_LONG).show();
+                    AlertDialog.Builder builder = new AlertDialog.Builder(SingleItemActivity.this);
                     builder.setMessage("Would you like to add it to the database?").setTitle("Item does not exist in the database");
 
                     builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-                            Intent addActivityIntent = new Intent(SingleItemAnalyze.this, DatabaseAddActivity.class);
+                            Intent addActivityIntent = new Intent(SingleItemActivity.this, DatabaseAddActivity.class);
                             addActivityIntent.putExtra(MainActivity.FIRSTBARCODEKEY,barcodeNum);
                             startActivity(addActivityIntent);
                         }
@@ -124,39 +104,30 @@ public class SingleItemAnalyze extends AppCompatActivity {
                 }
                 else {
 
-                    foodObject = task.getResult().getValue(FoodDatabaseObject.class); // get food object from database
-                    // Get the result from the database and populate a foodObject of type FoodDatabaseObject
-
-                    //add barcode to history if not full
-                    UserHistoryObject userHistory = userObject.getUserHistory();
-                    if (userHistory.isFull() == false){
-                        userHistory.addToHistory(barcodeNum);
-                        databaseReference.child("Users").child(username).child("userHistory").setValue(userHistory);
-                    }
-
+                    foodObject = task.getResult().getValue(FoodDatabaseObject.class);
+                    // Get the result from the database and populate a foodObject of type DatabaseItemObject
                     itemName.setText(foodObject.getFoodName());
-                    company.setText(foodObject.getFoodCompany());
+                    itemCompany.setText(foodObject.getFoodCompany());
                     mass.setText(foodObject.getFoodMass());
                     calories.setText(foodObject.getFoodCalories());
-                    /** this has to be changed, calculate the food percentage of daily intake through mass calories blah blah, right now we set it as blah
-                    percentage.setText(foodObject.getFoodPercentage()); */
-                    percentage.setText("blah");
-                    totalfat.setText(foodObject.getFoodTotalFat());
-                    saturatedfat.setText(foodObject.getFoodSaturatedFat());
-                    transfat.setText(foodObject.getFoodTransFat());
+                    /** TODO: need to create function to calc % of daily intake to put into
+                    percentage.setText(foodObject.getFoodPercentage());
+                     */
+                    totalFat.setText(foodObject.getFoodTotalFat());
+                    saturatedFat.setText(foodObject.getFoodSaturatedFat());
+                    transFat.setText(foodObject.getFoodTransFat());
                     cholesterol.setText(foodObject.getFoodCholesterol());
                     sodium.setText(foodObject.getFoodSodium());
-                    totalcarbs.setText(foodObject.getFoodCarbohydrate());
-                    dietaryfibres.setText(foodObject.getFoodDietaryFibre());
-                    totalsugars.setText(foodObject.getFoodTotalSugar());
+                    totalCarbohydrates.setText(foodObject.getFoodCarbohydrate());
+                    dietaryFibres.setText(foodObject.getFoodDietaryFibre());
+                    totalSugars.setText(foodObject.getFoodTotalSugar());
                     protein.setText(foodObject.getFoodProtein());
                     iron.setText(foodObject.getFoodIron());
                     String foodImageLink = foodObject.getFoodImageURL();
                     foodImageStorageReference = storage.getReference().child(foodImageLink);
-                    Log.d("food image", "onComplete: " + foodImageStorageReference);
                     GlideApp.with(getApplicationContext())
                             .load(foodImageStorageReference)
-                            .into(imageView); //TODO: implement placeholder
+                            .into(imageView); //implement placeholder
                 }
             }
         });
@@ -164,7 +135,7 @@ public class SingleItemAnalyze extends AppCompatActivity {
         scan_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(SingleItemAnalyze.this, ScanActivity.class);
+                Intent intent = new Intent(SingleItemActivity.this, ScanActivity.class);
                 intent.putExtra(MainActivity.FIRSTBARCODEKEY, foodObject);
                 startActivity(intent);
             }

@@ -79,6 +79,10 @@ public class QuizActivity extends AppCompatActivity {
         EditText userHeight = findViewById(R.id.editTextHeight);
         EditText userWeight = findViewById(R.id.editTextWeight);
         DatePicker userBirthday = findViewById(R.id.birthdayPicker);
+        Calendar calendarToday = Calendar.getInstance();
+        calendarToday.add(Calendar.YEAR, -1);
+        userBirthday.setMaxDate(calendarToday.getTimeInMillis());
+
         quizSubmitButton = findViewById(R.id.quizSubmit);
 
         //Initialize a database object instance
@@ -121,7 +125,9 @@ public class QuizActivity extends AppCompatActivity {
                         || isDateChanged == false){
                     Toast.makeText(QuizActivity.this, "Please ensure that all fields have been filled", Toast.LENGTH_LONG).show();
                 }
-                else{
+                if (userHeight.getText().toString().equals("0") || userWeight.getText().toString().equals("0")) {
+                    Toast.makeText(QuizActivity.this, "Please ensure that you enter a valid height and weight", Toast.LENGTH_LONG).show();
+                } else{
                     //setting all attributes of the UserPreference Object
                     bloodPressure = radioBloodPressureButton.getText().toString();
                     bloodSugarLevels = radioBloodSugarButton.getText().toString();
