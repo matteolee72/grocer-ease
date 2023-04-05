@@ -23,19 +23,30 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 public class SingleItemAnalyze extends AppCompatActivity {
+
     //realtime database
     private DatabaseReference databaseReference;
     //for images
     private StorageReference foodImageStorageReference;
     private FirebaseStorage storage;
+
+    UserDatabaseObject user;
+    
     TextView itemName, company, mass, calories, percentage, totalfat, saturatedfat, transfat, cholesterol,
             sodium, totalcarbs, dietaryfibres, totalsugars, protein, iron;
     FoodDatabaseObject foodObject;
+    
     Button scan_button;
+    private String username;
 
+    private UserDatabaseObject userObject;
+
+    private PreferencesHelper preferencesHelper;
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(SingleItemAnalyze.this, MainActivity.class);
+        intent.putExtra(MainActivity.USEROBJECTKEY,userObject);
+        // TODO: Discuss pushing of stuff through intents
         startActivity(intent);
     }
 
@@ -43,6 +54,12 @@ public class SingleItemAnalyze extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.single_item_activity);
+
+        // reference to the local preferences
+        preferencesHelper = new PreferencesHelper(this);
+        if (preferencesHelper != null) {
+            username = preferencesHelper.readString("username","error");
+        }
 
         // Get a handle on all the items on the page
         itemName = findViewById(R.id.itemName);
@@ -65,16 +82,19 @@ public class SingleItemAnalyze extends AppCompatActivity {
         // so that we can pass the information to the database reference
         Intent intent = getIntent();
         String barcodeNum = intent.getStringExtra(MainActivity.FIRSTBARCODEKEY);
+        userObject = (UserDatabaseObject) intent.getSerializableExtra(MainActivity.USEROBJECTKEY);
+        //Log.d("userName is", "onCreate: " + userObject.getUserName());
+
         Log.i("SingleItemAnalyse", "Intent barcode received: "+ barcodeNum);
 
         ImageView imageView = findViewById(R.id.card1_foodImage_ImageView);
-
 
         // DatabaseReference provides a handle to the firebase database such that we can access the
         // information contained at the key <barcodeNum>
         databaseReference = FirebaseDatabase.getInstance().getReference();
         // StorageReference provides a handle to the firebase storage service
         storage = FirebaseStorage.getInstance();
+
 
         databaseReference.child("Food").child(barcodeNum).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
@@ -104,8 +124,16 @@ public class SingleItemAnalyze extends AppCompatActivity {
                 }
                 else {
 
-                    foodObject = task.getResult().getValue(FoodDatabaseObject.class);
-                    // Get the result from the database and populate a foodObject of type DatabaseItemObject
+                    foodObject = task.getResult().getValue(FoodDatabaseObject.class); // get food object from database
+                    // Get the result from the database and populate a foodObject of type FoodDatabaseObject
+
+                    //add barcode to history if not full
+                    UserHistoryObject userHistory = userObject.getUserHistory();
+                    if (userHistory.isFull() == false){
+                        userHistory.addToHistory(barcodeNum);
+                        databaseReference.child("Users").child(username).child("userHistory").setValue(userHistory);
+                    }
+
                     itemName.setText(foodObject.getFoodName());
                     company.setText(foodObject.getFoodCompany());
                     mass.setText(foodObject.getFoodMass());
@@ -125,9 +153,10 @@ public class SingleItemAnalyze extends AppCompatActivity {
                     iron.setText(foodObject.getFoodIron());
                     String foodImageLink = foodObject.getFoodImageURL();
                     foodImageStorageReference = storage.getReference().child(foodImageLink);
+                    Log.d("food image", "onComplete: " + foodImageStorageReference);
                     GlideApp.with(getApplicationContext())
                             .load(foodImageStorageReference)
-                            .into(imageView); //implement placeholder
+                            .into(imageView); //TODO: implement placeholder
                 }
             }
         });

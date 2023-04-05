@@ -5,22 +5,6 @@ import java.util.Date;
 
 public class UserPreferencesObject implements Serializable {
 
-//    /**
-//     *
-//     * @param datePicker
-//     * @return a java.util.Date
-//     */
-//    public static java.util.Date getDateFromDatePicket(DatePicker datePicker){
-//        int day = datePicker.getDayOfMonth();
-//        int month = datePicker.getMonth();
-//        int year =  datePicker.getYear();
-//
-//        Calendar calendar = Calendar.getInstance();
-//        calendar.set(year, month, day);
-//
-//        return calendar.getTime();
-//    }
-
     private String bloodPressure;
     private String bloodSugarLevels;
     private String highCholesterol;
@@ -84,6 +68,9 @@ public class UserPreferencesObject implements Serializable {
         return birthday;
     }
 
+    public UserPreferencesObject(){
+
+    }
     public UserPreferencesObject(String bloodPressure, String bloodSugarLevels, String highCholesterol, String weightGoals, String name, String sex, int height, int weight, Date birthday){
         this.bloodPressure = bloodPressure;
         this.bloodSugarLevels = bloodSugarLevels;

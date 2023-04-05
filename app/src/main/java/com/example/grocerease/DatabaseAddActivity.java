@@ -75,6 +75,7 @@ public class DatabaseAddActivity extends AppCompatActivity {
                 //----------------==DEBUG==------------------
                 String foodImageURL = "http://www.google.com";
                 //--------------==END DEBUG==----------------
+                
                 FoodDatabaseObject foodItem = new FoodDatabaseObject(foodNameStr, foodCompanyStr, foodMassStr, foodProteinStr, foodTotalFatStr, foodSaturatedFatStr, foodTransFatStr, foodCholesterolStr, foodCarbohydrateStr, foodTotalSugarStr, foodDietaryFibreStr, foodSodiumStr, foodIronStr, foodCaloriesStr, foodImageURL);
                 Log.d("databaseAddActivity", foodIDStr);
                 Log.d("databaseAddActivity", foodItem.toString());

@@ -2,7 +2,6 @@ package com.example.grocerease;
 
 import java.io.Serializable;
 
-// Cephas - added all foodCompany, foodMass for each class and method
 
 public class FoodDatabaseObject implements Serializable {
     private String foodName;
@@ -17,8 +16,10 @@ public class FoodDatabaseObject implements Serializable {
     private String foodSodium;
     private String foodIron;// higher
     private String foodCalories;
+
     private String foodMass;
     private String foodCompany;
+    
     private String foodImageURL;
 
     public FoodDatabaseObject() {
@@ -41,8 +42,10 @@ public class FoodDatabaseObject implements Serializable {
         this.foodIron = foodIron;
         this.foodCalories = foodCalories;
         this.foodImageURL = foodImageURL;
+
         this.foodMass = foodMass;
         this.foodCompany = foodCompany;
+
 
     }
     @Override
@@ -61,8 +64,10 @@ public class FoodDatabaseObject implements Serializable {
                 ", foodIron='" + foodIron + '\'' +
                 ", foodCalories='" + foodCalories + '\'' +
                 ", foodImageURL='" + foodImageURL + '\'' +
+
                 ", foodCompany='" + foodCompany + '\'' +
                 ", foodMass='" + foodMass + '\'' +
+
                 '}';
     }
     public String getFoodName() {
@@ -104,6 +109,7 @@ public class FoodDatabaseObject implements Serializable {
     public String getFoodImageURL() {
         return foodImageURL;
     }
+
     public String getFoodMass() {
         return foodMass;
     }
