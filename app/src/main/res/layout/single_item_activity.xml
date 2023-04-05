@@ -7,7 +7,7 @@
     <!--take note: as we need to call each line by id to set the corresponding value, find a away to do this, if not have to create each unique textbox for each value-->
     <include
         android:id="@+id/include"
-        layout="@layout/mainheader" />
+        layout="@layout/header" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/food_card_view_1"
@@ -127,7 +127,7 @@
                         android:id="@+id/mass_of_contents_header"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/mass_of_contents"
+                        android:text="Mass of Contents"
                         android:textColor="#000000"
                         android:textSize="20sp"
                         android:textStyle="bold" />

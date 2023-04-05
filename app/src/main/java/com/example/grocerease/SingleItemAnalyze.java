@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,11 +14,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.Registry;
-import com.bumptech.glide.annotation.GlideModule;
-import com.bumptech.glide.module.AppGlideModule;
-import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -28,17 +22,15 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import java.io.InputStream;
-import java.time.Instant;
-
 public class SingleItemAnalyze extends AppCompatActivity {
     //realtime database
     private DatabaseReference databaseReference;
     //for images
     private StorageReference foodImageStorageReference;
     private FirebaseStorage storage;
-    TextView itemName, calories, mass, carbs, protein, fats;
-    DatabaseItemObject foodObject;
+    TextView itemName, company, mass, calories, percentage, totalfat, saturatedfat, transfat, cholesterol,
+            sodium, totalcarbs, dietaryfibres, totalsugars, protein, iron;
+    FoodDatabaseObject foodObject;
     Button scan_button;
 
     @Override
@@ -50,15 +42,24 @@ public class SingleItemAnalyze extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_single_item_analyze);
+        setContentView(R.layout.single_item_activity);
 
         // Get a handle on all the items on the page
         itemName = findViewById(R.id.itemName);
-        calories = findViewById(R.id.calories);
-        mass = findViewById(R.id.mass);
-        carbs = findViewById(R.id.carbs);
-        protein = findViewById(R.id.protein);
-        fats = findViewById(R.id.fats);
+        company = findViewById(R.id.itemCompany);
+        mass = findViewById(R.id.grams_of_contents);
+        calories = findViewById(R.id.number_of_calories);
+        percentage = findViewById(R.id.perc_of_daily_intake_value);
+        totalfat = findViewById(R.id.total_fat_value);
+        saturatedfat = findViewById(R.id.saturated_fat_value);
+        transfat = findViewById(R.id.trans_fat_value);
+        cholesterol = findViewById(R.id.cholesterol_value);
+        sodium = findViewById(R.id.sodium_value);
+        totalcarbs = findViewById(R.id.total_carbohydrates_value);
+        dietaryfibres = findViewById(R.id.dietary_fibres_value);
+        totalsugars = findViewById(R.id.total_sugars_value);
+        protein = findViewById(R.id.protein_value);
+        iron = findViewById(R.id.iron_value);
 
         // Get the barcode number from the previous intent
         // so that we can pass the information to the database reference
@@ -75,7 +76,7 @@ public class SingleItemAnalyze extends AppCompatActivity {
         // StorageReference provides a handle to the firebase storage service
         storage = FirebaseStorage.getInstance();
 
-        databaseReference.child(barcodeNum).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+        databaseReference.child("Food").child(barcodeNum).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if (!task.isSuccessful()) {
@@ -103,13 +104,25 @@ public class SingleItemAnalyze extends AppCompatActivity {
                 }
                 else {
 
-                    foodObject = task.getResult().getValue(DatabaseItemObject.class);
+                    foodObject = task.getResult().getValue(FoodDatabaseObject.class);
                     // Get the result from the database and populate a foodObject of type DatabaseItemObject
                     itemName.setText(foodObject.getFoodName());
+                    company.setText(foodObject.getFoodCompany());
+                    mass.setText(foodObject.getFoodMass());
                     calories.setText(foodObject.getFoodCalories());
-                    carbs.setText("Total Sugar\n" + foodObject.getFoodTotalSugar());
-                    protein.setText("Protein\n" + foodObject.getFoodProtein());
-                    fats.setText("Fats\n" + foodObject.getFoodTotalFat());
+                    /** this has to be changed, calculate the food percentage of daily intake through mass calories blah blah, right now we set it as blah
+                    percentage.setText(foodObject.getFoodPercentage()); */
+                    percentage.setText("blah");
+                    totalfat.setText(foodObject.getFoodTotalFat());
+                    saturatedfat.setText(foodObject.getFoodSaturatedFat());
+                    transfat.setText(foodObject.getFoodTransFat());
+                    cholesterol.setText(foodObject.getFoodCholesterol());
+                    sodium.setText(foodObject.getFoodSodium());
+                    totalcarbs.setText(foodObject.getFoodCarbohydrate());
+                    dietaryfibres.setText(foodObject.getFoodDietaryFibre());
+                    totalsugars.setText(foodObject.getFoodTotalSugar());
+                    protein.setText(foodObject.getFoodProtein());
+                    iron.setText(foodObject.getFoodIron());
                     String foodImageLink = foodObject.getFoodImageURL();
                     foodImageStorageReference = storage.getReference().child(foodImageLink);
                     GlideApp.with(getApplicationContext())

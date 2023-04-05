@@ -7,7 +7,7 @@
     <!--take note: as we need to call each line by id to set the corresponding value, find a away to do this, if not have to create each unique textbox for each value-->
     <include
         android:id="@+id/include"
-        layout="@layout/mainheader" />
+        layout="@layout/header" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/food_card_view_1"
@@ -173,7 +173,7 @@
                     <!--                    this adds weight and padding to put space between the 2 textboxes-->
 
                     <TextView
-                        android:id="@+id/grams_of_food_1"
+                        android:id="@+id/food_mass_1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="left"
@@ -201,7 +201,7 @@
                         android:layout_weight="1" />
 
                     <TextView
-                        android:id="@+id/grams_of_food2"
+                        android:id="@+id/food_mass_2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="right"

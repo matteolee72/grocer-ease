@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,11 +14,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.Registry;
-import com.bumptech.glide.annotation.GlideModule;
-import com.bumptech.glide.module.AppGlideModule;
-import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -28,16 +22,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import java.io.InputStream;
-import java.time.Instant;
-
 public class SingleItemActivity extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private StorageReference foodImageStorageReference;
     private FirebaseStorage storage;
     TextView itemName, itemCompany, mass, calories, percentage, totalFat, saturatedFat, transFat, cholesterol,
             sodium, totalCarbohydrates, dietaryFibres, totalSugars, protein, iron;
-    DatabaseItemObject foodObject;
+    FoodDatabaseObject foodObject;
     Button scan_button;
 
     @Override
@@ -113,13 +104,15 @@ public class SingleItemActivity extends AppCompatActivity {
                 }
                 else {
 
-                    foodObject = task.getResult().getValue(DatabaseItemObject.class);
+                    foodObject = task.getResult().getValue(FoodDatabaseObject.class);
                     // Get the result from the database and populate a foodObject of type DatabaseItemObject
                     itemName.setText(foodObject.getFoodName());
                     itemCompany.setText(foodObject.getFoodCompany());
                     mass.setText(foodObject.getFoodMass());
                     calories.setText(foodObject.getFoodCalories());
+                    /** TODO: need to create function to calc % of daily intake to put into
                     percentage.setText(foodObject.getFoodPercentage());
+                     */
                     totalFat.setText(foodObject.getFoodTotalFat());
                     saturatedFat.setText(foodObject.getFoodSaturatedFat());
                     transFat.setText(foodObject.getFoodTransFat());
