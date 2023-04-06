@@ -10,6 +10,7 @@
         android:id="@+id/view">
     </include>
 
+
     <TextView
         android:id="@+id/history_title"
         android:layout_width="match_parent"
