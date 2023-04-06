@@ -19,6 +19,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.gson.Gson;
 
 public class TwoItemCompare extends AppCompatActivity {
     TextView itemName_1,mass_1,calories_1, carbs_1, protein_1, fats_1;
@@ -29,6 +30,10 @@ public class TwoItemCompare extends AppCompatActivity {
     FoodDatabaseObject foodObject1;
     FoodDatabaseObject foodObject2;
     String barcodeNum2;
+    Gson gson = new Gson();
+    private UserDatabaseObject userObject;
+    private PreferencesHelper preferencesHelper;
+
 
     @Override
     public void onBackPressed() {
@@ -40,6 +45,11 @@ public class TwoItemCompare extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_two_item_compare);
+
+        // reading from preferences to obtain userObject
+        preferencesHelper = new PreferencesHelper(this);
+        String userObjectString = preferencesHelper.readString("userObject","error");
+        userObject = gson.fromJson(userObjectString, UserDatabaseObject.class);
 
         storage = FirebaseStorage.getInstance();
 
