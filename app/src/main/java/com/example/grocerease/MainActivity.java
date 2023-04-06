@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
 
         Intent intent = getIntent();
         userObject = (UserDatabaseObject) intent.getSerializableExtra(MainActivity.USEROBJECTKEY);
-        Log.d("user object has reached main", "onCreate: "+userObject.getUserName());
+        Log.d("user object has reached main", "onCreate: "+userObject.getUserPassword());
 
         navigationBarView =findViewById(R.id.bottomNavigationView);
         navigationBarView.setOnItemSelectedListener(this);
@@ -59,7 +59,9 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
                 startActivity(intent);
                 return true;
             case R.id.profile: // database add activity instead of profile
-                Intent intent1 = new Intent(MainActivity.this, DatabaseAddActivity.class);
+                Log.i("mainNavigation", "Profile button pressed");
+                Intent intent1 = new Intent(MainActivity.this, FavouritesActivity.class);
+                intent1.putExtra(MainActivity.USEROBJECTKEY,userObject);
                 startActivity(intent1);
                 return true;
         }
