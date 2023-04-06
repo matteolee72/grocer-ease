@@ -6,25 +6,52 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.gson.Gson;
 
 public class ProfileActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener {
 
-
     private UserDatabaseObject userObject;
+    private PreferencesHelper preferencesHelper;
+    Gson gson = new Gson();
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        Intent intent = getIntent();
-        userObject = (UserDatabaseObject) intent.getSerializableExtra(MainActivity.USEROBJECTKEY);
-        Log.d("user object has reached profile", "onCreate: "+userObject.getUserPassword());
+        preferencesHelper = new PreferencesHelper(this);
+        String userObjectString = preferencesHelper.readString("userObject","error");
+        userObject = gson.fromJson(userObjectString, UserDatabaseObject.class);
+        String userName = preferencesHelper.readString("username","error");
+
+        TextView userNameText = findViewById(R.id.username_textview);
+        userNameText.setText(userName);
+        TextView bloodPressureText = findViewById(R.id.bloodPressure_text);
+        bloodPressureText.setText(userObject.getUserPreferences().getBloodPressure());
+        TextView bloodSugarText = findViewById(R.id.bloodSugar_text);
+        bloodSugarText.setText(userObject.getUserPreferences().getBloodSugarLevels());
+        TextView cholesterolText = findViewById(R.id.cholesterol_text);
+        cholesterolText.setText(userObject.getUserPreferences().getHighCholesterol());
+        TextView nameText = findViewById(R.id.name_text2);
+        nameText.setText(userObject.getUserPreferences().getUserObjectName());
+        TextView weightText = findViewById(R.id.weight_text);
+        weightText.setText(userObject.getUserPreferences().getUserWeight());
+        TextView heightText = findViewById(R.id.height_text);
+        heightText.setText(userObject.getUserPreferences().getUserHeight());
+        TextView birthdayText = findViewById(R.id.birthday_text);
+        birthdayText.setText(userObject.getUserPreferences().getBirthday().toString());
+        TextView genderText = findViewById(R.id.sex_text);
+        genderText.setText(userObject.getUserPreferences().getSex());
+        TextView goalText = findViewById(R.id.goal_text);
+        goalText.setText(userObject.getUserPreferences().getWeightGoals());
+
+
 
         Button favouritesButton;
         favouritesButton = findViewById(R.id.favourites_button);

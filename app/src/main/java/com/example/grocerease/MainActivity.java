@@ -34,10 +34,10 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         String userObjectString = preferencesHelper.readString("userObject","error");
         userObject = gson.fromJson(userObjectString, UserDatabaseObject.class);
 
-
-        navigationBarView =findViewById(R.id.bottomNavigationView);
+        navigationBarView = findViewById(R.id.bottomNavigationView);
         navigationBarView.setOnItemSelectedListener(this);
         navigationBarView.setSelectedItemId(R.id.home);
+
         RecyclerView recyclerView = findViewById(R.id.historyRecyclerView);
         RecyclerView.Adapter<HistoryAdapter.ViewHolder> historyAdapter = new HistoryAdapter(this, userObject.getUserHistory());
         recyclerView.setAdapter(historyAdapter);
