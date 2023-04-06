@@ -2,6 +2,7 @@ package com.example.grocerease;
 
 import java.io.Serializable;
 
+
 public class FoodDatabaseObject implements Serializable {
     private String foodName;
     private String foodProtein;// higher
@@ -15,12 +16,19 @@ public class FoodDatabaseObject implements Serializable {
     private String foodSodium;
     private String foodIron;// higher
     private String foodCalories;
+
+    private String foodMass;
+    private String foodCompany;
+    
     private String foodImageURL;
 
     public FoodDatabaseObject() {
     }
 
-    public FoodDatabaseObject(String foodName, String foodProtein, String foodTotalFat, String foodSaturatedFat, String foodTransFat, String foodCholesterol, String foodCarbohydrate, String foodTotalSugar, String foodDietaryFibre, String foodSodium, String foodIron, String foodCalories, String foodImageURL) {
+    public FoodDatabaseObject(String foodName, String foodProtein, String foodTotalFat, String foodSaturatedFat, String foodTransFat,
+                              String foodCholesterol, String foodCarbohydrate, String foodTotalSugar, String foodDietaryFibre, String foodSodium,
+                              String foodIron, String foodCalories, String foodImageURL, String foodMass, String foodCompany) {
+
         this.foodName = foodName;
         this.foodProtein = foodProtein;
         this.foodTotalFat = foodTotalFat;
@@ -34,6 +42,10 @@ public class FoodDatabaseObject implements Serializable {
         this.foodIron = foodIron;
         this.foodCalories = foodCalories;
         this.foodImageURL = foodImageURL;
+
+        this.foodMass = foodMass;
+        this.foodCompany = foodCompany;
+
 
     }
     @Override
@@ -52,6 +64,10 @@ public class FoodDatabaseObject implements Serializable {
                 ", foodIron='" + foodIron + '\'' +
                 ", foodCalories='" + foodCalories + '\'' +
                 ", foodImageURL='" + foodImageURL + '\'' +
+
+                ", foodCompany='" + foodCompany + '\'' +
+                ", foodMass='" + foodMass + '\'' +
+
                 '}';
     }
     public String getFoodName() {
@@ -93,4 +109,12 @@ public class FoodDatabaseObject implements Serializable {
     public String getFoodImageURL() {
         return foodImageURL;
     }
+
+    public String getFoodMass() {
+        return foodMass;
+    }
+    public String getFoodCompany() {
+        return foodCompany;
+    }
+
 }
