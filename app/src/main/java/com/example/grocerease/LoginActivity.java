@@ -17,6 +17,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.StorageReference;
+import com.google.gson.Gson;
 
 public class LoginActivity extends AppCompatActivity {
     private DatabaseReference databaseReference;
@@ -67,10 +68,14 @@ public class LoginActivity extends AppCompatActivity {
                                 userObject = task.getResult().getValue(UserDatabaseObject.class);
                                 String database_password = userObject.getUserPassword();
                                 if (database_password.equals(password_input)) {
+
+                                    // testing gson to add Json string to Shared Preferences
+                                    Gson gson = new Gson();
+                                    String jsonString = gson.toJson(userObject); // returns a Json String object
+                                    preferencesHelper.writeString("userObject", jsonString);
                                     // adding username to preferences to allow for access throughout the application
                                     preferencesHelper.writeString("username",username_input);
                                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                    intent.putExtra(MainActivity.USEROBJECTKEY, userObject); //passing the entire user object through
                                     startActivity(intent);
                                     finish();
                                 } else {

@@ -21,6 +21,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.gson.Gson;
 
 public class SingleItemAnalyze extends AppCompatActivity {
 
@@ -38,10 +39,10 @@ public class SingleItemAnalyze extends AppCompatActivity {
     
     Button scan_button;
     private String username;
-
     private UserDatabaseObject userObject;
-
     private PreferencesHelper preferencesHelper;
+    Gson gson = new Gson();
+
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(SingleItemAnalyze.this, MainActivity.class);
@@ -49,17 +50,15 @@ public class SingleItemAnalyze extends AppCompatActivity {
         // TODO: Discuss pushing of stuff through intents
         startActivity(intent);
     }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.single_item_activity);
 
-        // reference to the local preferences
+        // reading from preferences to obtain userObject
         preferencesHelper = new PreferencesHelper(this);
-        if (preferencesHelper != null) {
-            username = preferencesHelper.readString("username","error");
-        }
+        String userObjectString = preferencesHelper.readString("userObject","error");
+        userObject = gson.fromJson(userObjectString, UserDatabaseObject.class);
 
         // Get a handle on all the items on the page
         itemName = findViewById(R.id.itemName);
@@ -82,9 +81,7 @@ public class SingleItemAnalyze extends AppCompatActivity {
         // so that we can pass the information to the database reference
         Intent intent = getIntent();
         String barcodeNum = intent.getStringExtra(MainActivity.FIRSTBARCODEKEY);
-        userObject = (UserDatabaseObject) intent.getSerializableExtra(MainActivity.USEROBJECTKEY);
         //Log.d("userName is", "onCreate: " + userObject.getUserName());
-
         Log.i("SingleItemAnalyse", "Intent barcode received: "+ barcodeNum);
 
         ImageView imageView = findViewById(R.id.card1_foodImage_ImageView);
@@ -94,8 +91,7 @@ public class SingleItemAnalyze extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference();
         // StorageReference provides a handle to the firebase storage service
         storage = FirebaseStorage.getInstance();
-
-
+        
         databaseReference.child("Food").child(barcodeNum).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
@@ -117,13 +113,11 @@ public class SingleItemAnalyze extends AppCompatActivity {
                     builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                         }
-
                     });
                     AlertDialog dialog = builder.create();
                     dialog.show();
                 }
                 else {
-
                     foodObject = task.getResult().getValue(FoodDatabaseObject.class); // get food object from database
                     // Get the result from the database and populate a foodObject of type FoodDatabaseObject
 

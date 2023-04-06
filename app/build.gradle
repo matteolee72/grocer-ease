@@ -33,7 +33,7 @@ android {
 }
 
 dependencies {
-
+    implementation 'com.google.code.gson:gson:2.8.9' //added Gson dependency to convert objects to String
     implementation 'com.github.bumptech.glide:glide:4.15.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.15.0'
     implementation 'com.journeyapps:zxing-android-embedded:4.3.0'
