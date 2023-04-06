@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.gson.Gson;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -147,9 +148,13 @@ public class QuizActivity extends AppCompatActivity {
                     Log.d("user pw from object is", pw);
                     //adding it to the DataBase
                     databaseReference.child("Users").child(username).child("userPreferences").setValue(UserPrefObject);
+
                     //going back to main activity
+                    Gson gson = new Gson();
+                    String jsonString = gson.toJson(userObject); // returns a Json String object
+                    preferencesHelper.writeString("userObject", jsonString);//making sure we set userObject to preferences
+
                     Intent intent = new Intent(QuizActivity.this,MainActivity.class);
-                    intent.putExtra(MainActivity.USEROBJECTKEY, userObject);
                     startActivity(intent);
                     finish();
                 }

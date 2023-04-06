@@ -68,7 +68,6 @@ public class LoginActivity extends AppCompatActivity {
                                 userObject = task.getResult().getValue(UserDatabaseObject.class);
                                 String database_password = userObject.getUserPassword();
                                 if (database_password.equals(password_input)) {
-
                                     // testing gson to add Json string to Shared Preferences
                                     Gson gson = new Gson();
                                     String jsonString = gson.toJson(userObject); // returns a Json String object

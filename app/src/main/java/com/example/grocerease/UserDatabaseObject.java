@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class UserDatabaseObject implements Serializable {
     private String userName;
     private String userPassword;
-    private String userFavourites;
+    private UserFavouritesObject userFavourites;
     private UserHistoryObject userHistory;
     private UserPreferencesObject userPreferences;
     public UserDatabaseObject(){
@@ -14,12 +14,12 @@ public class UserDatabaseObject implements Serializable {
     public UserDatabaseObject(String userPassword) {
         this.userName = null;
         this.userPassword = userPassword;
-        this.userFavourites = null;
+        this.userFavourites = new UserFavouritesObject();
         this.userHistory = new UserHistoryObject();
         this.userPreferences = null;
     }
     // With Arg Constructor -  we use this once a user has filled in their username/password
-    public UserDatabaseObject(String userName, String userPassword, String userFavourites, UserHistoryObject userHistory, UserPreferencesObject userPreferences) {
+    public UserDatabaseObject(String userName, String userPassword, UserFavouritesObject userFavourites, UserHistoryObject userHistory, UserPreferencesObject userPreferences) {
         this.userName = userName;
         this.userPassword = userPassword;
         this.userFavourites = userFavourites;
@@ -29,7 +29,7 @@ public class UserDatabaseObject implements Serializable {
     // Getters
     public String getUserName() {return userName;}
     public String getUserPassword() {return userPassword;}
-    public String getUserFavourites() {return userFavourites;}
+    public UserFavouritesObject getUserFavourites() {return userFavourites;}
     public UserHistoryObject getUserHistory() {return userHistory;}
     public UserPreferencesObject getUserPreferences() {return userPreferences;}
 }
