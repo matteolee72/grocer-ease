@@ -9,20 +9,36 @@
     <include
         layout="@layout/header"
         android:id="@+id/view">
+
     </include>
+
+    <ScrollView
+        android:fillViewport="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp"
+        app:layout_constraintTop_toBottomOf="@id/view">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:paddingBottom="120dp">
 
     <LinearLayout
         android:id="@+id/foodIDLinearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/view">
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/foodIDTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="#000000"
             android:text="ID"
             android:textSize="20dp" />
 
@@ -37,42 +53,19 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/foodCaloriesLinearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/foodIDLinearLayout">
-
-        <TextView
-            android:id="@+id/foodCaloriesTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Calories"
-            android:textSize="20dp" />
-
-        <EditText
-            android:id="@+id/foodCalories"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:ems="10"
-            android:hint="Calories"
-            android:inputType="textPersonName" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/foodCaloriesLinearLayout"
+        app:layout_constraintTop_toBottomOf="@+id/foodIDLinearLayout"
         android:id="@id/foodNameLinearLayout">
 
         <TextView
             android:id="@+id/foodNameTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="#000000"
             android:text="Name"
             android:textSize="20dp"/>
 
@@ -83,49 +76,107 @@
             android:ems="10"
             android:inputType="textPersonName"
             android:hint="Food Name"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/foodIDTextView" />
+            app:layout_constraintEnd_toEndOf="parent" />
 
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/foodCompanyLinearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/foodNameLinearLayout"
-        android:id="@+id/foodProteinLinearLayout">
+        app:layout_constraintTop_toBottomOf="@+id/foodNameLinearLayout">
 
         <TextView
-            android:id="@+id/foodProteinTextView"
+            android:id="@+id/foodCompanyTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Protein"
-            android:textSize="20dp"/>
+            android:textColor="#000000"
+            android:text="Company"
+            android:textSize="20dp" />
 
         <EditText
-            android:id="@+id/foodProtein"
+            android:id="@+id/foodCompany"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="right"
             android:ems="10"
+            android:hint="Company"
+            android:inputType="textPersonName" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/foodMassLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/foodCompanyLinearLayout">
+
+        <TextView
+            android:id="@+id/foodMassTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:text="Mass"
+            android:textSize="20dp" />
+
+        <EditText
+            android:id="@+id/foodMass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:ems="10"
+            android:hint="Mass (g)"
             android:inputType="textPersonName"
-            android:hint="Protein (g)"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/foodIDTextView" />
+            app:layout_constraintStart_toEndOf="@+id/foodIDTextView"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/foodCaloriesLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/foodMassLinearLayout">
+
+        <TextView
+            android:id="@+id/foodCaloriesTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:text="Calories"
+            android:textSize="20dp" />
+
+        <EditText
+            android:id="@+id/foodCalories"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:ems="10"
+            android:hint="Calories"
+            android:inputType="textPersonName"
+            app:layout_constraintStart_toEndOf="@+id/foodIDTextView"/>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/foodProteinLinearLayout"
+        app:layout_constraintTop_toBottomOf="@+id/foodCaloriesLinearLayout"
         android:id="@+id/foodTotalFatLinearLayout">
 
         <TextView
             android:id="@+id/foodTotalFatTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="#000000"
             android:text="Total Fat"
             android:textSize="20dp"/>
 
@@ -137,12 +188,13 @@
             android:inputType="textPersonName"
             android:hint="Total Fat (g)"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/foodIDTextView" />
+            app:layout_constraintStart_toEndOf="@+id/foodIDTextView"/>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/foodTotalFatLinearLayout"
@@ -152,6 +204,7 @@
             android:id="@+id/foodSaturatedFatTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="#000000"
             android:text="Saturated Fat"
             android:textSize="20dp"/>
 
@@ -169,6 +222,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/foodSaturatedFatLinearLayout"
@@ -178,6 +232,7 @@
             android:id="@+id/foodTransFatTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="#000000"
             android:text="Trans Fat"
             android:textSize="20dp"/>
 
@@ -195,6 +250,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/foodTransFatLinearLayout"
@@ -204,7 +260,8 @@
             android:id="@+id/foodCholesterolTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cholesterol (mg)"
+            android:textColor="#000000"
+            android:text="Cholesterol"
             android:textSize="20dp"/>
 
         <EditText
@@ -221,94 +278,18 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/foodCholesterolLinearLayout"
-        android:id="@+id/foodCarbohydrateLinearLayout">
-
-        <TextView
-            android:id="@+id/foodCarbohydrateTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Carbohydrate (g)"
-            android:textSize="20dp"/>
-
-        <EditText
-            android:id="@+id/foodCarbohydrate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="Carbohydrate (g)"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/foodIDTextView" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/foodCarbohydrateLinearLayout"
-        android:id="@+id/foodTotalSugarLinearLayout">
-
-        <TextView
-            android:id="@+id/foodTotalSugarTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Total Sugar (g)"
-            android:textSize="20dp"/>
-
-        <EditText
-            android:id="@+id/foodTotalSugar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="Total Sugar (g)"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/foodIDTextView" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/foodTotalSugarLinearLayout"
-        android:id="@+id/foodDietaryFibreLinearLayout">
-
-        <TextView
-            android:id="@+id/foodDietaryFibreTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Dietary Fibre (g)"
-            android:textSize="20dp"/>
-
-        <EditText
-            android:id="@+id/foodDietaryFibre"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="Dietary Fibre (g)"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/foodIDTextView" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/foodDietaryFibreLinearLayout"
         android:id="@+id/foodSodiumLinearLayout">
 
         <TextView
             android:id="@+id/foodSodiumTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sodium (mg)"
+            android:textColor="#000000"
+            android:text="Sodium"
             android:textSize="20dp"/>
 
         <EditText
@@ -325,16 +306,130 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/foodSodiumLinearLayout"
+        android:id="@+id/foodTotalCarbohydrateLinearLayout">
+
+        <TextView
+            android:id="@+id/foodCarbohydrateTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:text="Total Carbohydrates"
+            android:textSize="20dp"/>
+
+        <EditText
+            android:id="@+id/foodTotalCarbohydrates"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="Total Carbohydrates (g)"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/foodIDTextView" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/foodTotalCarbohydrateLinearLayout"
+        android:id="@+id/foodDietaryFibreLinearLayout">
+
+        <TextView
+            android:id="@+id/foodDietaryFibreTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:text="Dietary Fibre"
+            android:textSize="20dp"/>
+
+        <EditText
+            android:id="@+id/foodDietaryFibre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="Dietary Fibre (g)"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/foodIDTextView" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/foodDietaryFibreLinearLayout"
+        android:id="@+id/foodTotalSugarsLinearLayout">
+
+        <TextView
+            android:id="@+id/foodTotalSugarsTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:text="Total Sugars"
+            android:textSize="20dp"/>
+
+        <EditText
+            android:id="@+id/foodTotalSugars"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="Total Sugars (g)"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/foodIDTextView" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/foodTotalSugarsLinearLayout"
+        android:id="@+id/foodProteinLinearLayout">
+
+        <TextView
+            android:id="@+id/foodProteinTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:text="Protein"
+            android:textSize="20dp"/>
+
+        <EditText
+            android:id="@+id/foodProtein"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="Protein (g)"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/foodIDTextView" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/foodProteinLinearLayout"
         android:id="@+id/foodIronLinearLayout">
 
         <TextView
             android:id="@+id/foodIronTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Iron (g)"
+            android:textColor="#000000"
+            android:text="Iron"
             android:textSize="20dp"/>
 
         <EditText
@@ -355,5 +450,7 @@
         android:text="Add to Database"
         app:layout_constraintTop_toBottomOf="@+id/foodIronLinearLayout" />
 
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -15,7 +15,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class DatabaseAddActivity extends AppCompatActivity {
     // Instantiate all the variables
-    EditText foodID, foodName, foodProtein, foodTotalFat, foodSaturatedFat, foodTransFat,
+    EditText foodID, foodName, foodCompany, foodMass, foodProtein, foodTotalFat, foodSaturatedFat, foodTransFat,
             foodCholesterol, foodCarbohydrate, foodTotalSugar, foodDietaryFibre, foodSodium, foodIron, foodCalories;
     Button addToDatabaseButton;
     FirebaseDatabase firebaseDatabase;
@@ -28,17 +28,19 @@ public class DatabaseAddActivity extends AppCompatActivity {
 
         foodID = findViewById(R.id.foodID);
         foodName = findViewById(R.id.foodName);
-        foodProtein = findViewById(R.id.foodProtein);
+        foodCompany = findViewById(R.id.foodCompany);
+        foodMass = findViewById(R.id.foodMass);
+        foodCalories = findViewById(R.id.foodCalories);
         foodTotalFat = findViewById(R.id.foodTotalFat);
         foodSaturatedFat = findViewById(R.id.foodSaturatedFat);
         foodTransFat = findViewById(R.id.foodTransFat);
         foodCholesterol = findViewById(R.id.foodCholesterol);
-        foodCarbohydrate = findViewById(R.id.foodCarbohydrate);
-        foodTotalSugar = findViewById(R.id.foodTotalSugar);
-        foodDietaryFibre = findViewById(R.id.foodDietaryFibre);
         foodSodium = findViewById(R.id.foodSodium);
+        foodCarbohydrate = findViewById(R.id.foodTotalCarbohydrates);
+        foodDietaryFibre = findViewById(R.id.foodDietaryFibre);
+        foodTotalSugar = findViewById(R.id.foodTotalSugars);
+        foodProtein = findViewById(R.id.foodProtein);
         foodIron = findViewById(R.id.foodIron);
-        foodCalories = findViewById(R.id.foodCalories);
 
         addToDatabaseButton = findViewById(R.id.addToDatabaseButton);
 
@@ -57,6 +59,8 @@ public class DatabaseAddActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String foodIDStr = foodID.getText().toString();
                 String foodNameStr = foodName.getText().toString();
+                String foodCompanyStr = foodCompany.getText().toString();
+                String foodMassStr = foodMass.getText().toString();
                 String foodProteinStr = foodProtein.getText().toString();
                 String foodTotalFatStr = foodTotalFat.getText().toString();
                 String foodSaturatedFatStr = foodSaturatedFat.getText().toString();
@@ -71,7 +75,8 @@ public class DatabaseAddActivity extends AppCompatActivity {
                 //----------------==DEBUG==------------------
                 String foodImageURL = "http://www.google.com";
                 //--------------==END DEBUG==----------------
-                FoodDatabaseObject foodItem = new FoodDatabaseObject(foodNameStr, foodProteinStr, foodTotalFatStr, foodSaturatedFatStr, foodTransFatStr, foodCholesterolStr, foodCarbohydrateStr, foodTotalSugarStr, foodDietaryFibreStr, foodSodiumStr, foodIronStr, foodCaloriesStr, foodImageURL);
+                
+                FoodDatabaseObject foodItem = new FoodDatabaseObject(foodNameStr, foodCompanyStr, foodMassStr, foodProteinStr, foodTotalFatStr, foodSaturatedFatStr, foodTransFatStr, foodCholesterolStr, foodCarbohydrateStr, foodTotalSugarStr, foodDietaryFibreStr, foodSodiumStr, foodIronStr, foodCaloriesStr, foodImageURL);
                 Log.d("databaseAddActivity", foodIDStr);
                 Log.d("databaseAddActivity", foodItem.toString());
                 if (foodIDStr.isEmpty()) {
