@@ -136,7 +136,7 @@
 
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
-                android:text="Cholesterol Levels:"
+                android:text="High Cholesterol:"
                 android:textAlignment="inherit"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
