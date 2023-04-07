@@ -167,7 +167,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/mass_of_contents_layout"
+                    app:layout_constraintTop_toBottomOf="@+id/perc_of_daily_intake_line"
                     app:layout_constraintVertical_bias="0.0">
 
                     <TextView
@@ -176,7 +176,7 @@
                         android:layout_height="wrap_content"
                         android:text="Amount per 100g"
                         android:textColor="#000000"
-                        android:textSize="15sp" />
+                        android:textSize="20sp" />
 
                 </LinearLayout>
 
@@ -199,7 +199,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.461"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/amount_per_100g_line"
+                    app:layout_constraintTop_toBottomOf="@+id/mass_of_contents_layout"
                     app:layout_constraintVertical_bias="0.0">
 
                     <TextView
@@ -280,7 +280,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.576"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/perc_of_daily_intake_line"
+                    app:layout_constraintTop_toBottomOf="@+id/amount_per_100g_line"
                     app:layout_constraintVertical_bias="0.0">
 
                     <TextView
@@ -620,16 +620,62 @@
                         android:textSize="17sp" />
                 </LinearLayout>
 
-                <Button
-                    android:id="@+id/scan_button_single"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:id="@+id/buttons_layout"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
-                    android:text="Scan"
+                    android:layout_marginHorizontal="13dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.498"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/iron_layout" />
+                    app:layout_constraintTop_toBottomOf="@+id/iron_layout"
+                    app:layout_constraintVertical_bias="0.0">
+
+                    <Button
+                        android:id="@+id/favorties_button_single"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="Favorites"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.498"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/iron_layout" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1" />
+
+                    <Button
+                        android:id="@+id/scan_button_single"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="Scan"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.498"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/iron_layout" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1" />
+
+                    <Button
+                        android:id="@+id/history_button_single"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="History"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.498"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/iron_layout" />
+
+                </LinearLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>

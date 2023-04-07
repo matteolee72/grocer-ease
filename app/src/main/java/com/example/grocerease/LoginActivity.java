@@ -56,6 +56,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 else {
                     databaseReference = FirebaseDatabase.getInstance().getReference();
+                    Log.d("firebase", "Attempting to get data from firebase with username: "+username_input);
                     databaseReference.child("Users").child(username_input).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<DataSnapshot> task) {
@@ -67,6 +68,7 @@ public class LoginActivity extends AppCompatActivity {
                             } else {
                                 userObject = task.getResult().getValue(UserDatabaseObject.class);
                                 String database_password = userObject.getUserPassword();
+                                Log.d("firebase","user password:" + database_password);
                                 if (database_password.equals(password_input)) {
                                     // testing gson to add Json string to Shared Preferences
                                     Gson gson = new Gson();

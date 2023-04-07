@@ -9,10 +9,10 @@ public class UserPreferencesObject implements Serializable {
     private String bloodSugarLevels;
     private String highCholesterol;
     private String weightGoals;
-    private String name;
+    private String userObjectName;
     private String sex;
-    private int height;
-    private int weight;
+    private int userHeight;
+    private int userWeight;
     private Date birthday;
 
 
@@ -21,14 +21,14 @@ public class UserPreferencesObject implements Serializable {
     @Override
     public String toString() {
         return "UserPreferencesObject {" +
-                " name ='" + name + '\'' +
+                " name ='" + userObjectName + '\'' +
                 ", bloodPressure ='" + bloodPressure + '\'' +
                 ", bloodSugarLevels ='" + bloodSugarLevels + '\'' +
                 ", sex='" + sex + '\'' +
                 ", highCholesterol ='" + highCholesterol + '\'' +
                 ", weightGoals='" + weightGoals + '\'' +
-                ", height='" + height + '\'' +
-                ", weight='" + weight + '\'' +
+                ", height='" + userHeight + '\'' +
+                ", weight='" + userWeight + '\'' +
                 ", birthday='" + birthday + '\'' +
                 '}';
     }
@@ -49,7 +49,7 @@ public class UserPreferencesObject implements Serializable {
     }
 
     public String getUserObjectName() {
-        return name;
+        return userObjectName;
     }
 
     public String getSex() {
@@ -57,11 +57,11 @@ public class UserPreferencesObject implements Serializable {
     }
 
     public int getUserHeight() {
-        return height;
+        return userHeight;
     }
 
     public int getUserWeight() {
-        return weight;
+        return userWeight;
     }
 
     public Date getBirthday() {
@@ -76,9 +76,9 @@ public class UserPreferencesObject implements Serializable {
         this.bloodSugarLevels = bloodSugarLevels;
         this.highCholesterol = highCholesterol;
         this.weightGoals = weightGoals;
-        this.weight = weight;
-        this.height = height;
-        this.name = name;
+        this.userWeight = weight;
+        this.userHeight = height;
+        this.userObjectName = name;
         this.sex = sex;
         this.birthday = birthday;
     }

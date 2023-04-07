@@ -158,7 +158,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:ems="10"
-            android:hint="Calories"
+            android:hint="Calories (cal)"
             android:inputType="textPersonName"
             app:layout_constraintStart_toEndOf="@+id/foodIDTextView"/>
     </LinearLayout>

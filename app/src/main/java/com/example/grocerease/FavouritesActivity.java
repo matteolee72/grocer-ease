@@ -6,17 +6,21 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.gson.Gson;
 
 public class FavouritesActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener{
 
-
-
     private UserDatabaseObject userObject;
+    private PreferencesHelper preferencesHelper;
+    Gson gson = new Gson();
 
 
     @Override
@@ -24,14 +28,23 @@ public class FavouritesActivity extends AppCompatActivity implements NavigationB
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favourites);
 
-        Intent intent = getIntent();
-        userObject = (UserDatabaseObject) intent.getSerializableExtra(MainActivity.USEROBJECTKEY);
-        Log.d("user object has reached fav", "onCreate: "+userObject.getUserPassword());
+        preferencesHelper = new PreferencesHelper(this);
+        String userObjectString = preferencesHelper.readString("userObject","error");
+        userObject = gson.fromJson(userObjectString, UserDatabaseObject.class);
+        String userName = preferencesHelper.readString("username","error");
+
+        TextView userNameText = findViewById(R.id.username_textview);
+        userNameText.setText(userName);
 
         NavigationBarView navigationBarView;
         navigationBarView = findViewById(R.id.bottomNavigationView);
         navigationBarView.setOnItemSelectedListener(this);
         navigationBarView.setSelectedItemId(R.id.profile);
+
+        RecyclerView recyclerView = findViewById(R.id.favouritesRecyclerView);
+        RecyclerView.Adapter<HistoryAdapter.ViewHolder> historyAdapter = new HistoryAdapter(this, userObject.getUserHistory());
+        recyclerView.setAdapter(historyAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         Button profileButton;
         profileButton = findViewById(R.id.profile_button);
