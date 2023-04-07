@@ -22,6 +22,14 @@ public class FavouritesActivity extends AppCompatActivity implements NavigationB
     private PreferencesHelper preferencesHelper;
     Gson gson = new Gson();
 
+    @Override
+    protected void onResume(){ //making sure history is re-rendered in the event it is updated
+        super.onResume();
+        // reading from preferences to obtain userObject
+        preferencesHelper = new PreferencesHelper(this);
+        String userObjectString = preferencesHelper.readString("userObject","error");
+        userObject = gson.fromJson(userObjectString, UserDatabaseObject.class);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -42,8 +50,8 @@ public class FavouritesActivity extends AppCompatActivity implements NavigationB
         navigationBarView.setSelectedItemId(R.id.profile);
 
         RecyclerView recyclerView = findViewById(R.id.favouritesRecyclerView);
-        RecyclerView.Adapter<HistoryAdapter.ViewHolder> historyAdapter = new HistoryAdapter(this, userObject.getUserHistory());
-        recyclerView.setAdapter(historyAdapter);
+        RecyclerView.Adapter<FavouritesAdapter.ViewHolder> favouritesAdapter = new FavouritesAdapter(this, userObject.getUserFavourites());
+        recyclerView.setAdapter(favouritesAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         Button profileButton;

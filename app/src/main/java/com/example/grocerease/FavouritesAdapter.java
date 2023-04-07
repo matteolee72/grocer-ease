@@ -23,42 +23,41 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
-public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder>{
+public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.ViewHolder> {
 
-    UserHistoryObject userHistoryObject;
+    UserFavouritesObject userFavouritesObject;
     Context context;
     LayoutInflater mInflater;
     DatabaseReference databaseReference;
 
-    public HistoryAdapter(Context context, UserHistoryObject userHistoryObject){
+    public FavouritesAdapter(Context context, UserFavouritesObject userFavouritesObject){
         this.context = context;
-        this.userHistoryObject = userHistoryObject;
+        this.userFavouritesObject = userFavouritesObject;
         mInflater = LayoutInflater.from(context);
-        ArrayList<String> itemList = userHistoryObject.getFoodHistory();
-
+        ArrayList<String> itemList = userFavouritesObject.getFoodFavourites();
     }
 
     @NonNull
     @Override
-    public HistoryAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public FavouritesAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = mInflater.inflate(R.layout.list_item,parent,false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull HistoryAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull FavouritesAdapter.ViewHolder holder, int position) {
         databaseReference = FirebaseDatabase.getInstance().getReference();
         FirebaseStorage storage = FirebaseStorage.getInstance();
         holder.setPosition(position);
-        databaseReference.child("Food").child(userHistoryObject.getID(position)).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+
+        databaseReference.child("Food").child(userFavouritesObject.getID(position)).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if (!task.isSuccessful()) {
                     Log.e("firebase", "Error getting data", task.getException());
                 } else if (task.getResult().getValue(Object.class) == null) {
                     Log.e("firebase", "Item does not exist in database");
-                }
-                else {
+                } else {
                     FoodDatabaseObject foodDatabaseObject = task.getResult().getValue(FoodDatabaseObject.class);
                     holder.getTextView().setText(foodDatabaseObject.getFoodName());
 
@@ -70,13 +69,13 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
                             .into(holder.getImageView());
                 }
             }
-            //TODO put placeholder loading circle
+
         });
     }
 
     @Override
     public int getItemCount() {
-        return userHistoryObject.getSize();
+        return userFavouritesObject.getSize();
     }
     class ViewHolder extends RecyclerView.ViewHolder{
         private TextView textView;
@@ -94,7 +93,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
                 public void onClick(View view) {
                     UserDatabaseObject userObject = (UserDatabaseObject) ((Activity) context).getIntent().getSerializableExtra(MainActivity.USEROBJECTKEY);
                     Intent intent = new Intent(context, SingleItemAnalyze.class);
-                    intent.putExtra(MainActivity.FIRSTBARCODEKEY, userHistoryObject.getID(position));
+                    intent.putExtra(MainActivity.FIRSTBARCODEKEY, userFavouritesObject.getID(position));
                     intent.putExtra(MainActivity.USEROBJECTKEY, userObject );
                     context.startActivity(intent);
                 }

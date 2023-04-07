@@ -32,4 +32,5 @@ public class UserDatabaseObject implements Serializable {
     public UserFavouritesObject getUserFavourites() {return userFavourites;}
     public UserHistoryObject getUserHistory() {return userHistory;}
     public UserPreferencesObject getUserPreferences() {return userPreferences;}
+
 }

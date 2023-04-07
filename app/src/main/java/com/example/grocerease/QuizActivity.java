@@ -15,8 +15,12 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
@@ -150,9 +154,21 @@ public class QuizActivity extends AppCompatActivity {
                     databaseReference.child("Users").child(username).child("userPreferences").setValue(UserPrefObject);
 
                     //going back to main activity
+//                    databaseReference.child("Users").child(username).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+//                        @Override
+//                        public void onComplete(@NonNull Task<DataSnapshot> task) {
+//                            if (!task.isSuccessful()){
+//                                Log.d("firebase","Failed to obtain User");
+//                            }
+//                            else{
+//                                //userObject = task.getResult().getValue(UserDatabaseObject.class);
+//                            }
+//                        }
+//                    });
                     Gson gson = new Gson();
                     String jsonString = gson.toJson(userObject); // returns a Json String object
                     preferencesHelper.writeString("userObject", jsonString);//making sure we set userObject to preferences
+                    preferencesHelper.writeString("username", username);
 
                     Intent intent = new Intent(QuizActivity.this,MainActivity.class);
                     startActivity(intent);

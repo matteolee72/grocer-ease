@@ -395,7 +395,7 @@ public class SingleItemRating {
                 caloriesColor = "#00A877";
             }
 
-        } else if (userPreference.getHighCholesterol().equals("Lose Weight")) {
+        } else if (userPreference.getWeightGoals().equals("Lose Weight")) {
             // Unhealthy levels, shift upper threshold lower
             if (caloriesLevel > highThreshold) {
                 caloriesColor = "#D60000";

@@ -65,6 +65,7 @@ public class ProfileActivity extends AppCompatActivity implements NavigationBarV
                 Intent intent = new Intent(ProfileActivity.this, FavouritesActivity.class);
                 intent.putExtra(MainActivity.USEROBJECTKEY, userObject);
                 startActivity(intent);
+                finish();
             }
         });
 

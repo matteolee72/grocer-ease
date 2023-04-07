@@ -82,6 +82,7 @@ public class SingleItemAnalyze extends AppCompatActivity {
         preferencesHelper = new PreferencesHelper(this);
         String userObjectString = preferencesHelper.readString("userObject","error");
         userObject = gson.fromJson(userObjectString, UserDatabaseObject.class);
+        userPreferences = userObject.getUserPreferences();
         
         username = preferencesHelper.readString("username","error");
 
