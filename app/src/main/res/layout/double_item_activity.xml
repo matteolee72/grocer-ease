@@ -132,7 +132,8 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingBottom="15dp">
 
                 <TextView
                     android:id="@+id/nutritional_value_header"

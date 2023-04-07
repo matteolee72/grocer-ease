@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         userObject = gson.fromJson(userObjectString, UserDatabaseObject.class);
 
         navigationBarView = findViewById(R.id.bottomNavigationView);
+
         navigationBarView.setOnItemSelectedListener(this);
         navigationBarView.setSelectedItemId(R.id.home);
 
@@ -51,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
                 // By default, this code block should not be activated on reselect
                 Log.i("mainNavigation", "Home button pressed, this shouldn't happen");
                 return true;
-            case R.id.scan:
+            case R.id.scan: 
                 // Start the scan page when the scan button is pressed
                 Log.i("mainNavigation", "Scan button pressed");
                 Intent intent = new Intent(MainActivity.this, ScanActivity.class);

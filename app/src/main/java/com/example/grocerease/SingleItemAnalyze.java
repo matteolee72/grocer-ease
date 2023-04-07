@@ -1,11 +1,25 @@
 package com.example.grocerease;
 
+import static com.example.grocerease.SingleItemRating.caloriesRating;
+import static com.example.grocerease.SingleItemRating.cholesterolRating;
+import static com.example.grocerease.SingleItemRating.dietaryFibreRating;
+import static com.example.grocerease.SingleItemRating.ironRating;
+import static com.example.grocerease.SingleItemRating.percCalculator;
+import static com.example.grocerease.SingleItemRating.proteinRating;
+import static com.example.grocerease.SingleItemRating.saturatedFatRating;
+import static com.example.grocerease.SingleItemRating.sodiumRating;
+import static com.example.grocerease.SingleItemRating.sugarRating;
+import static com.example.grocerease.SingleItemRating.totalCarbohydratesRating;
+import static com.example.grocerease.SingleItemRating.totalFatRating;
+import static com.example.grocerease.SingleItemRating.transFatRating;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -30,6 +44,8 @@ public class SingleItemAnalyze extends AppCompatActivity {
     //for images
     private StorageReference foodImageStorageReference;
     private FirebaseStorage storage;
+
+    UserPreferencesObject userPreferences;
 
     UserDatabaseObject user;
     
@@ -82,7 +98,6 @@ public class SingleItemAnalyze extends AppCompatActivity {
         // so that we can pass the information to the database reference
         Intent intent = getIntent();
         String barcodeNum = intent.getStringExtra(MainActivity.FIRSTBARCODEKEY);
-        //Log.d("userName is", "onCreate: " + userObject.getUserName());
         Log.i("SingleItemAnalyse", "Intent barcode received: "+ barcodeNum);
 
         ImageView imageView = findViewById(R.id.card1_foodImage_ImageView);
@@ -120,7 +135,12 @@ public class SingleItemAnalyze extends AppCompatActivity {
                 }
                 else {
                     foodObject = task.getResult().getValue(FoodDatabaseObject.class); // get food object from database
+
                     // Get the result from the database and populate a foodObject of type FoodDatabaseObject
+
+                    userPreferences = userObject.getUserPreferences();
+
+
 
                     //add barcode to history if not full
                     UserHistoryObject userHistory = userObject.getUserHistory();
@@ -131,21 +151,55 @@ public class SingleItemAnalyze extends AppCompatActivity {
 
                     itemName.setText(foodObject.getFoodName());
                     company.setText(foodObject.getFoodCompany());
-                    mass.setText(foodObject.getFoodMass());
-                    calories.setText(foodObject.getFoodCalories());
-                    /** this has to be changed, calculate the food percentage of daily intake through mass calories blah blah, right now we set it as blah
-                    percentage.setText(foodObject.getFoodPercentage()); */
-                    percentage.setText("blah");
-                    totalfat.setText(foodObject.getFoodTotalFat());
-                    saturatedfat.setText(foodObject.getFoodSaturatedFat());
-                    transfat.setText(foodObject.getFoodTransFat());
-                    cholesterol.setText(foodObject.getFoodCholesterol());
-                    sodium.setText(foodObject.getFoodSodium());
-                    totalcarbs.setText(foodObject.getFoodCarbohydrate());
-                    dietaryfibres.setText(foodObject.getFoodDietaryFibre());
-                    totalsugars.setText(foodObject.getFoodTotalSugar());
-                    protein.setText(foodObject.getFoodProtein());
-                    iron.setText(foodObject.getFoodIron());
+                    mass.setText(foodObject.getFoodMass() + "g");
+
+                    String caloriesColor =  caloriesRating(foodObject,userPreferences);
+                    calories.setText(foodObject.getFoodCalories() + "cal");
+                    calories.setTextColor(Color.parseColor(caloriesColor));
+
+                    String perc = percCalculator(foodObject,userPreferences);
+                    percentage.setText(perc + "%");
+
+                    String totalFatColor = totalFatRating(foodObject,userPreferences);
+                    totalfat.setText(foodObject.getFoodTotalFat() + "g");
+                    totalfat.setTextColor(Color.parseColor(totalFatColor));
+
+                    String saturatedFatColor = saturatedFatRating(foodObject,userPreferences);
+                    saturatedfat.setText(foodObject.getFoodSaturatedFat() + "g");
+                    saturatedfat.setTextColor(Color.parseColor(saturatedFatColor));
+
+                    String transFatColor = transFatRating(foodObject,userPreferences);
+                    transfat.setText(foodObject.getFoodTransFat() + "g");
+                    transfat.setTextColor(Color.parseColor(transFatColor));
+
+                    String cholesterolColor = cholesterolRating(foodObject,userPreferences);
+                    cholesterol.setText(foodObject.getFoodCholesterol() + "mg");
+                    cholesterol.setTextColor(Color.parseColor(cholesterolColor));
+
+                    String sodiumColor = sodiumRating(foodObject,userPreferences);
+                    sodium.setText(foodObject.getFoodSodium() + "mg");
+                    sodium.setTextColor(Color.parseColor(sodiumColor));
+
+                    String totalCarbohydratesColor = totalCarbohydratesRating(foodObject,userPreferences);
+                    totalcarbs.setText(foodObject.getFoodCarbohydrate() + "g");
+                    totalcarbs.setTextColor(Color.parseColor(totalCarbohydratesColor));
+
+                    String dietaryFibresColor = dietaryFibreRating(foodObject,userPreferences);
+                    dietaryfibres.setText(foodObject.getFoodDietaryFibre() + "g");
+                    dietaryfibres.setTextColor(Color.parseColor(dietaryFibresColor));
+
+                    String sugarColor = sugarRating(foodObject,userPreferences);
+                    totalsugars.setText(foodObject.getFoodTotalSugar() + "g");
+                    totalsugars.setTextColor(Color.parseColor(sugarColor));
+
+                    String proteinColor = proteinRating(foodObject,userPreferences);
+                    protein.setText(foodObject.getFoodProtein() + "g");
+                    protein.setTextColor(Color.parseColor(proteinColor));
+
+                    String ironColor = ironRating(foodObject,userPreferences);
+                    iron.setText(foodObject.getFoodIron() + "mg");
+                    iron.setTextColor(Color.parseColor(ironColor));
+
                     String foodImageLink = foodObject.getFoodImageURL();
                     foodImageStorageReference = storage.getReference().child(foodImageLink);
                     Log.d("food image", "onComplete: " + foodImageStorageReference);
