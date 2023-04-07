@@ -154,19 +154,9 @@ public class QuizActivity extends AppCompatActivity {
                     databaseReference.child("Users").child(username).child("userPreferences").setValue(UserPrefObject);
 
                     //going back to main activity
-//                    databaseReference.child("Users").child(username).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-//                        @Override
-//                        public void onComplete(@NonNull Task<DataSnapshot> task) {
-//                            if (!task.isSuccessful()){
-//                                Log.d("firebase","Failed to obtain User");
-//                            }
-//                            else{
-//                                //userObject = task.getResult().getValue(UserDatabaseObject.class);
-//                            }
-//                        }
-//                    });
+                    UserDatabaseObject userObjectLocal = new UserDatabaseObject(username,pw,userObject.getUserFavourites(),userObject.getUserHistory(),UserPrefObject);
                     Gson gson = new Gson();
-                    String jsonString = gson.toJson(userObject); // returns a Json String object
+                    String jsonString = gson.toJson(userObjectLocal); // returns a Json String object
                     preferencesHelper.writeString("userObject", jsonString);//making sure we set userObject to preferences
                     preferencesHelper.writeString("username", username);
 
@@ -177,9 +167,6 @@ public class QuizActivity extends AppCompatActivity {
             }
         });
 
-
     }
-
-
 
 }
