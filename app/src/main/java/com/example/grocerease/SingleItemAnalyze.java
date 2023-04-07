@@ -105,8 +105,12 @@ public class SingleItemAnalyze extends AppCompatActivity {
             likeButton.setChecked(true);
         }
 
-        // TODO: make sure userObject stored in preferences is updated whenever we update something in USER
         userHistory.addToHistory(barcodeNum);
+        //making sure to update local userObject so that it updates the database correctly
+        String jsonString = gson.toJson(userObject); // returns a Json String object
+        preferencesHelper.writeString("userObject", jsonString);
+        Log.d("userObject", "onCreate: "+userObject.getUserHistory().getFoodHistory());
+
         databaseReference.child("Users").child(username).child("userHistory").setValue(userHistory);
         likeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,6 +118,12 @@ public class SingleItemAnalyze extends AppCompatActivity {
                 boolean isChecked = likeButton.isChecked();
                 if (isChecked) {
                     favourites.addToFavourites(barcodeNum);
+
+                    //making sure to update local userObject so that it updates the database correctly
+                    String jsonString = gson.toJson(userObject); // returns a Json String object
+                    preferencesHelper.writeString("userObject", jsonString);
+                    Log.d("userObject", "onCreate: "+userObject.getUserFavourites());
+
                     databaseReference.child("Users").child(username).child("userFavourites").setValue(favourites);
 
                     //like action
@@ -122,6 +132,12 @@ public class SingleItemAnalyze extends AppCompatActivity {
                     //unlike action
                     Log.d("unliking", "onClick: ");
                     favourites.removeFromFavourites(barcodeNum);
+
+                    // making sure to update local userObject
+                    String jsonString = gson.toJson(userObject); // returns a Json String object
+                    preferencesHelper.writeString("userObject", jsonString);
+                    Log.d("userObject", "onCreate: "+userObject.getUserFavourites());
+
                     databaseReference.child("Users").child(username).child("userFavourites").setValue(favourites);
 
                 }
