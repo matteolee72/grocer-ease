@@ -43,13 +43,13 @@ public class ProfileActivity extends AppCompatActivity implements NavigationBarV
         TextView nameText = findViewById(R.id.name_text2);
         nameText.setText(userObject.getUserPreferences().getUserObjectName());
         TextView weightText = findViewById(R.id.weight_text);
-        weightText.setText(String.valueOf(userObject.getUserPreferences().getUserWeight()));
+        weightText.setText(String.valueOf(userObject.getUserPreferences().getUserWeight()) + " kg");
         TextView heightText = findViewById(R.id.height_text);
-        heightText.setText(String.valueOf(userObject.getUserPreferences().getUserHeight()));
+        heightText.setText(String.valueOf(userObject.getUserPreferences().getUserHeight()) + " cm");
         TextView birthdayText = findViewById(R.id.birthday_text);
         String birthday = userObject.getUserPreferences().getBirthday().toString();
         String[] birthdaySplit = birthday.split(" ");
-        birthdayText.setText(birthdaySplit[1]+" "+birthdaySplit[2]+""+birthdaySplit[5]);
+        birthdayText.setText(birthdaySplit[1]+" "+birthdaySplit[2]+" "+birthdaySplit[5]);
 
         TextView genderText = findViewById(R.id.sex_text);
         genderText.setText(userObject.getUserPreferences().getSex());
