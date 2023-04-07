@@ -27,6 +27,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -36,6 +37,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.gson.Gson;
+
+import java.util.ArrayList;
 
 public class SingleItemAnalyze extends AppCompatActivity {
 
@@ -62,7 +65,6 @@ public class SingleItemAnalyze extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(SingleItemAnalyze.this, MainActivity.class);
-        intent.putExtra(MainActivity.USEROBJECTKEY,userObject);
         startActivity(intent);
     }
     @Override
@@ -70,12 +72,21 @@ public class SingleItemAnalyze extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.single_item_activity);
 
+        // DatabaseReference provides a handle to the firebase database such that we can access the
+        // information contained at the key <barcodeNum>
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        // StorageReference provides a handle to the firebase storage service
+        storage = FirebaseStorage.getInstance();
+
         // reading from preferences to obtain userObject
         preferencesHelper = new PreferencesHelper(this);
         String userObjectString = preferencesHelper.readString("userObject","error");
         userObject = gson.fromJson(userObjectString, UserDatabaseObject.class);
-        username = preferencesHelper.readString("username", "error");
-        Log.d("USERNAME", username);
+        
+        username = preferencesHelper.readString("username","error");
+
+        Log.d("username", "onCreate: " + username);
+
 
         // Get a handle on all the items on the page
         itemName = findViewById(R.id.itemName);
@@ -98,15 +109,58 @@ public class SingleItemAnalyze extends AppCompatActivity {
         // so that we can pass the information to the database reference
         Intent intent = getIntent();
         String barcodeNum = intent.getStringExtra(MainActivity.FIRSTBARCODEKEY);
+
         Log.i("SingleItemAnalyse", "Intent barcode received: "+ barcodeNum);
 
         ImageView imageView = findViewById(R.id.card1_foodImage_ImageView);
 
-        // DatabaseReference provides a handle to the firebase database such that we can access the
-        // information contained at the key <barcodeNum>
-        databaseReference = FirebaseDatabase.getInstance().getReference();
-        // StorageReference provides a handle to the firebase storage service
-        storage = FirebaseStorage.getInstance();
+        ToggleButton likeButton = findViewById(R.id.likeButton);
+
+        UserFavouritesObject favourites = userObject.getUserFavourites();
+        UserHistoryObject userHistory = userObject.getUserHistory();
+
+        if(favourites.getFoodFavourites().contains(barcodeNum)){
+            likeButton.setChecked(true);
+        }
+
+        userHistory.addToHistory(barcodeNum);
+        //making sure to update local userObject so that it updates the database correctly
+        String jsonString = gson.toJson(userObject); // returns a Json String object
+        preferencesHelper.writeString("userObject", jsonString);
+        Log.d("userObject", "onCreate: "+userObject.getUserHistory().getFoodHistory());
+
+        databaseReference.child("Users").child(username).child("userHistory").setValue(userHistory);
+        likeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean isChecked = likeButton.isChecked();
+                if (isChecked) {
+                    favourites.addToFavourites(barcodeNum);
+
+                    //making sure to update local userObject so that it updates the database correctly
+                    String jsonString = gson.toJson(userObject); // returns a Json String object
+                    preferencesHelper.writeString("userObject", jsonString);
+                    Log.d("userObject", "onCreate: "+userObject.getUserFavourites());
+
+                    databaseReference.child("Users").child(username).child("userFavourites").setValue(favourites);
+
+                    //like action
+                    Log.d("liking", "onClick: ");
+                } else {
+                    //unlike action
+                    Log.d("unliking", "onClick: ");
+                    favourites.removeFromFavourites(barcodeNum);
+
+                    // making sure to update local userObject
+                    String jsonString = gson.toJson(userObject); // returns a Json String object
+                    preferencesHelper.writeString("userObject", jsonString);
+                    Log.d("userObject", "onCreate: "+userObject.getUserFavourites());
+
+                    databaseReference.child("Users").child(username).child("userFavourites").setValue(favourites);
+
+                }
+            }
+        });
         
         databaseReference.child("Food").child(barcodeNum).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
@@ -137,17 +191,6 @@ public class SingleItemAnalyze extends AppCompatActivity {
                     foodObject = task.getResult().getValue(FoodDatabaseObject.class); // get food object from database
 
                     // Get the result from the database and populate a foodObject of type FoodDatabaseObject
-
-                    userPreferences = userObject.getUserPreferences();
-
-
-
-                    //add barcode to history if not full
-                    UserHistoryObject userHistory = userObject.getUserHistory();
-                    if (userHistory.isFull() == false){
-                        userHistory.addToHistory(barcodeNum);
-                        databaseReference.child("Users").child(username).child("userHistory").setValue(userHistory);
-                    }
 
                     itemName.setText(foodObject.getFoodName());
                     company.setText(foodObject.getFoodCompany());

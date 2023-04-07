@@ -23,7 +23,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/include">
 
-
         <ImageView
             android:id="@+id/card1_foodImage_ImageView"
             android:layout_width="90dp"
@@ -60,6 +59,16 @@
             android:textStyle="italic"
             android:autoSizeTextType="uniform" />
 
+        <ToggleButton
+            android:id="@+id/likeButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="right"
+            android:layout_margin="16dp"
+            android:textOff=""
+            android:textOn=""
+            android:background="@drawable/like_button_selector"
+            />
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView

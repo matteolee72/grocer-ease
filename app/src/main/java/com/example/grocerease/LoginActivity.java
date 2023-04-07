@@ -70,7 +70,6 @@ public class LoginActivity extends AppCompatActivity {
                                 String database_password = userObject.getUserPassword();
                                 Log.d("firebase","user password:" + database_password);
                                 if (database_password.equals(password_input)) {
-
                                     // testing gson to add Json string to Shared Preferences
                                     Gson gson = new Gson();
                                     String jsonString = gson.toJson(userObject); // returns a Json String object

@@ -38,7 +38,6 @@ public class SingleItemActivity extends AppCompatActivity {
     }
 
     // use calculate to find normal sugar content and saturated fat content per 100g, and color code
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

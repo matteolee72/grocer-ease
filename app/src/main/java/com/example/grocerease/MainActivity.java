@@ -25,6 +25,15 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
     Gson gson = new Gson();
 
     @Override
+    protected void onResume(){ //making sure history is re-rendered in the event it is updated
+        super.onResume();
+        // reading from preferences to obtain userObject
+        preferencesHelper = new PreferencesHelper(this);
+        String userObjectString = preferencesHelper.readString("userObject","error");
+        userObject = gson.fromJson(userObjectString, UserDatabaseObject.class);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
