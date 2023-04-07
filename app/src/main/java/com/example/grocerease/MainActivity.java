@@ -34,9 +34,11 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         String userObjectString = preferencesHelper.readString("userObject","error");
         userObject = gson.fromJson(userObjectString, UserDatabaseObject.class);
 
-        navigationBarView =findViewById(R.id.bottomNavigationView);
+        navigationBarView = findViewById(R.id.bottomNavigationView);
+
         navigationBarView.setOnItemSelectedListener(this);
         navigationBarView.setSelectedItemId(R.id.home);
+
         RecyclerView recyclerView = findViewById(R.id.historyRecyclerView);
         RecyclerView.Adapter<HistoryAdapter.ViewHolder> historyAdapter = new HistoryAdapter(this, userObject.getUserHistory());
         recyclerView.setAdapter(historyAdapter);
@@ -57,7 +59,9 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
                 startActivity(intent);
                 return true;
             case R.id.profile: // database add activity instead of profile
-                Intent intent1 = new Intent(MainActivity.this, DatabaseAddActivity.class);
+                Log.i("mainNavigation", "Profile button pressed");
+                Intent intent1 = new Intent(MainActivity.this, FavouritesActivity.class);
+                intent1.putExtra(MainActivity.USEROBJECTKEY,userObject);
                 startActivity(intent1);
                 return true;
         }

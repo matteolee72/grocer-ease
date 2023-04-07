@@ -62,6 +62,7 @@ public class SingleItemAnalyze extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(SingleItemAnalyze.this, MainActivity.class);
+        intent.putExtra(MainActivity.USEROBJECTKEY,userObject);
         startActivity(intent);
     }
     @Override
@@ -73,6 +74,8 @@ public class SingleItemAnalyze extends AppCompatActivity {
         preferencesHelper = new PreferencesHelper(this);
         String userObjectString = preferencesHelper.readString("userObject","error");
         userObject = gson.fromJson(userObjectString, UserDatabaseObject.class);
+        username = preferencesHelper.readString("username", "error");
+        Log.d("USERNAME", username);
 
         // Get a handle on all the items on the page
         itemName = findViewById(R.id.itemName);
