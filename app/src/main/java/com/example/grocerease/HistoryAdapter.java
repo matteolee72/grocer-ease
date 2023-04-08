@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.view.accessibility.AccessibilityViewCommand;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -37,14 +38,12 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         ArrayList<String> itemList = userHistoryObject.getFoodHistory();
 
     }
-
     @NonNull
     @Override
     public HistoryAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = mInflater.inflate(R.layout.list_item,parent,false);
         return new ViewHolder(view);
     }
-
     @Override
     public void onBindViewHolder(@NonNull HistoryAdapter.ViewHolder holder, int position) {
         databaseReference = FirebaseDatabase.getInstance().getReference();
@@ -92,11 +91,21 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    UserDatabaseObject userObject = (UserDatabaseObject) ((Activity) context).getIntent().getSerializableExtra(MainActivity.USEROBJECTKEY);
-                    Intent intent = new Intent(context, SingleItemAnalyze.class);
-                    intent.putExtra(MainActivity.FIRSTBARCODEKEY, userHistoryObject.getID(position));
-                    intent.putExtra(MainActivity.USEROBJECTKEY, userObject );
-                    context.startActivity(intent);
+                    Log.d("activity parent", "onClick: " + ((Activity) context).getClass().getSimpleName());
+                    if(((Activity) context).getClass().getSimpleName().equals("HistoryActivity")){
+                        FoodDatabaseObject foodObject1 = (FoodDatabaseObject) ((Activity) context).getIntent().getSerializableExtra(MainActivity.FIRSTBARCODEKEY);
+                        Intent intent = new Intent(context, TwoItemCompare.class);
+                        intent.putExtra(MainActivity.SECONDBARCODEKEY, userHistoryObject.getID(position));
+                        intent.putExtra(MainActivity.FIRSTBARCODEKEY, foodObject1);
+                        context.startActivity(intent);
+                    }
+                    else{
+                        UserDatabaseObject userObject = (UserDatabaseObject) ((Activity) context).getIntent().getSerializableExtra(MainActivity.USEROBJECTKEY);
+                        Intent intent = new Intent(context, SingleItemAnalyze.class);
+                        intent.putExtra(MainActivity.FIRSTBARCODEKEY, userHistoryObject.getID(position));
+                        intent.putExtra(MainActivity.USEROBJECTKEY, userObject); // can this be removed? the top one too
+                        context.startActivity(intent);
+                    }
                 }
             });
         }

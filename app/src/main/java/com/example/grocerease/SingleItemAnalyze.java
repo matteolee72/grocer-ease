@@ -15,6 +15,7 @@ import static com.example.grocerease.SingleItemRating.transFatRating;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.TintableCheckedTextView;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -55,7 +56,8 @@ public class SingleItemAnalyze extends AppCompatActivity {
     TextView itemName, company, mass, calories, percentage, totalfat, saturatedfat, transfat, cholesterol,
             sodium, totalcarbs, dietaryfibres, totalsugars, protein, iron;
     FoodDatabaseObject foodObject;
-    
+
+    Button historyFromSingle;
     Button scan_button;
     private String username;
     private UserDatabaseObject userObject;
@@ -105,6 +107,19 @@ public class SingleItemAnalyze extends AppCompatActivity {
         totalsugars = findViewById(R.id.total_sugars_value);
         protein = findViewById(R.id.protein_value);
         iron = findViewById(R.id.iron_value);
+
+        // buttons to navigate to other activities to obtain 2nd item for compare
+        historyFromSingle = findViewById(R.id.history_button_single);
+
+        // navigate to History Activity from Single Item to choose next item
+        historyFromSingle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SingleItemAnalyze.this,HistoryActivity.class);
+                intent.putExtra(MainActivity.FIRSTBARCODEKEY, foodObject);
+                startActivity(intent);
+            }
+        });
 
         // Get the barcode number from the previous intent
         // so that we can pass the information to the database reference

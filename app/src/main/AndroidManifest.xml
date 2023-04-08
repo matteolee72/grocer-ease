@@ -49,6 +49,10 @@
             android:parentActivityName=".MainActivity"
             android:exported="false" />
         <activity
+            android:name=".HistoryActivity"
+            android:parentActivityName=".SingleItemAnalyze"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
         </activity>
