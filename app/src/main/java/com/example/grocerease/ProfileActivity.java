@@ -36,8 +36,10 @@ public class ProfileActivity extends AppCompatActivity implements NavigationBarV
         ImageView imageView = findViewById(R.id.photo);
         if (userObject.getUserPreferences().getSex().equals("Male")){
             imageView.setImageResource(R.drawable.boy);
+            Log.d("profilephoto","User is a BOY");
         } else {
             imageView.setImageResource(R.drawable.girl);
+            Log.d("profilephoto","User is a GIRL");
         }
 
         TextView userNameText = findViewById(R.id.username_textview);
