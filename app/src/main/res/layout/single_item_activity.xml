@@ -25,11 +25,11 @@
 
         <ImageView
             android:id="@+id/card1_foodImage_ImageView"
+            android:scaleType="fitCenter"
             android:layout_width="180dp"
             android:layout_height="140dp"
             android:layout_marginTop="50dp"
             android:layout_gravity="center_horizontal"
-            android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

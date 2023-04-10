@@ -76,7 +76,7 @@ public class ProfileActivity extends AppCompatActivity implements NavigationBarV
             }
         });
 
-        Button editButton;
+        View editButton;
         editButton = findViewById(R.id.edit_button);
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
