@@ -5,42 +5,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/user_imageView"
+    <ImageView
+        android:id="@+id/photo"
         android:layout_width="120dp"
         android:layout_height="120dp"
-        app:cardCornerRadius="250dp"
-        app:cardBackgroundColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/boy_profile"
+        android:layout_marginTop="40dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.069">
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            app:cardCornerRadius="250dp"
-            android:layout_gravity="center">
-
-            <ImageView
-                android:id="@+id/photo"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:src="@drawable/person"
-                android:scaleType="centerCrop"/>
-
-        </androidx.cardview.widget.CardView>
-
-    </androidx.cardview.widget.CardView>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/profile_buttons_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -101,14 +81,14 @@
         android:id="@+id/username_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="2dp"
         android:text="TextView"
         android:textColor="#000000"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user_imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/photo" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/edit_button"
@@ -279,9 +259,9 @@
         android:layout_width="398dp"
         android:layout_height="116dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="-30dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="130dp"
+        android:layout_marginTop="-20dp"
         app:cardCornerRadius="10dp"
         app:cardElevation="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
