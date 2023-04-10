@@ -17,7 +17,6 @@ public class ScanActivity extends AppCompatActivity {
     String barcodeNum;
     Gson gson = new Gson();
     private PreferencesHelper preferencesHelper;
-
     private UserDatabaseObject userObject;
 
     // When the activity is created, get the previously scanned information if it exists
@@ -27,6 +26,7 @@ public class ScanActivity extends AppCompatActivity {
         setContentView(R.layout.activity_scan); //outdated
         // Immediately launch the scancode function to retrieve the code using the barcode scanner
         scanCode();
+        finish();
     }
 
     // Set the settings to create the scanning activity and eventually call the barLauncher
