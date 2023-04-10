@@ -1,7 +1,7 @@
 package com.example.grocerease;
+import android.content.Context;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.core.view.accessibility.AccessibilityViewCommand;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.load.resource.gif.GifDrawable;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -69,7 +70,6 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
                             .into(holder.getImageView());
                 }
             }
-            //TODO put placeholder loading circle
         });
     }
 

@@ -2,8 +2,11 @@ package com.example.grocerease;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -73,17 +76,44 @@ public class DatabaseAddActivity extends AppCompatActivity {
                 String foodIronStr = foodIron.getText().toString();
                 String foodCaloriesStr = foodCalories.getText().toString();
                 //----------------==DEBUG==------------------
-                String foodImageURL = "http://www.google.com";
+                String foodImageURL = "grocery_placeholder.png";
                 //--------------==END DEBUG==----------------
                 
-                FoodDatabaseObject foodItem = new FoodDatabaseObject(foodNameStr, foodCompanyStr, foodMassStr, foodProteinStr, foodTotalFatStr, foodSaturatedFatStr, foodTransFatStr, foodCholesterolStr, foodCarbohydrateStr, foodTotalSugarStr, foodDietaryFibreStr, foodSodiumStr, foodIronStr, foodCaloriesStr, foodImageURL);
+                FoodDatabaseObject foodItem = new FoodDatabaseObject(foodNameStr,
+                                                                    foodMassStr,
+                                                                    foodProteinStr,
+                                                                    foodTotalFatStr,
+                                                                    foodSaturatedFatStr,
+                                                                    foodTransFatStr,
+                                                                    foodCholesterolStr,
+                                                                    foodCarbohydrateStr,
+                                                                    foodTotalSugarStr,
+                                                                    foodDietaryFibreStr,
+                                                                    foodSodiumStr,
+                                                                    foodIronStr,
+                                                                    foodCaloriesStr,
+                                                                    foodImageURL,
+                                                                    foodCompanyStr);
+
                 Log.d("databaseAddActivity", foodIDStr);
                 Log.d("databaseAddActivity", foodItem.toString());
                 if (foodIDStr.isEmpty()) {
                     Toast.makeText(DatabaseAddActivity.this, "Key in a food ID value", Toast.LENGTH_LONG).show();
                 }
                 else {
-                    databaseReference.child(foodIDStr).setValue(foodItem); //key is foodIDStr, value is foodItem
+                    databaseReference.child("Food").child(foodIDStr).setValue(foodItem); //key is foodIDStr, value is foodItem
+                    Toast.makeText(DatabaseAddActivity.this, "Item has been successfully added", Toast.LENGTH_LONG).show();
+                    AlertDialog.Builder builder = new AlertDialog.Builder(DatabaseAddActivity.this);
+                    builder.setMessage("Return to Main Menu").setTitle("Thank you for contributing to our database!");
+
+                    builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            Intent intent = new Intent(DatabaseAddActivity.this, MainActivity.class);
+                            startActivity(intent);
+                        }
+                    });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
                 }
             }
         });
