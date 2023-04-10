@@ -82,6 +82,7 @@ public class TwoItemCompare extends AppCompatActivity {
         // reading from preferences to obtain userObject
         preferencesHelper = new PreferencesHelper(this);
         String userObjectString = preferencesHelper.readString("userObject","error");
+        String username = preferencesHelper.readString("username","error");
         userObject = gson.fromJson(userObjectString, UserDatabaseObject.class);
 
         storage = FirebaseStorage.getInstance();
@@ -154,6 +155,7 @@ public class TwoItemCompare extends AppCompatActivity {
                     });
                     builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
+                            finish();
                         }
 
                     });
@@ -166,6 +168,13 @@ public class TwoItemCompare extends AppCompatActivity {
                     Log.i("TwoItemCompare", "Object2 from database" + foodObject2.toString());
 
                     userPreferences = userObject.getUserPreferences();
+
+                    userHistory.addToHistory(barcodeNum2);
+                    //making sure to update local userObject so that it updates the database correctly
+                    String jsonString = gson.toJson(userObject); // returns a Json String object
+                    preferencesHelper.writeString("userObject", jsonString);
+                    Log.d("userObject", "onCreate: "+userObject.getUserHistory().getFoodHistory());
+                    databaseReference.child("Users").child(username).child("userHistory").setValue(userHistory);
 
                     /** All compare functions */
                     String sugarBold_1 = sugarSeed(foodObject1,foodObject2,userPreferences)[0];

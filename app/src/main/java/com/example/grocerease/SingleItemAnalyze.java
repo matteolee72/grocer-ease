@@ -13,6 +13,7 @@ import static com.example.grocerease.SingleItemRating.totalCarbohydratesRating;
 import static com.example.grocerease.SingleItemRating.totalFatRating;
 import static com.example.grocerease.SingleItemRating.transFatRating;
 
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -37,8 +38,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.gson.Gson;
+import com.journeyapps.barcodescanner.ScanContract;
+import com.journeyapps.barcodescanner.ScanOptions;
 
 public class SingleItemAnalyze extends AppCompatActivity {
+
+    private String barcodeNum;
 
     //realtime database
     private DatabaseReference databaseReference;
@@ -47,13 +52,10 @@ public class SingleItemAnalyze extends AppCompatActivity {
     private FirebaseStorage storage;
 
     UserPreferencesObject userPreferences;
-
-    UserDatabaseObject user;
     
     TextView itemName, company, mass, calories, percentage, totalfat, saturatedfat, transfat, cholesterol,
             sodium, totalcarbs, dietaryfibres, totalsugars, protein, iron;
     FoodDatabaseObject foodObject;
-
     Button historyFromSingle;
     Button favouritesFromSingle;
     Button scan_button;
@@ -148,13 +150,6 @@ public class SingleItemAnalyze extends AppCompatActivity {
             likeButton.setChecked(true);
         }
 
-        userHistory.addToHistory(barcodeNum);
-        //making sure to update local userObject so that it updates the database correctly
-        String jsonString = gson.toJson(userObject); // returns a Json String object
-        preferencesHelper.writeString("userObject", jsonString);
-        Log.d("userObject", "onCreate: "+userObject.getUserHistory().getFoodHistory());
-
-        databaseReference.child("Users").child(username).child("userHistory").setValue(userHistory);
         likeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -206,6 +201,8 @@ public class SingleItemAnalyze extends AppCompatActivity {
                     });
                     builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
+                            Intent intent = new Intent(SingleItemAnalyze.this,MainActivity.class);
+                            startActivity(intent);
                         }
                     });
                     AlertDialog dialog = builder.create();
@@ -213,6 +210,13 @@ public class SingleItemAnalyze extends AppCompatActivity {
                 }
                 else {
                     foodObject = task.getResult().getValue(FoodDatabaseObject.class); // get food object from database
+
+                    userHistory.addToHistory(barcodeNum);
+                    //making sure to update local userObject so that it updates the database correctly
+                    String jsonString = gson.toJson(userObject); // returns a Json String object
+                    preferencesHelper.writeString("userObject", jsonString);
+                    Log.d("userObject", "onCreate: "+userObject.getUserHistory().getFoodHistory());
+                    databaseReference.child("Users").child(username).child("userHistory").setValue(userHistory);
 
                     // Get the result from the database and populate a foodObject of type FoodDatabaseObject
 
@@ -280,11 +284,43 @@ public class SingleItemAnalyze extends AppCompatActivity {
         scan_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(SingleItemAnalyze.this, ScanActivity.class);
-                intent.putExtra(MainActivity.FIRSTBARCODEKEY, foodObject);
-                startActivity(intent);
+                scanCode();
             }
         });
 
     }
+    // Set the settings to create the scanning activity and eventually call the barLauncher
+    public void scanCode() {
+        ScanOptions options = new ScanOptions();
+        options.setPrompt("Volume up to flash on");
+        options.setBeepEnabled(true);
+        options.setOrientationLocked(true);
+        options.setCaptureActivity(CaptureAct.class);
+        barLauncher.launch(options);
+    }
+    ActivityResultLauncher<ScanOptions> barLauncher = registerForActivityResult(new ScanContract(), result->
+    {
+        // Check if we get a valid output from the barcode scanner
+        if(result.getContents() != null)
+        {
+            // Prepare a new intent singleItemToScan so we can get the result from the previous
+            // activity and store it to firstFoodItem
+            Intent singleItemToScan = getIntent();
+            FoodDatabaseObject firstFoodItem = foodObject;
+
+            // Make a log of what we receive from the server
+            barcodeNum = result.getContents();
+            Log.d("scanActivity", barcodeNum);
+
+            // If firstFoodItem contains something, then we assume that we are now
+            // scanning the second barcode. So we run this block of code.
+            Intent intent = new Intent(SingleItemAnalyze.this, TwoItemCompare.class);
+            intent.putExtra(MainActivity.FIRSTBARCODEKEY, firstFoodItem); //Using putExtra, implement mPreferences next
+            intent.putExtra(MainActivity.SECONDBARCODEKEY, barcodeNum);
+            startActivity(intent);
+            finish();
+        }
+    });
+
+
 }

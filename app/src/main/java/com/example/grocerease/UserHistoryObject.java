@@ -5,13 +5,12 @@ import java.util.ArrayList;
 
 public class UserHistoryObject implements Serializable {
     private ArrayList<String> foodHistory;
-    private final int size = 5;
+    private final int size = 10;
 
     public String getID(int i){
         return this.getFoodHistory().get(i);
     }
     public void removeID(int i){}
-
     public int getSize(){
         return this.foodHistory.size();
     }

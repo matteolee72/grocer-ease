@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.gson.Gson;
 
 public class DatabaseAddActivity extends AppCompatActivity {
     // Instantiate all the variables
@@ -23,11 +24,19 @@ public class DatabaseAddActivity extends AppCompatActivity {
     Button addToDatabaseButton;
     FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
+    private UserDatabaseObject userObject;
+    private PreferencesHelper preferencesHelper;
+    Gson gson = new Gson();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_database_add);
+
+        preferencesHelper = new PreferencesHelper(this);
+        String userObjectString = preferencesHelper.readString("userObject","error");
+        String username = preferencesHelper.readString("username" , "error");
+        userObject = gson.fromJson(userObjectString, UserDatabaseObject.class);
 
         foodID = findViewById(R.id.foodID);
         foodName = findViewById(R.id.foodName);
@@ -78,7 +87,6 @@ public class DatabaseAddActivity extends AppCompatActivity {
                 //----------------==DEBUG==------------------
                 String foodImageURL = "grocery_placeholder.png";
                 //--------------==END DEBUG==----------------
-                
                 FoodDatabaseObject foodItem = new FoodDatabaseObject(foodNameStr,
                                                                     foodMassStr,
                                                                     foodProteinStr,
@@ -102,6 +110,16 @@ public class DatabaseAddActivity extends AppCompatActivity {
                 }
                 else {
                     databaseReference.child("Food").child(foodIDStr).setValue(foodItem); //key is foodIDStr, value is foodItem
+
+                    UserHistoryObject userHistory = userObject.getUserHistory();
+                    userHistory.addToHistory(foodIDStr);
+                    //making sure to update local userObject so that it updates the database correctly
+                    String jsonString = gson.toJson(userObject); // returns a Json String object
+                    preferencesHelper.writeString("userObject", jsonString);
+                    databaseReference.child("Users").child(username).child("userHistory").setValue(userHistory);
+
+                    Log.d("userObject", "onCreate: "+userObject.getUserHistory().getFoodHistory());
+
                     Toast.makeText(DatabaseAddActivity.this, "Item has been successfully added", Toast.LENGTH_LONG).show();
                     AlertDialog.Builder builder = new AlertDialog.Builder(DatabaseAddActivity.this);
                     builder.setMessage("Return to Main Menu").setTitle("Thank you for contributing to our database!");
