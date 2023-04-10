@@ -13,10 +13,11 @@
         android:id="@+id/food_card_view_1"
         android:layout_width="180dp"
         android:layout_height="200dp"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         app:cardCornerRadius="8dp"
         app:cardElevation="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.069"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/include">
 
@@ -39,11 +40,11 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_margin="2dp"
+            android:autoSizeTextType="uniform"
             android:text="Item Name"
             android:textColor="#000000"
             android:textSize="20dp"
-            android:textStyle="bold"
-            android:autoSizeTextType="uniform" />
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/food_company_1"
@@ -51,11 +52,11 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_margin="26dp"
+            android:autoSizeTextType="uniform"
             android:text="Item Company"
             android:textColor="#000000"
             android:textSize="14dp"
-            android:textStyle="italic"
-            android:autoSizeTextType="uniform" />
+            android:textStyle="italic" />
 
     </androidx.cardview.widget.CardView>
 
@@ -64,11 +65,12 @@
         android:layout_width="180dp"
         android:layout_height="200dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
         app:cardCornerRadius="8dp"
         app:cardElevation="10dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.93"
         app:layout_constraintLeft_toRightOf="@+id/food_card_view_1"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/include">
 
 

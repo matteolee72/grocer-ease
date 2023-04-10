@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -31,6 +32,13 @@ public class ProfileActivity extends AppCompatActivity implements NavigationBarV
         String userName = preferencesHelper.readString("username","error");
         UserPreferencesObject userPreferencesObject = userObject.getUserPreferences();
         Log.d("Preferences", userPreferencesObject.toString());
+
+        ImageView imageView = findViewById(R.id.photo);
+        if (userObject.getUserPreferences().getSex().equals("Male")){
+            imageView.setImageResource(R.drawable.boy);
+        } else {
+            imageView.setImageResource(R.drawable.girl);
+        }
 
         TextView userNameText = findViewById(R.id.username_textview);
         userNameText.setText(userName);
