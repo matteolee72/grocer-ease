@@ -177,7 +177,6 @@ public class SingleItemAnalyze extends AppCompatActivity {
                 }
             }
         });
-        
         databaseReference.child("Food").child(barcodeNum).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
