@@ -11,7 +11,9 @@ import com.google.gson.Gson;
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
 
+//OLD TO REMOVE FILE
 public class ScanActivity extends AppCompatActivity {
+
     // Prepare a variable to store the incoming barcode number
     String barcodeNum;
     Gson gson = new Gson();
@@ -19,13 +21,12 @@ public class ScanActivity extends AppCompatActivity {
     private UserDatabaseObject userObject;
 
     // When the activity is created, get the previously scanned information if it exists
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_scan); //outdated
         // Immediately launch the scancode function to retrieve the code using the barcode scanner
         scanCode();
-        finish();
     }
 
     // Set the settings to create the scanning activity and eventually call the barLauncher
@@ -37,11 +38,8 @@ public class ScanActivity extends AppCompatActivity {
         options.setCaptureActivity(CaptureAct.class);
         barLauncher.launch(options);
     }
-    //TODO fix onBackButtonPressed() from scan activity camera - currently displays the old scan page instead of going to main
-    // Determine what to do when the barcode launcher receives the barcode
     ActivityResultLauncher<ScanOptions> barLauncher = registerForActivityResult(new ScanContract(), result->
     {
-
         // Check if we get a valid output from the barcode scanner
         if(result.getContents() != null)
         {
@@ -73,8 +71,4 @@ public class ScanActivity extends AppCompatActivity {
             }
         }
     });
-
-
-
-
 }

@@ -83,7 +83,7 @@ public class QuizActivity extends AppCompatActivity {
 
         EditText userHeight = findViewById(R.id.editTextHeight);
         EditText userWeight = findViewById(R.id.editTextWeight);
-        DatePicker userBirthday = findViewById(R.id.birthdayPicker);
+        CustomDatePicker userBirthday = findViewById(R.id.birthdayPicker);
         Calendar calendarToday = Calendar.getInstance();
         calendarToday.add(Calendar.YEAR, -1);
         userBirthday.setMaxDate(calendarToday.getTimeInMillis());

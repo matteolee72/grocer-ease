@@ -34,12 +34,10 @@ public class ProfileActivity extends AppCompatActivity implements NavigationBarV
         Log.d("Preferences", userPreferencesObject.toString());
 
         ImageView imageView = findViewById(R.id.photo);
-        if (userObject.getUserPreferences().getSex().equals("Male")){
-            imageView.setImageResource(R.drawable.boy);
-            Log.d("profilephoto","User is a BOY");
+        if (userObject.getUserPreferences().getSex().equals("Male")){        
+            imageView.setImageResource(R.drawable.boy_profile);
         } else {
-            imageView.setImageResource(R.drawable.girl);
-            Log.d("profilephoto","User is a GIRL");
+            imageView.setImageResource(R.drawable.girl_profile);
         }
 
         TextView userNameText = findViewById(R.id.username_textview);
@@ -78,7 +76,7 @@ public class ProfileActivity extends AppCompatActivity implements NavigationBarV
             }
         });
 
-        Button editButton;
+        View editButton;
         editButton = findViewById(R.id.edit_button);
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -530,7 +530,9 @@
                         android:layout_marginBottom="10dp"/>
 
 
-                    <DatePicker
+
+
+                    <com.example.grocerease.CustomDatePicker
                         android:id="@+id/birthdayPicker"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
@@ -538,7 +540,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textViewBirthday"
-                        android:layout_marginTop="10dp"/>
+                        android:layout_marginTop="10dp"></com.example.grocerease.CustomDatePicker>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
