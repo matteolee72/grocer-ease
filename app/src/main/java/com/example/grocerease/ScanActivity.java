@@ -11,7 +11,6 @@ import com.google.gson.Gson;
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
 
-
 public class ScanActivity extends AppCompatActivity {
     // Prepare a variable to store the incoming barcode number
     String barcodeNum;
