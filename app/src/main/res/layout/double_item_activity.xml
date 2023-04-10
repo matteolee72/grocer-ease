@@ -7,7 +7,7 @@
     <!--take note: as we need to call each line by id to set the corresponding value, find a away to do this, if not have to create each unique textbox for each value-->
     <include
         android:id="@+id/include"
-        layout="@layout/header" />
+        layout="@layout/grocereaseheader" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/food_card_view_1"
@@ -23,7 +23,7 @@
 
         <ImageView
             android:id="@+id/food_image_1"
-            android:layout_width="90dp"
+            android:layout_width="130dp"
             android:layout_height="140dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="50dp"
@@ -68,12 +68,13 @@
         app:cardCornerRadius="8dp"
         app:cardElevation="10dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/food_card_view_1"
         app:layout_constraintTop_toBottomOf="@+id/include">
 
 
         <ImageView
             android:id="@+id/food_image_2"
-            android:layout_width="90dp"
+            android:layout_width="130dp"
             android:layout_height="140dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="50dp"
@@ -114,8 +115,9 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginBottom="10dp"
         app:cardCornerRadius="8dp"
         app:cardElevation="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
