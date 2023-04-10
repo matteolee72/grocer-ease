@@ -47,6 +47,7 @@ public class FavouritesActivity extends AppCompatActivity implements NavigationB
 
         ImageView imageView = findViewById(R.id.photo);
         if (userObject.getUserPreferences().getSex().equals("Male")){
+
             imageView.setImageResource(R.drawable.boy_profile);
         } else {
             imageView.setImageResource(R.drawable.girl_profile);
