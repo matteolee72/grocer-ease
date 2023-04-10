@@ -15,7 +15,6 @@ import static com.example.grocerease.SingleItemRating.transFatRating;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.widget.TintableCheckedTextView;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -39,8 +38,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.gson.Gson;
 
-import java.util.ArrayList;
-
 public class SingleItemAnalyze extends AppCompatActivity {
 
     //realtime database
@@ -58,6 +55,7 @@ public class SingleItemAnalyze extends AppCompatActivity {
     FoodDatabaseObject foodObject;
 
     Button historyFromSingle;
+    Button favouritesFromSingle;
     Button scan_button;
     private String username;
     private UserDatabaseObject userObject;
@@ -110,12 +108,23 @@ public class SingleItemAnalyze extends AppCompatActivity {
 
         // buttons to navigate to other activities to obtain 2nd item for compare
         historyFromSingle = findViewById(R.id.history_button_single);
+        favouritesFromSingle = findViewById(R.id.favourties_button_single);
 
         // navigate to History Activity from Single Item to choose next item
         historyFromSingle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SingleItemAnalyze.this,HistoryActivity.class);
+                Intent intent = new Intent(SingleItemAnalyze.this, ChooseHistoryActivity.class);
+                intent.putExtra(MainActivity.FIRSTBARCODEKEY, foodObject);
+                startActivity(intent);
+            }
+        });
+
+        // navigate to Favourites Activity from Single Item to choose next item
+        favouritesFromSingle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SingleItemAnalyze.this, ChooseFavouritesActivity.class);
                 intent.putExtra(MainActivity.FIRSTBARCODEKEY, foodObject);
                 startActivity(intent);
             }

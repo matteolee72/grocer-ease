@@ -8,14 +8,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 
-public class HistoryActivity extends AppCompatActivity {
-
+public class ChooseFavouritesActivity extends AppCompatActivity {
     private PreferencesHelper preferencesHelper;
     private UserDatabaseObject userObject;
     Gson gson = new Gson();
-
     @Override
-    protected void onResume(){ //making sure history is re-rendered in the event it is updated
+    protected void onResume(){ //making sure favourites is re-rendered in the event it is updated
         super.onResume();
         // reading from preferences to obtain userObject
         preferencesHelper = new PreferencesHelper(this);
@@ -26,17 +24,16 @@ public class HistoryActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_history);
+        setContentView(R.layout.activity_choose_favourites);
 
         // reading from preferences to obtain userObject
         preferencesHelper = new PreferencesHelper(this);
         String userObjectString = preferencesHelper.readString("userObject","error");
         userObject = gson.fromJson(userObjectString, UserDatabaseObject.class);
 
-        RecyclerView recyclerView = findViewById(R.id.historyRecyclerView);
-        RecyclerView.Adapter<HistoryAdapter.ViewHolder> historyAdapter = new HistoryAdapter(this, userObject.getUserHistory());
-        recyclerView.setAdapter(historyAdapter);
+        RecyclerView recyclerView = findViewById(R.id.favouritesRecyclerView);
+        RecyclerView.Adapter<FavouritesAdapter.ViewHolder> favouritesAdapter = new FavouritesAdapter(this, userObject.getUserFavourites());
+        recyclerView.setAdapter(favouritesAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
-
 }

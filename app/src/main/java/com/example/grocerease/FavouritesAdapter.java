@@ -91,11 +91,21 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Vi
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    UserDatabaseObject userObject = (UserDatabaseObject) ((Activity) context).getIntent().getSerializableExtra(MainActivity.USEROBJECTKEY);
-                    Intent intent = new Intent(context, SingleItemAnalyze.class);
-                    intent.putExtra(MainActivity.FIRSTBARCODEKEY, userFavouritesObject.getID(position));
-                    intent.putExtra(MainActivity.USEROBJECTKEY, userObject );
-                    context.startActivity(intent);
+                    Log.d("activity parent", "onClick: " + ((Activity) context).getClass().getSimpleName());
+                    if (((Activity) context).getClass().getSimpleName().equals("ChooseFavouritesActivity")) {
+                        FoodDatabaseObject foodObject1 = (FoodDatabaseObject) ((Activity) context).getIntent().getSerializableExtra(MainActivity.FIRSTBARCODEKEY);
+                        Intent intent = new Intent(context, TwoItemCompare.class);
+                        intent.putExtra(MainActivity.SECONDBARCODEKEY, userFavouritesObject.getID(position));
+                        intent.putExtra(MainActivity.FIRSTBARCODEKEY, foodObject1);
+                        context.startActivity(intent);
+                    }
+                    else{
+                        UserDatabaseObject userObject = (UserDatabaseObject) ((Activity) context).getIntent().getSerializableExtra(MainActivity.USEROBJECTKEY);
+                        Intent intent = new Intent(context, SingleItemAnalyze.class);
+                        intent.putExtra(MainActivity.FIRSTBARCODEKEY, userFavouritesObject.getID(position));
+                        intent.putExtra(MainActivity.USEROBJECTKEY, userObject);
+                        context.startActivity(intent);
+                    }
                 }
             });
         }

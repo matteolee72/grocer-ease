@@ -92,7 +92,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
                 @Override
                 public void onClick(View view) {
                     Log.d("activity parent", "onClick: " + ((Activity) context).getClass().getSimpleName());
-                    if(((Activity) context).getClass().getSimpleName().equals("HistoryActivity")){
+                    if(((Activity) context).getClass().getSimpleName().equals("ChooseHistoryActivity")){
                         FoodDatabaseObject foodObject1 = (FoodDatabaseObject) ((Activity) context).getIntent().getSerializableExtra(MainActivity.FIRSTBARCODEKEY);
                         Intent intent = new Intent(context, TwoItemCompare.class);
                         intent.putExtra(MainActivity.SECONDBARCODEKEY, userHistoryObject.getID(position));
