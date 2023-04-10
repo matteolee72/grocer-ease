@@ -36,12 +36,13 @@
 
         <TextView
             android:id="@+id/food_company_1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="150dp"
+            android:layout_height="18dp"
             android:layout_gravity="center_horizontal"
             android:layout_margin="26dp"
             android:autoSizeTextType="uniform"
             android:text="Item Company"
+            android:textAlignment="center"
             android:textColor="#000000"
             android:textSize="14dp"
             android:textStyle="italic" />
@@ -49,9 +50,9 @@
         <TextView
             android:id="@+id/food_name_1"
             android:layout_width="140dp"
-            android:layout_height="25dp"
+            android:layout_height="23dp"
             android:layout_gravity="center_horizontal"
-            android:layout_margin="2dp"
+            android:layout_margin="6dp"
             android:autoSizeTextType="uniform"
             android:maxLines="1"
             android:text="Item Name"
@@ -91,25 +92,26 @@
         <TextView
             android:id="@+id/food_name_2"
             android:layout_width="150dp"
-            android:layout_height="25dp"
+            android:layout_height="23dp"
             android:layout_gravity="center_horizontal"
-            android:layout_margin="2dp"
+            android:layout_margin="6dp"
             android:autoSizeTextType="uniform"
             android:maxLines="1"
-            android:textAlignment="center"
             android:text="Item Name"
+            android:textAlignment="center"
             android:textColor="#000000"
             android:textSize="20dp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/food_company_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="150dp"
+            android:layout_height="18dp"
             android:layout_gravity="center_horizontal"
             android:layout_margin="26dp"
             android:autoSizeTextType="uniform"
             android:text="Item Company"
+            android:textAlignment="center"
             android:textColor="#000000"
             android:textSize="14dp"
             android:textStyle="italic" />
