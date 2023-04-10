@@ -73,17 +73,32 @@ public class DatabaseAddActivity extends AppCompatActivity {
                 String foodIronStr = foodIron.getText().toString();
                 String foodCaloriesStr = foodCalories.getText().toString();
                 //----------------==DEBUG==------------------
-                String foodImageURL = "http://www.google.com";
+                String foodImageURL = "grocery_placeholder.png";
                 //--------------==END DEBUG==----------------
                 
-                FoodDatabaseObject foodItem = new FoodDatabaseObject(foodNameStr, foodCompanyStr, foodMassStr, foodProteinStr, foodTotalFatStr, foodSaturatedFatStr, foodTransFatStr, foodCholesterolStr, foodCarbohydrateStr, foodTotalSugarStr, foodDietaryFibreStr, foodSodiumStr, foodIronStr, foodCaloriesStr, foodImageURL);
+                FoodDatabaseObject foodItem = new FoodDatabaseObject(foodNameStr,
+                                                                    foodMassStr,
+                                                                    foodProteinStr,
+                                                                    foodTotalFatStr,
+                                                                    foodSaturatedFatStr,
+                                                                    foodTransFatStr,
+                                                                    foodCholesterolStr,
+                                                                    foodCarbohydrateStr,
+                                                                    foodTotalSugarStr,
+                                                                    foodDietaryFibreStr,
+                                                                    foodSodiumStr,
+                                                                    foodIronStr,
+                                                                    foodCaloriesStr,
+                                                                    foodImageURL,
+                                                                    foodCompanyStr);
+
                 Log.d("databaseAddActivity", foodIDStr);
                 Log.d("databaseAddActivity", foodItem.toString());
                 if (foodIDStr.isEmpty()) {
                     Toast.makeText(DatabaseAddActivity.this, "Key in a food ID value", Toast.LENGTH_LONG).show();
                 }
                 else {
-                    databaseReference.child(foodIDStr).setValue(foodItem); //key is foodIDStr, value is foodItem
+                    databaseReference.child("Food").child(foodIDStr).setValue(foodItem); //key is foodIDStr, value is foodItem
                 }
             }
         });
