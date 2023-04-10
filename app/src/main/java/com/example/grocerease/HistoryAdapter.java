@@ -23,6 +23,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder>{
@@ -61,6 +63,9 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
                 else {
                     FoodDatabaseObject foodDatabaseObject = task.getResult().getValue(FoodDatabaseObject.class);
                     holder.getTextView().setText(foodDatabaseObject.getFoodName());
+                    holder.getCompanyTextView().setText(foodDatabaseObject.getFoodCompany());
+                    holder.getCalorieTextView().setText(foodDatabaseObject.getFoodCalories());
+                    holder.getMassTextView().setText(foodDatabaseObject.getFoodMass());
 
                     String foodImageLink = foodDatabaseObject.getFoodImageURL();
                     StorageReference foodImageStorageReference = storage.getReference().child(foodImageLink);
@@ -80,6 +85,9 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
     class ViewHolder extends RecyclerView.ViewHolder{
         private TextView textView;
         private ImageView imageView;
+        private TextView companyTextView;
+        private TextView calorieTextView;
+        private TextView massTextView;
         private int position;
         public void setPosition(int position){
             this.position = position;
@@ -88,6 +96,9 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
             super(itemView);
             textView = itemView.findViewById(R.id.listText);
             imageView = itemView.findViewById(R.id.listImage);
+            companyTextView = itemView.findViewById(R.id.listCompany);
+            calorieTextView = itemView.findViewById(R.id.listCalories);
+            massTextView = itemView.findViewById(R.id.listMass);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -109,5 +120,8 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         }
         public TextView getTextView() {return textView;}
         public ImageView getImageView() {return imageView;}
+        public TextView getCompanyTextView() {return companyTextView;}
+        public TextView getCalorieTextView() {return calorieTextView;}
+        public TextView getMassTextView() {return massTextView;}
     }
 }

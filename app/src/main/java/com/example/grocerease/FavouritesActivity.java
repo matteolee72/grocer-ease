@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -43,6 +44,15 @@ public class FavouritesActivity extends AppCompatActivity implements NavigationB
 
         TextView userNameText = findViewById(R.id.username_textview);
         userNameText.setText(userName);
+
+        ImageView imageView = findViewById(R.id.photo);
+        if (userObject.getUserPreferences().getSex().equals("Male")){
+
+            imageView.setImageResource(R.drawable.boy_profile);
+        } else {
+            imageView.setImageResource(R.drawable.girl_profile);
+        }
+
 
         NavigationBarView navigationBarView;
         navigationBarView = findViewById(R.id.bottomNavigationView);

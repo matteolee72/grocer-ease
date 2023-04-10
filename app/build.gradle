@@ -33,6 +33,8 @@ android {
 }
 
 dependencies {
+    implementation 'androidx.appcompat:appcompat:1.3.0-beta01'
+    implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'com.google.code.gson:gson:2.8.9' //added Gson dependency to convert objects to String
     implementation 'com.github.bumptech.glide:glide:4.15.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.15.0'
