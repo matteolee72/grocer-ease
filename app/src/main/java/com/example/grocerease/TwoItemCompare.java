@@ -126,6 +126,13 @@ public class TwoItemCompare extends AppCompatActivity {
         Log.i("TwoItemCompare", "Barcode received: "+ foodObject1.toString());
         Log.i("TwoItemCompare", "Barcode received: "+ barcodeNum2);
 
+        UserHistoryObject userHistory = userObject.getUserHistory();
+        userHistory.addToHistory(barcodeNum2);
+        //making sure to update local userObject so that it updates the database correctly
+        String jsonString = gson.toJson(userObject); // returns a Json String object
+        preferencesHelper.writeString("userObject", jsonString);
+        Log.d("userObject", "onCreate: "+userObject.getUserHistory().getFoodHistory());
+
         databaseReference = FirebaseDatabase.getInstance().getReference();
         databaseReference.child("Food").child(barcodeNum2).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override

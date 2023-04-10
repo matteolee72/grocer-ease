@@ -100,10 +100,8 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Vi
                         context.startActivity(intent);
                     }
                     else{
-                        UserDatabaseObject userObject = (UserDatabaseObject) ((Activity) context).getIntent().getSerializableExtra(MainActivity.USEROBJECTKEY);
                         Intent intent = new Intent(context, SingleItemAnalyze.class);
                         intent.putExtra(MainActivity.FIRSTBARCODEKEY, userFavouritesObject.getID(position));
-                        intent.putExtra(MainActivity.USEROBJECTKEY, userObject);
                         context.startActivity(intent);
                     }
                 }

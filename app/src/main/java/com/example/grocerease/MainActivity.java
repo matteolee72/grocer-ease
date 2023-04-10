@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
     // Setting final Strings to be used as keys for passing data between Activities
     public static final String FIRSTBARCODEKEY = "firstBarcode";
     public static final String SECONDBARCODEKEY = "secondBarcode";
-    public static final String USEROBJECTKEY = "userObjectKey"; // for retrieval of the entire user object
+    public static final String USEROBJECTKEY = "userObjectKey";
     NavigationBarView navigationBarView;
     private PreferencesHelper preferencesHelper;
     private UserDatabaseObject userObject;
@@ -70,7 +70,6 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
             case R.id.profile: // database add activity instead of profile
                 Log.i("mainNavigation", "Profile button pressed");
                 Intent intent1 = new Intent(MainActivity.this, FavouritesActivity.class);
-                intent1.putExtra(MainActivity.USEROBJECTKEY,userObject);
                 startActivity(intent1);
                 return true;
         }

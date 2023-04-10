@@ -100,18 +100,14 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
                         context.startActivity(intent);
                     }
                     else{
-                        UserDatabaseObject userObject = (UserDatabaseObject) ((Activity) context).getIntent().getSerializableExtra(MainActivity.USEROBJECTKEY);
                         Intent intent = new Intent(context, SingleItemAnalyze.class);
                         intent.putExtra(MainActivity.FIRSTBARCODEKEY, userHistoryObject.getID(position));
-                        intent.putExtra(MainActivity.USEROBJECTKEY, userObject); // can this be removed? the top one too
                         context.startActivity(intent);
                     }
                 }
             });
         }
-
         public TextView getTextView() {return textView;}
         public ImageView getImageView() {return imageView;}
-
     }
 }

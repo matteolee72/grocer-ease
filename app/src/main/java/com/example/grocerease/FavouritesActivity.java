@@ -61,7 +61,6 @@ public class FavouritesActivity extends AppCompatActivity implements NavigationB
             public void onClick(View view) {
                 Log.d("ButtonPress","Profile Button Clicked");
                 Intent intent = new Intent(FavouritesActivity.this, ProfileActivity.class);
-                intent.putExtra(MainActivity.USEROBJECTKEY,userObject);
                 startActivity(intent);
             }
         });
@@ -75,14 +74,12 @@ public class FavouritesActivity extends AppCompatActivity implements NavigationB
                 // By default, this code block should not be activated on reselect
                 Log.i("mainNavigation", "Home button pressed");
                 Intent intent1 = new Intent(FavouritesActivity.this, MainActivity.class);
-                intent1.putExtra(MainActivity.USEROBJECTKEY,userObject);
                 startActivity(intent1);
                 return true;
             case R.id.scan:
                 // Start the scan page when the scan button is pressed
                 Log.i("mainNavigation", "Scan button pressed");
                 Intent intent2 = new Intent(FavouritesActivity.this, ScanActivity.class);
-                intent2.putExtra(MainActivity.USEROBJECTKEY,userObject);
                 startActivity(intent2);
                 return true;
             case R.id.profile: // database add activity instead of profile
