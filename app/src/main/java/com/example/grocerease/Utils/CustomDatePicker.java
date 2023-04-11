@@ -6,16 +6,15 @@ import android.view.MotionEvent;
 import android.view.ViewParent;
 import android.widget.DatePicker;
 
-public class CustomDatePicker extends DatePicker {
+/** CustomDatePicker is to allow scrolling the DatePicker while it is nested in a scrollView */
 
+public class CustomDatePicker extends DatePicker {
     public CustomDatePicker(Context context) {
         super(context);
     }
-
     public CustomDatePicker(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
-
     public CustomDatePicker(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
