@@ -53,14 +53,15 @@ import com.google.firebase.storage.StorageReference;
 import com.google.gson.Gson;
 
 import java.util.Objects;
-
+/** DoubleItemAnalyze will take in functions from doubleitemrating and singleitemrating to set the
+ *  twoitemcompare activity. This will be called after the singleitemanalyze runs, when the barcode
+ *  scanning/ clicking on favourites/ history returns an item that already exists within the database */
 public class TwoItemCompareActivity extends AppCompatActivity {
     TextView itemName_1, company_1, mass_1, calories_1, percentage_1, totalfat_1, saturatedfat_1,
             transfat_1, cholesterol_1, sodium_1, totalcarbs_1, dietaryfibres_1, totalsugars_1, protein_1, iron_1;
     TextView itemName_2, company_2, mass_2, calories_2, percentage_2, totalfat_2, saturatedfat_2,
             transfat_2, cholesterol_2, sodium_2, totalcarbs_2, dietaryfibres_2, totalsugars_2, protein_2, iron_2;
 
-    final String grams = "g";
     private StorageReference foodImageStorageReference;
     private DatabaseReference databaseReference;
     private FirebaseStorage storage;
@@ -92,6 +93,7 @@ public class TwoItemCompareActivity extends AppCompatActivity {
 
         storage = FirebaseStorage.getInstance();
 
+        // call ids for 1st food item
         itemName_1 = findViewById(R.id.food_name_1);
         company_1 = findViewById(R.id.food_company_1);
         mass_1 = findViewById(R.id.food_mass_1);
@@ -109,6 +111,7 @@ public class TwoItemCompareActivity extends AppCompatActivity {
         iron_1 = findViewById(R.id.iron_1);
         ImageView food_image_1 = findViewById(R.id.food_image_1);
 
+        // call ids for 2nd food item
         itemName_2 = findViewById(R.id.food_name_2);
         company_2 = findViewById(R.id.food_company_2);
         mass_2 = findViewById(R.id.food_mass_2);

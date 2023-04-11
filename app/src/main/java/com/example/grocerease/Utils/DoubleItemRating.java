@@ -5,20 +5,12 @@ import com.example.grocerease.Objects.UserPreferencesObject;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.storage.FirebaseStorage;
 
+/** DoubleItemRating will be called once the user goes from singleitemanalyzeactivity to compare with another object
+ *  This will call on userpreferences, and fooddatabaseobject to compare the nutrients of both foodobjects with
+ *  userpreferences in mind. These functions output whether the nutrient from item 1 or 2 will be normal or bolded.
+ *  Functions will be called in twoitemcompare */
+
 public class DoubleItemRating{
-
-    private DatabaseReference databaseReference;
-    private FirebaseStorage storage;
-
-    static FoodDatabaseObject foodObject1;
-    static FoodDatabaseObject foodObject2;
-
-    UserPreferencesObject userPreference;
-
-    /** works such that for example if bloodpressure is high then run accordingly,this should be done ins scanacitvity*/
-
-    /** If foodobject1 better, return 1, if foodobject2 higher, return 2. put both into twoitemcompare*/
-
 
     public static int compareObjects(double obj1, double obj2) {
         if (obj1 > obj2) {

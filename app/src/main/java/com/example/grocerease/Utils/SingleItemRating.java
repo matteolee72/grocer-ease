@@ -5,17 +5,10 @@ import com.example.grocerease.Objects.UserPreferencesObject;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.storage.FirebaseStorage;
 
+/** SingleItemRating will take on userpreferences and foodobjects to determine whether to shift the threshold of each
+ *  Each nutrient's threshold will be shifted by 10% or wtv we decide. The functions here will be applied within singleitemanalyze*/
 
-/** SingleItemRating will take on userpreferences to determine whether to shift the threshold of each
- *  Each nutrient's threshold will be shifted by 10% or wtv we decide */
 public class SingleItemRating {
-
-    private DatabaseReference databaseReference;
-    private FirebaseStorage storage;
-
-    FoodDatabaseObject foodObject1;
-
-    UserPreferencesObject userPreference;
 
     /** High Blood Pressure - Avoid Sodium, Saturated Fat, Total Sugars
 
