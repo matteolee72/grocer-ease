@@ -206,7 +206,7 @@ public class TwoItemCompare extends AppCompatActivity {
                     mass_1.setText(foodObject1.getFoodMass() + "g");
 
                     String caloriesColor_1 =  caloriesRating(foodObject1,userPreferences);
-                    calories_1.setText(foodObject1.getFoodCalories() + "cal");
+                    calories_1.setText(foodObject1.getFoodCalories() + "kcal");
                     calories_1.setTextColor(Color.parseColor(caloriesColor_1));
                     if (Objects.equals(calBold_1, "BOLD")) {
                         calories_1.setTypeface(calories_1.getTypeface(), Typeface.BOLD);
@@ -320,7 +320,7 @@ public class TwoItemCompare extends AppCompatActivity {
                     mass_2.setText(foodObject2.getFoodMass() + "g");
 
                     String caloriesColor_2 =  caloriesRating(foodObject2,userPreferences);
-                    calories_2.setText(foodObject2.getFoodCalories() + "cal");
+                    calories_2.setText(foodObject2.getFoodCalories() + "kcal");
                     calories_2.setTextColor(Color.parseColor(caloriesColor_2));
                     if (Objects.equals(calBold_2, "BOLD")) {
                         calories_2.setTypeface(calories_2.getTypeface(), Typeface.BOLD);

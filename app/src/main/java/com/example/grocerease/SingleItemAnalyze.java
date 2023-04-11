@@ -219,7 +219,7 @@ public class SingleItemAnalyze extends AppCompatActivity {
                     mass.setText(foodObject.getFoodMass() + "g");
 
                     String caloriesColor =  caloriesRating(foodObject,userPreferences);
-                    calories.setText(foodObject.getFoodCalories() + "cal");
+                    calories.setText(foodObject.getFoodCalories() + "kcal");
                     calories.setTextColor(Color.parseColor(caloriesColor));
 
                     String perc = percCalculator(foodObject,userPreferences);
