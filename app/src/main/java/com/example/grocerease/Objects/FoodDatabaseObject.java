@@ -2,27 +2,36 @@ package com.example.grocerease.Objects;
 
 import java.io.Serializable;
 
+/*** Food Database Object
+ * This is a food object from our Firebase.
+ * It contains all the nutritional information of a single Food item
+ * We have each of these nutritional fields as private attributes, each with getters
+ * We also have arg/no arg constructors to populate the Database ***/
 
 public class FoodDatabaseObject implements Serializable {
+
+    /** ATTRIBUTES **/
     private String foodName;
-    private String foodProtein;// higher
+    private String foodProtein;
     private String foodTotalFat;
     private String foodSaturatedFat;
     private String foodTransFat;
     private String foodCholesterol;
     private String foodCarbohydrate;
     private String foodTotalSugar;
-    private String foodDietaryFibre;// higher
+    private String foodDietaryFibre;
     private String foodSodium;
-    private String foodIron;// higher
+    private String foodIron;
     private String foodCalories;
     private String foodMass;
     private String foodCompany;
     private String foodImageURL;
 
+    /** NO ARG CONSTRUCTOR **/
     public FoodDatabaseObject() {
     }
 
+    /** WITH ARG CONSTRUCTOR **/
     public FoodDatabaseObject(String foodName,
                               String foodMass,
                               String foodProtein,
@@ -56,6 +65,8 @@ public class FoodDatabaseObject implements Serializable {
         this.foodCompany = foodCompany;
 
     }
+
+    /** toString() method **/
     @Override
     public String toString() {
         return "DatabaseItemObject{" +
@@ -74,9 +85,10 @@ public class FoodDatabaseObject implements Serializable {
                 ", foodImageURL='" + foodImageURL + '\'' +
                 ", foodCompany='" + foodCompany + '\'' +
                 ", foodMass='" + foodMass + '\'' +
-
                 '}';
     }
+
+    /** Getters **/
     public String getFoodName() {
         return foodName;
     }
@@ -116,7 +128,6 @@ public class FoodDatabaseObject implements Serializable {
     public String getFoodImageURL() {
         return foodImageURL;
     }
-
     public String getFoodMass() {
         return foodMass;
     }

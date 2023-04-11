@@ -2,15 +2,27 @@ package com.example.grocerease.Objects;
 
 import java.io.Serializable;
 
+/*** User Database Object
+ * This is a user object from our Firebase.
+ * It contains all the user information from our Database
+ * Aside from their username and password, we have 3 other custom objects: Favourites, History, and Preferences
+ * We also have arg/no arg constructors to populate the Database ***/
+
 public class UserDatabaseObject implements Serializable {
+
+    /** ATTRIBUTES **/
     private String userName;
     private String userPassword;
     private UserFavouritesObject userFavourites;
     private UserHistoryObject userHistory;
     private UserPreferencesObject userPreferences;
+
+    /** NO ARG CONSTRUCTOR **/
     public UserDatabaseObject(){
     }
-    // Partial Arg Constructor - we use this in the create account page
+
+    /** PARTIAL ARG CONSTRUCTOR **/
+    // We use this when we create a new user
     public UserDatabaseObject(String userPassword) {
         this.userName = null;
         this.userPassword = userPassword;
@@ -18,7 +30,8 @@ public class UserDatabaseObject implements Serializable {
         this.userHistory = new UserHistoryObject();
         this.userPreferences = null;
     }
-    // With Arg Constructor -  we use this once a user has filled in their username/password
+
+    /** COMPLETE ARG CONSTRUCTOR **/
     public UserDatabaseObject(String userName, String userPassword, UserFavouritesObject userFavourites, UserHistoryObject userHistory, UserPreferencesObject userPreferences) {
         this.userName = userName;
         this.userPassword = userPassword;
@@ -26,7 +39,8 @@ public class UserDatabaseObject implements Serializable {
         this.userHistory = userHistory;
         this.userPreferences = userPreferences;
     }
-    // Getters
+
+    /** GETTERS **/
     public String getUserName() {return userName;}
     public String getUserPassword() {return userPassword;}
     public UserFavouritesObject getUserFavourites() {return userFavourites;}
