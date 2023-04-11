@@ -122,6 +122,8 @@ public class DoubleItemRating{
         return new String[]{transFatline_1, transFatline_2};
     }
 
+
+
     public static String[] saturatedFatSeed(FoodDatabaseObject foodObject1, FoodDatabaseObject foodObject2, UserPreferencesObject userPreference){
         String saturatedFatline_1;
         String saturatedFatline_2;
