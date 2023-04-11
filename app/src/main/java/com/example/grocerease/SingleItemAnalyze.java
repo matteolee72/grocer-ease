@@ -17,6 +17,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -43,8 +44,6 @@ import com.journeyapps.barcodescanner.ScanOptions;
 
 public class SingleItemAnalyze extends AppCompatActivity {
 
-    private String barcodeNum;
-
     //realtime database
     private DatabaseReference databaseReference;
     //for images
@@ -53,8 +52,8 @@ public class SingleItemAnalyze extends AppCompatActivity {
 
     UserPreferencesObject userPreferences;
     
-    TextView itemName, company, mass, calories, percentage, totalfat, saturatedfat, transfat, cholesterol,
-            sodium, totalcarbs, dietaryfibres, totalsugars, protein, iron;
+    TextView itemName, company, mass, calories, percentage, totalFat, saturatedFat, transFat, cholesterol,
+            sodium, totalCarbs, dietaryFibres, totalSugars, protein, iron;
     FoodDatabaseObject foodObject;
     Button historyFromSingle;
     Button favouritesFromSingle;
@@ -97,14 +96,14 @@ public class SingleItemAnalyze extends AppCompatActivity {
         mass = findViewById(R.id.grams_of_contents);
         calories = findViewById(R.id.number_of_calories);
         percentage = findViewById(R.id.perc_of_daily_intake_value);
-        totalfat = findViewById(R.id.total_fat_value);
-        saturatedfat = findViewById(R.id.saturated_fat_value);
-        transfat = findViewById(R.id.trans_fat_value);
+        totalFat = findViewById(R.id.total_fat_value);
+        saturatedFat = findViewById(R.id.saturated_fat_value);
+        transFat = findViewById(R.id.trans_fat_value);
         cholesterol = findViewById(R.id.cholesterol_value);
         sodium = findViewById(R.id.sodium_value);
-        totalcarbs = findViewById(R.id.total_carbohydrates_value);
-        dietaryfibres = findViewById(R.id.dietary_fibres_value);
-        totalsugars = findViewById(R.id.total_sugars_value);
+        totalCarbs = findViewById(R.id.total_carbohydrates_value);
+        dietaryFibres = findViewById(R.id.dietary_fibres_value);
+        totalSugars = findViewById(R.id.total_sugars_value);
         protein = findViewById(R.id.protein_value);
         iron = findViewById(R.id.iron_value);
 
@@ -113,23 +112,17 @@ public class SingleItemAnalyze extends AppCompatActivity {
         favouritesFromSingle = findViewById(R.id.favourties_button_single);
 
         // navigate to History Activity from Single Item to choose next item
-        historyFromSingle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(SingleItemAnalyze.this, ChooseHistoryActivity.class);
-                intent.putExtra(MainActivity.FIRSTBARCODEKEY, foodObject);
-                startActivity(intent);
-            }
+        historyFromSingle.setOnClickListener(v -> {
+            Intent intent = new Intent(SingleItemAnalyze.this, ChooseHistoryActivity.class);
+            intent.putExtra(MainActivity.FIRSTBARCODEKEY, foodObject);
+            startActivity(intent);
         });
 
         // navigate to Favourites Activity from Single Item to choose next item
-        favouritesFromSingle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(SingleItemAnalyze.this, ChooseFavouritesActivity.class);
-                intent.putExtra(MainActivity.FIRSTBARCODEKEY, foodObject);
-                startActivity(intent);
-            }
+        favouritesFromSingle.setOnClickListener(v -> {
+            Intent intent = new Intent(SingleItemAnalyze.this, ChooseFavouritesActivity.class);
+            intent.putExtra(MainActivity.FIRSTBARCODEKEY, foodObject);
+            startActivity(intent);
         });
 
         // Get the barcode number from the previous intent
@@ -182,6 +175,7 @@ public class SingleItemAnalyze extends AppCompatActivity {
             }
         });
         databaseReference.child("Food").child(barcodeNum).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if (!task.isSuccessful()) {
@@ -232,16 +226,16 @@ public class SingleItemAnalyze extends AppCompatActivity {
                     percentage.setText(perc + "%");
 
                     String totalFatColor = totalFatRating(foodObject,userPreferences);
-                    totalfat.setText(foodObject.getFoodTotalFat() + "g");
-                    totalfat.setTextColor(Color.parseColor(totalFatColor));
+                    totalFat.setText(foodObject.getFoodTotalFat() + "g");
+                    totalFat.setTextColor(Color.parseColor(totalFatColor));
 
                     String saturatedFatColor = saturatedFatRating(foodObject,userPreferences);
-                    saturatedfat.setText(foodObject.getFoodSaturatedFat() + "g");
-                    saturatedfat.setTextColor(Color.parseColor(saturatedFatColor));
+                    saturatedFat.setText(foodObject.getFoodSaturatedFat() + "g");
+                    saturatedFat.setTextColor(Color.parseColor(saturatedFatColor));
 
                     String transFatColor = transFatRating(foodObject,userPreferences);
-                    transfat.setText(foodObject.getFoodTransFat() + "g");
-                    transfat.setTextColor(Color.parseColor(transFatColor));
+                    transFat.setText(foodObject.getFoodTransFat() + "g");
+                    transFat.setTextColor(Color.parseColor(transFatColor));
 
                     String cholesterolColor = cholesterolRating(foodObject,userPreferences);
                     cholesterol.setText(foodObject.getFoodCholesterol() + "mg");
@@ -252,16 +246,16 @@ public class SingleItemAnalyze extends AppCompatActivity {
                     sodium.setTextColor(Color.parseColor(sodiumColor));
 
                     String totalCarbohydratesColor = totalCarbohydratesRating(foodObject,userPreferences);
-                    totalcarbs.setText(foodObject.getFoodCarbohydrate() + "g");
-                    totalcarbs.setTextColor(Color.parseColor(totalCarbohydratesColor));
+                    totalCarbs.setText(foodObject.getFoodCarbohydrate() + "g");
+                    totalCarbs.setTextColor(Color.parseColor(totalCarbohydratesColor));
 
                     String dietaryFibresColor = dietaryFibreRating(foodObject,userPreferences);
-                    dietaryfibres.setText(foodObject.getFoodDietaryFibre() + "g");
-                    dietaryfibres.setTextColor(Color.parseColor(dietaryFibresColor));
+                    dietaryFibres.setText(foodObject.getFoodDietaryFibre() + "g");
+                    dietaryFibres.setTextColor(Color.parseColor(dietaryFibresColor));
 
                     String sugarColor = sugarRating(foodObject,userPreferences);
-                    totalsugars.setText(foodObject.getFoodTotalSugar() + "g");
-                    totalsugars.setTextColor(Color.parseColor(sugarColor));
+                    totalSugars.setText(foodObject.getFoodTotalSugar() + "g");
+                    totalSugars.setTextColor(Color.parseColor(sugarColor));
 
                     String proteinColor = proteinRating(foodObject,userPreferences);
                     protein.setText(foodObject.getFoodProtein() + "g");
@@ -305,11 +299,10 @@ public class SingleItemAnalyze extends AppCompatActivity {
         {
             // Prepare a new intent singleItemToScan so we can get the result from the previous
             // activity and store it to firstFoodItem
-            Intent singleItemToScan = getIntent();
             FoodDatabaseObject firstFoodItem = foodObject;
 
             // Make a log of what we receive from the server
-            barcodeNum = result.getContents();
+            String barcodeNum = result.getContents();
             Log.d("scanActivity", barcodeNum);
 
             // If firstFoodItem contains something, then we assume that we are now
@@ -321,6 +314,4 @@ public class SingleItemAnalyze extends AppCompatActivity {
             finish();
         }
     });
-
-
 }
