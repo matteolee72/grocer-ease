@@ -378,31 +378,31 @@ public class SingleItemRating {
 
     public static String caloriesRating(FoodDatabaseObject foodObject1, UserPreferencesObject userPreference) {
 
-        double highThreshold = 200;
+        double highThreshold = 300;
         double lowThreshold = 100;
 
         String caloriesColor;
         double caloriesLevel = Double.parseDouble(foodObject1.getFoodCalories());
         if (userPreference.getWeightGoals().equals("Gain Weight")) {
             // Unhealthy levels, shift lower threshold higher
-            if (caloriesLevel > highThreshold + 300 || caloriesLevel < lowThreshold + 50) {
+            if (caloriesLevel > highThreshold + 100 || caloriesLevel < lowThreshold) {
                 caloriesColor = "#D60000";
                 // maintain, normal threshold
-            } else if (caloriesLevel >= lowThreshold + 50 && caloriesLevel < highThreshold) {
+            } else if (caloriesLevel >= lowThreshold && caloriesLevel < highThreshold - 100) {
                 caloriesColor = "#000000";
-                // good for user to increase blood pressure
+                // good for user to gain weight
             } else {
                 caloriesColor = "#00A877";
             }
 
         } else if (userPreference.getWeightGoals().equals("Lose Weight")) {
             // Unhealthy levels, shift upper threshold lower
-            if (caloriesLevel > highThreshold) {
+            if (caloriesLevel > highThreshold - 100 || caloriesLevel < lowThreshold - 50) {
                 caloriesColor = "#D60000";
                 // maintain normal threshold
-            } else if (caloriesLevel >= lowThreshold) {
+            } else if (caloriesLevel >= lowThreshold + 50 && caloriesLevel <= highThreshold - 50) {
                 caloriesColor = "#000000";
-                // good for user to decrease blood pressure
+                // good for user to reduce weight
             } else {
                 caloriesColor = "#00A877";
             }
