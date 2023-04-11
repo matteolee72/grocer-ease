@@ -11,6 +11,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 
+import com.example.grocerease.Objects.FoodDatabaseObject;
+import com.example.grocerease.Objects.UserDatabaseObject;
+import com.example.grocerease.Utils.CaptureAct;
+import com.example.grocerease.Utils.HistoryAdapter;
+import com.example.grocerease.Utils.PreferencesHelper;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.gson.Gson;
 import com.journeyapps.barcodescanner.ScanContract;
@@ -102,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
             // If firstFoodItem contains nothing, then we assume that we are scanning the first barcode
             // so we pass the barcode number that we scan and pass it to the next activity
             if (firstFoodItem == null){
-                Intent intent = new Intent(MainActivity.this, SingleItemAnalyze.class);
+                Intent intent = new Intent(MainActivity.this, SingleItemAnalyzeActivity.class);
                 intent.putExtra(MainActivity.FIRSTBARCODEKEY, barcodeNum);
                 startActivity(intent);
                 finish();
@@ -110,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
             else{
                 // If firstFoodItem contains something, then we assume that we are now
                 // scanning the second barcode. So we run this block of code.
-                Intent intent = new Intent(MainActivity.this, TwoItemCompare.class);
+                Intent intent = new Intent(MainActivity.this, TwoItemCompareActivity.class);
                 intent.putExtra(MainActivity.FIRSTBARCODEKEY, firstFoodItem); //Using putExtra, implement mPreferences next
                 intent.putExtra(MainActivity.SECONDBARCODEKEY, barcodeNum);
                 startActivity(intent);

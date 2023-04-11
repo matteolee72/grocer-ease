@@ -1,7 +1,7 @@
-package com.example.grocerease;
+package com.example.grocerease.Utils;
 
-import android.widget.TextView;
-
+import com.example.grocerease.Objects.FoodDatabaseObject;
+import com.example.grocerease.Objects.UserPreferencesObject;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.storage.FirebaseStorage;
 
@@ -63,7 +63,7 @@ public class SingleItemRating {
                 sodiumColor = "#00A877";
             }
 
-        } else if (userPreference.getBloodSugarLevels().equals("High")) {
+        } else if (userPreference.getBloodPressure().equals("High")) {
             // Unhealthy levels, shift upper threshold lower
             if (sodiumLevel > highThreshold - 100) {
                 sodiumColor = "#D60000";
@@ -408,10 +408,10 @@ public class SingleItemRating {
             }
         } else {
             // Unhealthy levels, shift upper threshold lower
-            if (caloriesLevel > highThreshold || caloriesLevel < lowThreshold) {
+            if (caloriesLevel > highThreshold) {
                 caloriesColor = "#D60000";
                 // maintain normal threshold
-            } else if (caloriesLevel >= lowThreshold) {
+            } else if (caloriesLevel >= lowThreshold && caloriesLevel <= highThreshold) {
                 caloriesColor = "#000000";
                 // good for user to decrease blood pressure
             } else {

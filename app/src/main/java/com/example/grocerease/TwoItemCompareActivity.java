@@ -1,28 +1,28 @@
 package com.example.grocerease;
 
-import static com.example.grocerease.DoubleItemRating.caloriesSeed;
-import static com.example.grocerease.DoubleItemRating.carbSeed;
-import static com.example.grocerease.DoubleItemRating.cholesterolSeed;
-import static com.example.grocerease.DoubleItemRating.dietarySeed;
-import static com.example.grocerease.DoubleItemRating.ironSeed;
-import static com.example.grocerease.DoubleItemRating.proteinSeed;
-import static com.example.grocerease.DoubleItemRating.saturatedFatSeed;
-import static com.example.grocerease.DoubleItemRating.sodiumSeed;
-import static com.example.grocerease.DoubleItemRating.sugarSeed;
-import static com.example.grocerease.DoubleItemRating.totalFatSeed;
-import static com.example.grocerease.DoubleItemRating.transFatSeed;
-import static com.example.grocerease.SingleItemRating.caloriesRating;
-import static com.example.grocerease.SingleItemRating.cholesterolRating;
-import static com.example.grocerease.SingleItemRating.dietaryFibreRating;
-import static com.example.grocerease.SingleItemRating.ironRating;
-import static com.example.grocerease.SingleItemRating.percCalculator;
-import static com.example.grocerease.SingleItemRating.proteinRating;
-import static com.example.grocerease.SingleItemRating.saturatedFatRating;
-import static com.example.grocerease.SingleItemRating.sodiumRating;
-import static com.example.grocerease.SingleItemRating.sugarRating;
-import static com.example.grocerease.SingleItemRating.totalCarbohydratesRating;
-import static com.example.grocerease.SingleItemRating.totalFatRating;
-import static com.example.grocerease.SingleItemRating.transFatRating;
+import static com.example.grocerease.Utils.DoubleItemRating.caloriesSeed;
+import static com.example.grocerease.Utils.DoubleItemRating.carbSeed;
+import static com.example.grocerease.Utils.DoubleItemRating.cholesterolSeed;
+import static com.example.grocerease.Utils.DoubleItemRating.dietarySeed;
+import static com.example.grocerease.Utils.DoubleItemRating.ironSeed;
+import static com.example.grocerease.Utils.DoubleItemRating.proteinSeed;
+import static com.example.grocerease.Utils.DoubleItemRating.saturatedFatSeed;
+import static com.example.grocerease.Utils.DoubleItemRating.sodiumSeed;
+import static com.example.grocerease.Utils.DoubleItemRating.sugarSeed;
+import static com.example.grocerease.Utils.DoubleItemRating.totalFatSeed;
+import static com.example.grocerease.Utils.DoubleItemRating.transFatSeed;
+import static com.example.grocerease.Utils.SingleItemRating.caloriesRating;
+import static com.example.grocerease.Utils.SingleItemRating.cholesterolRating;
+import static com.example.grocerease.Utils.SingleItemRating.dietaryFibreRating;
+import static com.example.grocerease.Utils.SingleItemRating.ironRating;
+import static com.example.grocerease.Utils.SingleItemRating.percCalculator;
+import static com.example.grocerease.Utils.SingleItemRating.proteinRating;
+import static com.example.grocerease.Utils.SingleItemRating.saturatedFatRating;
+import static com.example.grocerease.Utils.SingleItemRating.sodiumRating;
+import static com.example.grocerease.Utils.SingleItemRating.sugarRating;
+import static com.example.grocerease.Utils.SingleItemRating.totalCarbohydratesRating;
+import static com.example.grocerease.Utils.SingleItemRating.totalFatRating;
+import static com.example.grocerease.Utils.SingleItemRating.transFatRating;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -38,6 +38,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.grocerease.Objects.FoodDatabaseObject;
+import com.example.grocerease.Objects.UserDatabaseObject;
+import com.example.grocerease.Objects.UserHistoryObject;
+import com.example.grocerease.Objects.UserPreferencesObject;
+import com.example.grocerease.Utils.PreferencesHelper;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -49,7 +54,7 @@ import com.google.gson.Gson;
 
 import java.util.Objects;
 
-public class TwoItemCompare extends AppCompatActivity {
+public class TwoItemCompareActivity extends AppCompatActivity {
     TextView itemName_1, company_1, mass_1, calories_1, percentage_1, totalfat_1, saturatedfat_1,
             transfat_1, cholesterol_1, sodium_1, totalcarbs_1, dietaryfibres_1, totalsugars_1, protein_1, iron_1;
     TextView itemName_2, company_2, mass_2, calories_2, percentage_2, totalfat_2, saturatedfat_2,
@@ -70,14 +75,14 @@ public class TwoItemCompare extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(TwoItemCompare.this, MainActivity.class);
+        Intent intent = new Intent(TwoItemCompareActivity.this, MainActivity.class);
         startActivity(intent);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.double_item_activity);
+        setContentView(R.layout.activity_double_item);
 
         // reading from preferences to obtain userObject
         preferencesHelper = new PreferencesHelper(this);
@@ -124,8 +129,8 @@ public class TwoItemCompare extends AppCompatActivity {
         Intent intent = getIntent();
         foodObject1 = (FoodDatabaseObject) intent.getSerializableExtra(MainActivity.FIRSTBARCODEKEY);
         barcodeNum2 = intent.getStringExtra(MainActivity.SECONDBARCODEKEY);
-        Log.i("TwoItemCompare", "Barcode received: "+ foodObject1.toString());
-        Log.i("TwoItemCompare", "Barcode received: "+ barcodeNum2);
+        Log.i("TwoItemCompareActivity", "Barcode received: "+ foodObject1.toString());
+        Log.i("TwoItemCompareActivity", "Barcode received: "+ barcodeNum2);
 
         UserHistoryObject userHistory = userObject.getUserHistory();
         userHistory.addToHistory(barcodeNum2);
@@ -142,13 +147,13 @@ public class TwoItemCompare extends AppCompatActivity {
                     Log.e("firebase", "Error getting data", task.getException());
                 } else if (task.getResult().getValue(Object.class) == null) {
                     Log.e("firebase", "Item does not exist in database");
-                    Toast.makeText(TwoItemCompare.this, barcodeNum2.toString() + " is not in database", Toast.LENGTH_LONG).show();
-                    AlertDialog.Builder builder = new AlertDialog.Builder(TwoItemCompare.this);
+                    Toast.makeText(TwoItemCompareActivity.this, barcodeNum2.toString() + " is not in database", Toast.LENGTH_LONG).show();
+                    AlertDialog.Builder builder = new AlertDialog.Builder(TwoItemCompareActivity.this);
                     builder.setMessage("Would you like to add it to the database?").setTitle("Item does not exist in database");
 
                     builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-                            Intent addActivityIntent = new Intent(TwoItemCompare.this, DatabaseAddActivity.class);
+                            Intent addActivityIntent = new Intent(TwoItemCompareActivity.this, DatabaseAddActivity.class);
                             addActivityIntent.putExtra(MainActivity.FIRSTBARCODEKEY, barcodeNum2); // just because FIRSTBARCODEKEY is what add activity uses
                             startActivity(addActivityIntent);
                         }
@@ -164,8 +169,8 @@ public class TwoItemCompare extends AppCompatActivity {
                 }
                 else {
                     foodObject2 = task.getResult().getValue(FoodDatabaseObject.class);
-                    Log.i("TwoItemCompare", "Object1 from intent" + foodObject1.toString());
-                    Log.i("TwoItemCompare", "Object2 from database" + foodObject2.toString());
+                    Log.i("TwoItemCompareActivity", "Object1 from intent" + foodObject1.toString());
+                    Log.i("TwoItemCompareActivity", "Object2 from database" + foodObject2.toString());
 
                     userPreferences = userObject.getUserPreferences();
 

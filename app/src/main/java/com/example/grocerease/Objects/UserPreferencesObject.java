@@ -1,4 +1,4 @@
-package com.example.grocerease;
+package com.example.grocerease.Objects;
 
 import java.io.Serializable;
 import java.util.Date;

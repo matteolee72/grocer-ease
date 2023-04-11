@@ -1,10 +1,9 @@
-package com.example.grocerease;
+package com.example.grocerease.Utils;
 
+import com.example.grocerease.Objects.FoodDatabaseObject;
+import com.example.grocerease.Objects.UserPreferencesObject;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.storage.FirebaseStorage;
-
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 
 public class DoubleItemRating{
 
@@ -30,13 +29,6 @@ public class DoubleItemRating{
             return 0;
         }
     }
-
-
-
-
-
-
-
 
 //    public static Integer sugarCompare(FoodDatabaseObject foodObject1, FoodDatabaseObject foodObject2) {
 //
@@ -256,22 +248,22 @@ public class DoubleItemRating{
             caloriesline_1 = "NORMAL";
             caloriesline_2 = "NORMAL";
         } else {
-            if (userPreference.getWeightGoals().equals("Lose Weight")) { // if i have high chol, less chol
+            if (userPreference.getWeightGoals().equals("Gain Weight")) { // if i have high chol, less chol
                 if (calres == 1) {
-                    caloriesline_1 = "NORMAL";
-                    caloriesline_2 = "BOLD";
-                } else {
                     caloriesline_1 = "BOLD";
                     caloriesline_2 = "NORMAL";
+                } else {
+                    caloriesline_1 = "NORMAL";
+                    caloriesline_2 = "BOLD";
                 }
             } else {
                 // gain weight and normal same
                 if (calres == 1) {
-                    caloriesline_1 = "BOLD";
-                    caloriesline_2 = "NORMAL";
-                } else {
                     caloriesline_1 = "NORMAL";
                     caloriesline_2 = "BOLD";
+                } else {
+                    caloriesline_1 = "BOLD";
+                    caloriesline_2 = "NORMAL";
                 }
             }
         }

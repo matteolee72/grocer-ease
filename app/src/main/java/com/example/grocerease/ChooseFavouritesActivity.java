@@ -6,6 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.grocerease.Objects.UserDatabaseObject;
+import com.example.grocerease.Utils.FavouritesAdapter;
+import com.example.grocerease.Utils.PreferencesHelper;
 import com.google.gson.Gson;
 
 public class ChooseFavouritesActivity extends AppCompatActivity {

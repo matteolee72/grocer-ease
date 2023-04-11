@@ -1,4 +1,4 @@
-package com.example.grocerease;
+package com.example.grocerease.Utils;
 
 import android.content.Context;
 import android.util.AttributeSet;

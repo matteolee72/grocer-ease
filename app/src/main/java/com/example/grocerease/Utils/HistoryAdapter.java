@@ -1,4 +1,4 @@
-package com.example.grocerease;
+package com.example.grocerease.Utils;
 import android.content.Context;
 
 import android.app.Activity;
@@ -11,10 +11,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.core.view.accessibility.AccessibilityViewCommand;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.load.resource.gif.GifDrawable;
+import com.example.grocerease.Objects.FoodDatabaseObject;
+import com.example.grocerease.GlideApp;
+import com.example.grocerease.MainActivity;
+import com.example.grocerease.R;
+import com.example.grocerease.SingleItemAnalyzeActivity;
+import com.example.grocerease.TwoItemCompareActivity;
+import com.example.grocerease.Objects.UserHistoryObject;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -22,8 +27,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -82,7 +85,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
     public int getItemCount() {
         return userHistoryObject.getSize();
     }
-    class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder{
         private TextView textView;
         private ImageView imageView;
         private TextView companyTextView;
@@ -105,13 +108,13 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
                     Log.d("activity parent", "onClick: " + ((Activity) context).getClass().getSimpleName());
                     if(((Activity) context).getClass().getSimpleName().equals("ChooseHistoryActivity")){
                         FoodDatabaseObject foodObject1 = (FoodDatabaseObject) ((Activity) context).getIntent().getSerializableExtra(MainActivity.FIRSTBARCODEKEY);
-                        Intent intent = new Intent(context, TwoItemCompare.class);
+                        Intent intent = new Intent(context, TwoItemCompareActivity.class);
                         intent.putExtra(MainActivity.SECONDBARCODEKEY, userHistoryObject.getID(position));
                         intent.putExtra(MainActivity.FIRSTBARCODEKEY, foodObject1);
                         context.startActivity(intent);
                     }
                     else{
-                        Intent intent = new Intent(context, SingleItemAnalyze.class);
+                        Intent intent = new Intent(context, SingleItemAnalyzeActivity.class);
                         intent.putExtra(MainActivity.FIRSTBARCODEKEY, userHistoryObject.getID(position));
                         context.startActivity(intent);
                     }

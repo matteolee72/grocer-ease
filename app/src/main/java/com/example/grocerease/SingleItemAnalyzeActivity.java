@@ -1,17 +1,17 @@
 package com.example.grocerease;
 
-import static com.example.grocerease.SingleItemRating.caloriesRating;
-import static com.example.grocerease.SingleItemRating.cholesterolRating;
-import static com.example.grocerease.SingleItemRating.dietaryFibreRating;
-import static com.example.grocerease.SingleItemRating.ironRating;
-import static com.example.grocerease.SingleItemRating.percCalculator;
-import static com.example.grocerease.SingleItemRating.proteinRating;
-import static com.example.grocerease.SingleItemRating.saturatedFatRating;
-import static com.example.grocerease.SingleItemRating.sodiumRating;
-import static com.example.grocerease.SingleItemRating.sugarRating;
-import static com.example.grocerease.SingleItemRating.totalCarbohydratesRating;
-import static com.example.grocerease.SingleItemRating.totalFatRating;
-import static com.example.grocerease.SingleItemRating.transFatRating;
+import static com.example.grocerease.Utils.SingleItemRating.caloriesRating;
+import static com.example.grocerease.Utils.SingleItemRating.cholesterolRating;
+import static com.example.grocerease.Utils.SingleItemRating.dietaryFibreRating;
+import static com.example.grocerease.Utils.SingleItemRating.ironRating;
+import static com.example.grocerease.Utils.SingleItemRating.percCalculator;
+import static com.example.grocerease.Utils.SingleItemRating.proteinRating;
+import static com.example.grocerease.Utils.SingleItemRating.saturatedFatRating;
+import static com.example.grocerease.Utils.SingleItemRating.sodiumRating;
+import static com.example.grocerease.Utils.SingleItemRating.sugarRating;
+import static com.example.grocerease.Utils.SingleItemRating.totalCarbohydratesRating;
+import static com.example.grocerease.Utils.SingleItemRating.totalFatRating;
+import static com.example.grocerease.Utils.SingleItemRating.transFatRating;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
@@ -31,6 +31,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.example.grocerease.Objects.FoodDatabaseObject;
+import com.example.grocerease.Objects.UserDatabaseObject;
+import com.example.grocerease.Objects.UserFavouritesObject;
+import com.example.grocerease.Objects.UserHistoryObject;
+import com.example.grocerease.Objects.UserPreferencesObject;
+import com.example.grocerease.Utils.CaptureAct;
+import com.example.grocerease.Utils.PreferencesHelper;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -42,7 +49,7 @@ import com.google.gson.Gson;
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
 
-public class SingleItemAnalyze extends AppCompatActivity {
+public class SingleItemAnalyzeActivity extends AppCompatActivity {
 
     //realtime database
     private DatabaseReference databaseReference;
@@ -65,13 +72,13 @@ public class SingleItemAnalyze extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(SingleItemAnalyze.this, MainActivity.class);
+        Intent intent = new Intent(SingleItemAnalyzeActivity.this, MainActivity.class);
         startActivity(intent);
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.single_item_activity);
+        setContentView(R.layout.activity_single_item);
 
         // DatabaseReference provides a handle to the firebase database such that we can access the
         // information contained at the key <barcodeNum>
@@ -113,14 +120,14 @@ public class SingleItemAnalyze extends AppCompatActivity {
 
         // navigate to History Activity from Single Item to choose next item
         historyFromSingle.setOnClickListener(v -> {
-            Intent intent = new Intent(SingleItemAnalyze.this, ChooseHistoryActivity.class);
+            Intent intent = new Intent(SingleItemAnalyzeActivity.this, ChooseHistoryActivity.class);
             intent.putExtra(MainActivity.FIRSTBARCODEKEY, foodObject);
             startActivity(intent);
         });
 
         // navigate to Favourites Activity from Single Item to choose next item
         favouritesFromSingle.setOnClickListener(v -> {
-            Intent intent = new Intent(SingleItemAnalyze.this, ChooseFavouritesActivity.class);
+            Intent intent = new Intent(SingleItemAnalyzeActivity.this, ChooseFavouritesActivity.class);
             intent.putExtra(MainActivity.FIRSTBARCODEKEY, foodObject);
             startActivity(intent);
         });
@@ -182,13 +189,13 @@ public class SingleItemAnalyze extends AppCompatActivity {
                     Log.e("firebase", "Error getting data", task.getException());
                 } else if (task.getResult().getValue(Object.class) == null) {
                     Log.e("firebase", "Item does not exist in database");
-                    Toast.makeText(SingleItemAnalyze.this, barcodeNum + " is not in database", Toast.LENGTH_LONG).show();
-                    AlertDialog.Builder builder = new AlertDialog.Builder(SingleItemAnalyze.this);
+                    Toast.makeText(SingleItemAnalyzeActivity.this, barcodeNum + " is not in database", Toast.LENGTH_LONG).show();
+                    AlertDialog.Builder builder = new AlertDialog.Builder(SingleItemAnalyzeActivity.this);
                     builder.setMessage("Would you like to add it to the database?").setTitle("Item does not exist in the database");
 
                     builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-                            Intent addActivityIntent = new Intent(SingleItemAnalyze.this, DatabaseAddActivity.class);
+                            Intent addActivityIntent = new Intent(SingleItemAnalyzeActivity.this, DatabaseAddActivity.class);
                             addActivityIntent.putExtra(MainActivity.FIRSTBARCODEKEY,barcodeNum);
                             startActivity(addActivityIntent);
                             finish();
@@ -196,7 +203,7 @@ public class SingleItemAnalyze extends AppCompatActivity {
                     });
                     builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-                            Intent intent = new Intent(SingleItemAnalyze.this,MainActivity.class);
+                            Intent intent = new Intent(SingleItemAnalyzeActivity.this,MainActivity.class);
                             startActivity(intent);
                             finish();
                         }
@@ -220,7 +227,7 @@ public class SingleItemAnalyze extends AppCompatActivity {
                     company.setText(foodObject.getFoodCompany());
                     mass.setText(foodObject.getFoodMass() + "g");
 
-                    String caloriesColor =  caloriesRating(foodObject,userPreferences);
+                    String caloriesColor = caloriesRating(foodObject,userPreferences);
                     calories.setText(foodObject.getFoodCalories() + "kcal");
                     calories.setTextColor(Color.parseColor(caloriesColor));
 
@@ -308,7 +315,7 @@ public class SingleItemAnalyze extends AppCompatActivity {
 
             // If firstFoodItem contains something, then we assume that we are now
             // scanning the second barcode. So we run this block of code.
-            Intent intent = new Intent(SingleItemAnalyze.this, TwoItemCompare.class);
+            Intent intent = new Intent(SingleItemAnalyzeActivity.this, TwoItemCompareActivity.class);
             intent.putExtra(MainActivity.FIRSTBARCODEKEY, firstFoodItem); //Using putExtra, implement mPreferences next
             intent.putExtra(MainActivity.SECONDBARCODEKEY, barcodeNum);
             startActivity(intent);

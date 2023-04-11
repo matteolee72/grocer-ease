@@ -9,13 +9,21 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.grocerease.Objects.FoodDatabaseObject;
+import com.example.grocerease.Objects.UserDatabaseObject;
+import com.example.grocerease.Utils.CaptureAct;
+import com.example.grocerease.Utils.FavouritesAdapter;
+import com.example.grocerease.Utils.PreferencesHelper;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.gson.Gson;
+import com.journeyapps.barcodescanner.ScanContract;
+import com.journeyapps.barcodescanner.ScanOptions;
 
 public class FavouritesActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener{
 
@@ -89,8 +97,7 @@ public class FavouritesActivity extends AppCompatActivity implements NavigationB
             case R.id.scan:
                 // Start the scan page when the scan button is pressed
                 Log.i("mainNavigation", "Scan button pressed");
-                Intent intent2 = new Intent(FavouritesActivity.this, ScanActivity.class);
-                startActivity(intent2);
+                scanCode();
                 return true;
             case R.id.profile: // database add activity instead of profile
                 Log.i("mainNavigation", "Profile button pressed");
@@ -98,4 +105,45 @@ public class FavouritesActivity extends AppCompatActivity implements NavigationB
         }
         return false;
     }
+
+    public void scanCode() {
+        ScanOptions options = new ScanOptions();
+        options.setPrompt("Volume up to flash on");
+        options.setBeepEnabled(true);
+        options.setOrientationLocked(true);
+        options.setCaptureActivity(CaptureAct.class);
+        barLauncher.launch(options);
+    }
+    ActivityResultLauncher<ScanOptions> barLauncher = registerForActivityResult(new ScanContract(), result->
+    {
+        // Check if we get a valid output from the barcode scanner
+        if(result.getContents() != null)
+        {
+            // Prepare a new intent singleItemToScan so we can get the result from the previous
+            // activity and store it to firstFoodItem
+            Intent singleItemToScan = getIntent();
+            FoodDatabaseObject firstFoodItem = (FoodDatabaseObject) singleItemToScan.getSerializableExtra(MainActivity.FIRSTBARCODEKEY);
+
+            // Make a log of what we receive from the server
+            String barcodeNum = result.getContents();
+
+            // If firstFoodItem contains nothing, then we assume that we are scanning the first barcode
+            // so we pass the barcode number that we scan and pass it to the next activity
+            if (firstFoodItem == null){
+                Intent intent = new Intent(FavouritesActivity.this, SingleItemAnalyzeActivity.class);
+                intent.putExtra(MainActivity.FIRSTBARCODEKEY, barcodeNum);
+                startActivity(intent);
+                finish();
+            }
+            else{
+                // If firstFoodItem contains something, then we assume that we are now
+                // scanning the second barcode. So we run this block of code.
+                Intent intent = new Intent(FavouritesActivity.this, TwoItemCompareActivity.class);
+                intent.putExtra(MainActivity.FIRSTBARCODEKEY, firstFoodItem); //Using putExtra, implement mPreferences next
+                intent.putExtra(MainActivity.SECONDBARCODEKEY, barcodeNum);
+                startActivity(intent);
+                finish();
+            }
+        }
+    });
 }

@@ -1,4 +1,4 @@
-package com.example.grocerease;
+package com.example.grocerease.Utils;
 
 import android.app.Activity;
 import android.content.Context;
@@ -13,6 +13,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.grocerease.Objects.FoodDatabaseObject;
+import com.example.grocerease.GlideApp;
+import com.example.grocerease.MainActivity;
+import com.example.grocerease.R;
+import com.example.grocerease.SingleItemAnalyzeActivity;
+import com.example.grocerease.TwoItemCompareActivity;
+import com.example.grocerease.Objects.UserFavouritesObject;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -80,7 +87,7 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Vi
     public int getItemCount() {
         return userFavouritesObject.getSize();
     }
-    class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder{
         private TextView textView;
         private ImageView imageView;
         private TextView companyTextView;
@@ -103,13 +110,13 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Vi
                     Log.d("activity parent", "onClick: " + ((Activity) context).getClass().getSimpleName());
                     if (((Activity) context).getClass().getSimpleName().equals("ChooseFavouritesActivity")) {
                         FoodDatabaseObject foodObject1 = (FoodDatabaseObject) ((Activity) context).getIntent().getSerializableExtra(MainActivity.FIRSTBARCODEKEY);
-                        Intent intent = new Intent(context, TwoItemCompare.class);
+                        Intent intent = new Intent(context, TwoItemCompareActivity.class);
                         intent.putExtra(MainActivity.SECONDBARCODEKEY, userFavouritesObject.getID(position));
                         intent.putExtra(MainActivity.FIRSTBARCODEKEY, foodObject1);
                         context.startActivity(intent);
                     }
                     else{
-                        Intent intent = new Intent(context, SingleItemAnalyze.class);
+                        Intent intent = new Intent(context, SingleItemAnalyzeActivity.class);
                         intent.putExtra(MainActivity.FIRSTBARCODEKEY, userFavouritesObject.getID(position));
                         context.startActivity(intent);
                     }
