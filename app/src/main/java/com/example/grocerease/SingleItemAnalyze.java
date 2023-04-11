@@ -191,12 +191,14 @@ public class SingleItemAnalyze extends AppCompatActivity {
                             Intent addActivityIntent = new Intent(SingleItemAnalyze.this, DatabaseAddActivity.class);
                             addActivityIntent.putExtra(MainActivity.FIRSTBARCODEKEY,barcodeNum);
                             startActivity(addActivityIntent);
+                            finish();
                         }
                     });
                     builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             Intent intent = new Intent(SingleItemAnalyze.this,MainActivity.class);
                             startActivity(intent);
+                            finish();
                         }
                     });
                     AlertDialog dialog = builder.create();
@@ -303,7 +305,6 @@ public class SingleItemAnalyze extends AppCompatActivity {
 
             // Make a log of what we receive from the server
             String barcodeNum = result.getContents();
-            Log.d("scanActivity", barcodeNum);
 
             // If firstFoodItem contains something, then we assume that we are now
             // scanning the second barcode. So we run this block of code.

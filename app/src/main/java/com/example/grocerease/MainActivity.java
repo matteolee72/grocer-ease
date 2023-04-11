@@ -48,7 +48,6 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         userObject = gson.fromJson(userObjectString, UserDatabaseObject.class);
 
         navigationBarView = findViewById(R.id.bottomNavigationView);
-
         navigationBarView.setOnItemSelectedListener(this);
         navigationBarView.setSelectedItemId(R.id.home);
 
@@ -78,7 +77,6 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         }
         return false;
     }
-
     // Set the settings to create the scanning activity and eventually call the barLauncher
     public void scanCode() {
         ScanOptions options = new ScanOptions();
@@ -100,7 +98,6 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
 
             // Make a log of what we receive from the server
             barcodeNum = result.getContents();
-            Log.d("scanActivity", barcodeNum);
 
             // If firstFoodItem contains nothing, then we assume that we are scanning the first barcode
             // so we pass the barcode number that we scan and pass it to the next activity
