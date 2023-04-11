@@ -439,7 +439,7 @@ public class SingleItemRating {
                 proteinColor = "#00A877";
             }
 
-        } else if (userPreference.getHighCholesterol().equals("Lose Weight")) {
+        } else if (userPreference.getWeightGoals().equals("Lose Weight")) {
             // Unhealthy levels, shift upper threshold lower
             if (proteinLevel > highThreshold || proteinLevel < lowThreshold - 10) {
                 proteinColor = "#D60000";
@@ -475,7 +475,7 @@ public class SingleItemRating {
         if (ironLevel > highThreshold) {
             ironColor = "#D60000";
             // maintain normal threshold
-        } else if (ironLevel >= lowThreshold) {
+        } else if (ironLevel <= lowThreshold) {
             ironColor = "#000000";
             // good for user to decrease blood pressure
         } else {
