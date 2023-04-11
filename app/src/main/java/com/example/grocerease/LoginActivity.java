@@ -20,14 +20,18 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 
+/*** Login Activity
+ * This Activity is the first page the user sees upon opening GrocerEase.
+ * It allows them to either login with a pre-existing account, or create a new account***/
+
 public class LoginActivity extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private EditText username, password;
     private Button login_button, create_account_button;
     UserDatabaseObject userObject;
-
     private PreferencesHelper preferencesHelper;
 
+    /** onCreate() method **/
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -42,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
         login_button = findViewById(R.id.login_button);
         create_account_button = findViewById(R.id.create_account_button);
 
-        // Setting Button functionality: Login Button
+        // Setting Button functionality: Login Button -> Main Activity
         login_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -63,15 +67,18 @@ public class LoginActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<DataSnapshot> task) {
                             if (!task.isSuccessful()) {
                                 Log.e("firebase", "Error getting data", task.getException());
+
                             } else if (task.getResult().getValue(Object.class) == null) {
                                 Log.e("firebase", "User does not exist in database");
                                 Toast.makeText(LoginActivity.this, "Username not in Database", Toast.LENGTH_LONG).show();
+
                             } else {
                                 userObject = task.getResult().getValue(UserDatabaseObject.class);
                                 String database_password = userObject.getUserPassword();
                                 Log.d("firebase","user password:" + database_password);
+
                                 if (database_password.equals(password_input)) {
-                                    // testing gson to add Json string to Shared Preferences
+                                    // Gson to add Json string to Shared Preferences
                                     Gson gson = new Gson();
                                     String jsonString = gson.toJson(userObject); // returns a Json String object
                                     preferencesHelper.writeString("userObject", jsonString);
@@ -80,6 +87,7 @@ public class LoginActivity extends AppCompatActivity {
                                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                     startActivity(intent);
                                     finish();
+
                                 } else {
                                     Log.e("firebase", "Password does not correspond to user");
                                     Toast.makeText(LoginActivity.this, "Username or Password is Incorrect", Toast.LENGTH_LONG).show();
@@ -91,7 +99,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        // Setting Button functionality: Create Account Button
+        // Setting Button functionality: Create Account Button -> Create Account Activity
         create_account_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

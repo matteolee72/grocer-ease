@@ -18,17 +18,18 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+/*** Create Account Activity
+ * This Activity is created when the user comes from Login and wants to create a new account.
+ * It creates a new User Object with a partial constructor.***/
+
 public class CreateAccountActivity extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private EditText username,password,retype_password;
     private Button submit_button;
-
-
-    UserDatabaseObject userObject;
-
-    // Setting final Strings to pass Username and Password to Quiz Activity
+    // Setting Strings to pass Username to Quiz Activity
     public static final String NEWUSERNAME = "newUserName";
-    public static final String NEWPASSWORD = "newPassword";
+
+    /** onCreate() method **/
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -44,6 +45,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         submit_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 // Getting the inputs in the text edit fields
                 String username_input = username.getText().toString();
                 String password_input = password.getText().toString();
@@ -57,11 +59,12 @@ public class CreateAccountActivity extends AppCompatActivity {
                             "Please fill in all the fields", Toast.LENGTH_LONG).show();
                 }
 
-                // Check if the same text has been put into the text fields
+                // Check if the same text has been put into the password text fields
                 else if (!r_password_input.equals(password_input)){
                     Toast.makeText(CreateAccountActivity.this,
                             "Your passwords are not the same", Toast.LENGTH_LONG).show();
                 }
+
                 // Check if username is already in taken
                 else {
                     // Checking is username in database
@@ -73,10 +76,12 @@ public class CreateAccountActivity extends AppCompatActivity {
                                 Log.e("firebase", "Error getting data", task.getException());}
                             else if (task.getResult().getValue(Object.class) == null) {
                                 Log.e("firebase", "Valid Username and Password");
+
                                 // Add user to database with partial arg constructor
                                 UserDatabaseObject newUser =  new UserDatabaseObject(password_input);
                                 databaseReference.child("Users").child(username_input).setValue(newUser);
-                                // Move to QuizActivity, pass userObject whole
+
+                                // Move to QuizActivity, pass username_input
                                 Log.d("new user password from object is ", newUser.getUserPassword());
                                 Intent intent = new Intent(CreateAccountActivity.this,QuizActivity.class);
                                 intent.putExtra(NEWUSERNAME,username_input);
@@ -84,6 +89,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                                 startActivity(intent);
                                 finish();
                             }
+                            // Handling when username is already inside th database
                             else {
                                 Log.e("firebase", "Username already exists in database");
                                 Toast.makeText(CreateAccountActivity.this, "Username already exists in database", Toast.LENGTH_LONG).show();

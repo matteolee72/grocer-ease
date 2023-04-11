@@ -1,5 +1,4 @@
 package com.example.grocerease.Utils;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -30,13 +29,20 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
+/*** Favourites Adapter
+ * This Adapter is for the Favourites Recycler View ***/
+
 public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.ViewHolder> {
 
+
+    /** ATTRIBUTES **/
     UserFavouritesObject userFavouritesObject;
     Context context;
     LayoutInflater mInflater;
     DatabaseReference databaseReference;
 
+
+    /** CONSTRUCTOR **/
     public FavouritesAdapter(Context context, UserFavouritesObject userFavouritesObject){
         this.context = context;
         this.userFavouritesObject = userFavouritesObject;
@@ -44,19 +50,19 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Vi
         ArrayList<String> itemList = userFavouritesObject.getFoodFavourites();
     }
 
+    /** CONCRETE METHODS FOR RECYCLERVIEW (onCreateViewHolder, onBindViewHolder, getItemCount)**/
     @NonNull
     @Override
     public FavouritesAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = mInflater.inflate(R.layout.list_item,parent,false);
         return new ViewHolder(view);
     }
-
     @Override
     public void onBindViewHolder(@NonNull FavouritesAdapter.ViewHolder holder, int position) {
         databaseReference = FirebaseDatabase.getInstance().getReference();
         FirebaseStorage storage = FirebaseStorage.getInstance();
         holder.setPosition(position);
-
+        // Calling Food item from Database
         databaseReference.child("Food").child(userFavouritesObject.getID(position)).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
@@ -82,11 +88,12 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Vi
 
         });
     }
-
     @Override
     public int getItemCount() {
         return userFavouritesObject.getSize();
     }
+
+    /** ViewHolder class **/
     public class ViewHolder extends RecyclerView.ViewHolder{
         private TextView textView;
         private ImageView imageView;
@@ -97,6 +104,7 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Vi
         public void setPosition(int position){
             this.position = position;
         }
+        /** ViewHolder Constructor **/
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             textView = itemView.findViewById(R.id.listText);
@@ -104,6 +112,8 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Vi
             companyTextView = itemView.findViewById(R.id.listCompany);
             calorieTextView = itemView.findViewById(R.id.listCalories);
             massTextView = itemView.findViewById(R.id.listMass);
+
+            // Opening Single/Double item analyse when clicking on the RecyclerView
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -123,7 +133,7 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Vi
                 }
             });
         }
-
+        /** ViewHolder Getters **/
         public TextView getTextView() {return textView;}
         public ImageView getImageView() {return imageView;}
         public TextView getCompanyTextView() {return companyTextView;}

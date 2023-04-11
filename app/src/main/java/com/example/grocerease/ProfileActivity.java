@@ -23,6 +23,9 @@ import com.google.gson.Gson;
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
 
+/*** Favourites Activity
+ * This Activity shows the user their profile, and allows them to edit their preferences ***/
+
 public class ProfileActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener {
 
     private UserDatabaseObject userObject;
@@ -30,11 +33,13 @@ public class ProfileActivity extends AppCompatActivity implements NavigationBarV
     Gson gson = new Gson();
     private String barcodeNum;
 
+    /** onCreate() method **/
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
+        // Getting user object, name, and preferences object
         preferencesHelper = new PreferencesHelper(this);
         String userObjectString = preferencesHelper.readString("userObject","error");
         userObject = gson.fromJson(userObjectString, UserDatabaseObject.class);
@@ -42,6 +47,7 @@ public class ProfileActivity extends AppCompatActivity implements NavigationBarV
         UserPreferencesObject userPreferencesObject = userObject.getUserPreferences();
         Log.d("Preferences", userPreferencesObject.toString());
 
+        // Setting imageView - depending on user gender
         ImageView imageView = findViewById(R.id.photo);
         if (userObject.getUserPreferences().getSex().equals("Male")){        
             imageView.setImageResource(R.drawable.boy_profile);
@@ -49,6 +55,7 @@ public class ProfileActivity extends AppCompatActivity implements NavigationBarV
             imageView.setImageResource(R.drawable.girl_profile);
         }
 
+        // Changing TextViews to display user Preferences
         TextView userNameText = findViewById(R.id.username_textview);
         userNameText.setText(userName);
         TextView bloodPressureText = findViewById(R.id.bloodPressure_text);
@@ -67,12 +74,12 @@ public class ProfileActivity extends AppCompatActivity implements NavigationBarV
         String birthday = userObject.getUserPreferences().getBirthday().toString();
         String[] birthdaySplit = birthday.split(" ");
         birthdayText.setText(birthdaySplit[1]+" "+birthdaySplit[2]+" "+birthdaySplit[5]);
-
         TextView genderText = findViewById(R.id.sex_text);
         genderText.setText(userObject.getUserPreferences().getSex());
         TextView goalText = findViewById(R.id.goal_text);
         goalText.setText(userObject.getUserPreferences().getWeightGoals());
 
+        // Instantiating activityButton -> goes back to Favourites Activity
         Button favouritesButton;
         favouritesButton = findViewById(R.id.favourites_button);
         favouritesButton.setOnClickListener(new View.OnClickListener() {
@@ -85,6 +92,7 @@ public class ProfileActivity extends AppCompatActivity implements NavigationBarV
             }
         });
 
+        // Instantiating editButton -> goes to Quiz Activity for user to edit their preferences
         View editButton;
         editButton = findViewById(R.id.edit_button);
         editButton.setOnClickListener(new View.OnClickListener() {
@@ -97,6 +105,8 @@ public class ProfileActivity extends AppCompatActivity implements NavigationBarV
             }
         });
     }
+
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -119,6 +129,7 @@ public class ProfileActivity extends AppCompatActivity implements NavigationBarV
         return false;
     }
 
+    /** Logic entering scan Activity from favourites Activity **/
     public void scanCode() {
         ScanOptions options = new ScanOptions();
         options.setPrompt("Volume up to flash on");

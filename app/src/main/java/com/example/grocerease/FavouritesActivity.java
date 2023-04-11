@@ -25,14 +25,18 @@ import com.google.gson.Gson;
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
 
+/*** Favourites Activity
+ * This Activity shows the user their favourites. ***/
+
 public class FavouritesActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener{
 
     private UserDatabaseObject userObject;
     private PreferencesHelper preferencesHelper;
     Gson gson = new Gson();
 
+    /** onResume() ensures that favourites is re-rendered in the event it is updated **/
     @Override
-    protected void onResume(){ //making sure history is re-rendered in the event it is updated
+    protected void onResume(){
         super.onResume();
         // reading from preferences to obtain userObject
         preferencesHelper = new PreferencesHelper(this);
@@ -40,38 +44,43 @@ public class FavouritesActivity extends AppCompatActivity implements NavigationB
         userObject = gson.fromJson(userObjectString, UserDatabaseObject.class);
     }
 
+    /** onCreate() method **/
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favourites);
 
+        // Getting the user object and username
         preferencesHelper = new PreferencesHelper(this);
         String userObjectString = preferencesHelper.readString("userObject","error");
         userObject = gson.fromJson(userObjectString, UserDatabaseObject.class);
         String userName = preferencesHelper.readString("username","error");
 
+        // Setting username Textview
         TextView userNameText = findViewById(R.id.username_textview);
         userNameText.setText(userName);
 
+        // Setting imageView - depending on user gender
         ImageView imageView = findViewById(R.id.photo);
         if (userObject.getUserPreferences().getSex().equals("Male")){
-
             imageView.setImageResource(R.drawable.boy_profile);
         } else {
             imageView.setImageResource(R.drawable.girl_profile);
         }
 
-
+        // Setting navigationBarView
         NavigationBarView navigationBarView;
         navigationBarView = findViewById(R.id.bottomNavigationView);
         navigationBarView.setOnItemSelectedListener(this);
         navigationBarView.setSelectedItemId(R.id.profile);
 
+        // Instantiating the recyclerView
         RecyclerView recyclerView = findViewById(R.id.favouritesRecyclerView);
         RecyclerView.Adapter<FavouritesAdapter.ViewHolder> favouritesAdapter = new FavouritesAdapter(this, userObject.getUserFavourites());
         recyclerView.setAdapter(favouritesAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        // Instantiating profileButton -> goes to profile activity
         Button profileButton;
         profileButton = findViewById(R.id.profile_button);
         profileButton.setOnClickListener(new View.OnClickListener() {
@@ -84,6 +93,7 @@ public class FavouritesActivity extends AppCompatActivity implements NavigationB
         });
     }
 
+    /** Logic for Navbar **/
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -106,6 +116,7 @@ public class FavouritesActivity extends AppCompatActivity implements NavigationB
         return false;
     }
 
+    /** Logic entering scan Activity from favourites Activity **/
     public void scanCode() {
         ScanOptions options = new ScanOptions();
         options.setPrompt("Volume up to flash on");

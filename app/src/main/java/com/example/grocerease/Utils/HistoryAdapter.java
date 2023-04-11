@@ -30,20 +30,26 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
+/*** History Adapter
+ * This Adapter is for the History Recycler View ***/
+
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder>{
 
+    /** ATTRIBUTES **/
     UserHistoryObject userHistoryObject;
     Context context;
     LayoutInflater mInflater;
     DatabaseReference databaseReference;
 
+    /** CONSTRUCTOR **/
     public HistoryAdapter(Context context, UserHistoryObject userHistoryObject){
         this.context = context;
         this.userHistoryObject = userHistoryObject;
         mInflater = LayoutInflater.from(context);
         ArrayList<String> itemList = userHistoryObject.getFoodHistory();
-
     }
+
+    /** CONCRETE METHODS FOR RECYCLERVIEW (onCreateViewHolder, onBindViewHolder, getItemCount)**/
     @NonNull
     @Override
     public HistoryAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -80,11 +86,12 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
             }
         });
     }
-
     @Override
     public int getItemCount() {
         return userHistoryObject.getSize();
     }
+
+    /** ViewHolder class **/
     public class ViewHolder extends RecyclerView.ViewHolder{
         private TextView textView;
         private ImageView imageView;
@@ -95,6 +102,8 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         public void setPosition(int position){
             this.position = position;
         }
+
+        /** ViewHolder Constructor **/
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             textView = itemView.findViewById(R.id.listText);
@@ -102,6 +111,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
             companyTextView = itemView.findViewById(R.id.listCompany);
             calorieTextView = itemView.findViewById(R.id.listCalories);
             massTextView = itemView.findViewById(R.id.listMass);
+            // Opening Single/Double item analyse when clicking on the RecyclerView
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -121,6 +131,8 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
                 }
             });
         }
+
+        /** ViewHolder Getters **/
         public TextView getTextView() {return textView;}
         public ImageView getImageView() {return imageView;}
         public TextView getCompanyTextView() {return companyTextView;}

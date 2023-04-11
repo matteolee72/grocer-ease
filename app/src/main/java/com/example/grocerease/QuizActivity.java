@@ -27,6 +27,10 @@ import com.google.gson.Gson;
 import java.util.Calendar;
 import java.util.Date;
 
+/*** Quiz Activity
+ * This Activity is created when the user comes from Create Account.
+ * It creates a new Preferences object for the user and adds it to the database.***/
+
 public class QuizActivity extends AppCompatActivity {
     private String bloodPressure;
     private String bloodSugarLevels;
@@ -37,20 +41,17 @@ public class QuizActivity extends AppCompatActivity {
     private int height;
     private int weight;
     private Date birthday;
-
     Button quizSubmitButton;
     FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
-
     private PreferencesHelper preferencesHelper;
-
     Calendar cal = Calendar.getInstance();
-
     private Boolean isDateChanged = false;
 
     //TODO: Create default constructor for preferences and handle them appropriately in singleItemAnalyze and compare
     // e.g user creates account but does NOT fill in preferences, need to know how to display their preferences still.
 
+    /** onCreate() method **/
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
@@ -62,24 +63,20 @@ public class QuizActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String username = intent.getStringExtra(NEWUSERNAME);
         preferencesHelper.writeString("username",username);
-
         UserDatabaseObject userObject = (UserDatabaseObject) intent.getSerializableExtra(MainActivity.USEROBJECTKEY);
         Log.d("new user password is", userObject.getUserPassword());
+
+        /** Getting views from quiz **/
         //get blood pressure from RadioGroup
         RadioGroup bloodPressureGroup = findViewById(R.id.bloodPressureGroup);
-
         //get blood sugar from RadioGroup
         RadioGroup bloodSugarLevelsGroup = findViewById(R.id.bloodSugarLevelsGroup);
-
         //get cholesterol from RadioGroup
         RadioGroup HighCholesterolGroup = findViewById(R.id.HighCholesterolGroup);
         //get WeightGoals from RadioGroup
         RadioGroup WeightGoalsGroup = findViewById(R.id.weightGoalsGroup);
-
         EditText userObjectName = findViewById(R.id.UserObjectName);
-
         RadioGroup userSex = findViewById(R.id.UserSex);
-
         EditText userHeight = findViewById(R.id.editTextHeight);
         EditText userWeight = findViewById(R.id.editTextWeight);
         CustomDatePicker userBirthday = findViewById(R.id.birthdayPicker);
@@ -103,6 +100,8 @@ public class QuizActivity extends AppCompatActivity {
                 }
             });
         }
+
+        /** Setting button functionality for submitting quiz **/
         quizSubmitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -118,6 +117,7 @@ public class QuizActivity extends AppCompatActivity {
                 int userSexID = userSex.getCheckedRadioButtonId();
                 RadioButton radioButtonUserSex = findViewById(userSexID);
 
+                // Ensuring user inputs are valid
                 if(radioBloodPressureButton == null
                         || radioBloodSugarButton == null
                         || radioHighCholesterolButton == null
@@ -145,11 +145,12 @@ public class QuizActivity extends AppCompatActivity {
                     cal.set(Calendar.MONTH, userBirthday.getMonth());
                     cal.set(Calendar.DAY_OF_MONTH, userBirthday.getDayOfMonth());
                     birthday = cal.getTime();
-                    //instantiating new UserPreferencesObject
+
+                    // instantiating new UserPreferencesObject
                     UserPreferencesObject UserPrefObject = new UserPreferencesObject(bloodPressure,bloodSugarLevels,highCholesterol,weightGoals,name,sex,height,weight,birthday);
                     String pw = userObject.getUserPassword();
                     Log.d("user pw from object is", pw);
-                    //adding it to the DataBase
+                    // adding it to the DataBase
                     databaseReference.child("Users").child(username).child("userPreferences").setValue(UserPrefObject);
 
                     //going back to main activity

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 /*** User History Object
  * This is a history object attached to each user in our Firebase.
  * It contains an arraylist of food IDs which users have added to their history.
- * We use it to interface with both our Adapters (for recyclerView) and our Database***/
+ * We use it to interface with both our Adapters (for recyclerView) and our Database ***/
 
 public class UserHistoryObject implements Serializable {
 

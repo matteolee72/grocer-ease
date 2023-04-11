@@ -21,6 +21,9 @@ import com.google.gson.Gson;
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
 
+/*** Main Activity
+ * This Activity serves as the "homepage" of our app. It also shows the user their history. ***/
+
 public class MainActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener{
 
     // Setting final Strings to be used as keys for passing data between Activities
@@ -33,8 +36,9 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
     private UserDatabaseObject userObject;
     Gson gson = new Gson();
 
+    /** onResume() ensures that history is re-rendered in the event it is updated **/
     @Override
-    protected void onResume(){ //making sure history is re-rendered in the event it is updated
+    protected void onResume(){
         super.onResume();
         // reading from preferences to obtain userObject
         preferencesHelper = new PreferencesHelper(this);
@@ -42,25 +46,30 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         userObject = gson.fromJson(userObjectString, UserDatabaseObject.class);
     }
 
+    /** onCreate() method **/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // reading from preferences to obtain userObject
-        preferencesHelper = new PreferencesHelper(this);
-        String userObjectString = preferencesHelper.readString("userObject","error");
-        userObject = gson.fromJson(userObjectString, UserDatabaseObject.class);
-
+        // Setting navigationBarView
         navigationBarView = findViewById(R.id.bottomNavigationView);
         navigationBarView.setOnItemSelectedListener(this);
         navigationBarView.setSelectedItemId(R.id.home);
 
+        // Reading from preferences to obtain userObject
+        preferencesHelper = new PreferencesHelper(this);
+        String userObjectString = preferencesHelper.readString("userObject","error");
+        userObject = gson.fromJson(userObjectString, UserDatabaseObject.class);
+
+        // Instantiating the recyclerView
         RecyclerView recyclerView = findViewById(R.id.historyRecyclerView);
         RecyclerView.Adapter<HistoryAdapter.ViewHolder> historyAdapter = new HistoryAdapter(this, userObject.getUserHistory());
         recyclerView.setAdapter(historyAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
+
+    /** Logic for Navbar **/
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
