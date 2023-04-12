@@ -15,6 +15,8 @@ import java.util.Arrays;
 
 public class DoubleItemRating{
 
+    private DoubleItemRating(){};   //Private No Arg Constructor to prevent instantiation
+
     public static int compareObjects(double obj1, double obj2) {
         if (obj1 > obj2) {
             return 1;
@@ -25,23 +27,6 @@ public class DoubleItemRating{
         }
     }
 
-//    public static Integer sugarCompare(FoodDatabaseObject foodObject1, FoodDatabaseObject foodObject2) {
-//
-//        Integer sugarCompare;
-//
-//        double sugarlevel_1 = Double.parseDouble(foodObject1.getFoodTotalSugar());
-//        double sugarlevel_2 = Double.parseDouble(foodObject2.getFoodTotalSugar());
-//
-//        int comp = Double.compare(sugarlevel_1, sugarlevel_2);
-//        if (comp > 0){
-//            sugarCompare = 1;
-//        } else if (comp < 0){
-//            sugarCompare = 2;
-//        } else {
-//            sugarCompare = 0;
-//        }
-//        return sugarCompare;
-//    }
 
     public static boolean highIsBetter(String[] highConditions, String condition){
         ArrayList<String> highConditionsList = new ArrayList<>(Arrays.asList(highConditions));

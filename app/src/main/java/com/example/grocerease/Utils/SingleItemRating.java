@@ -18,6 +18,7 @@ public class SingleItemRating {
 
     Wanting to Bulk - More Protein, Calories */
 
+    private SingleItemRating(){};  // Private No Arg Constructor to prevent instantiation
 
     // per 100g
     // low - 5g and below, high - 22.5g
