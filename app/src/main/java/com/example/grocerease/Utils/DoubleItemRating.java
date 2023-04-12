@@ -5,6 +5,9 @@ import com.example.grocerease.Objects.UserPreferencesObject;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.storage.FirebaseStorage;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class DoubleItemRating{
 
     private DatabaseReference databaseReference;
@@ -19,7 +22,6 @@ public class DoubleItemRating{
 
     /** If foodobject1 better, return 1, if foodobject2 higher, return 2. put both into twoitemcompare*/
 
-
     public static int compareObjects(double obj1, double obj2) {
         if (obj1 > obj2) {
             return 1;
@@ -28,25 +30,46 @@ public class DoubleItemRating{
         } else {
             return 0;
         }
+    }public static boolean highIsBetter(String[] highConditions, String condition){
+         ArrayList<String> highConditionsList = new ArrayList<>(Arrays.asList(highConditions));
+        if (highConditionsList.contains(condition)){
+            return true;
+        }
+        return false;
     }
+    public static String[] Seed(String nutrient,
+                                String foodNutrient1,
+                                String foodNutrient2,
+                                String[] highConditions,
+                                String condition){
 
-//    public static Integer sugarCompare(FoodDatabaseObject foodObject1, FoodDatabaseObject foodObject2) {
-//
-//        Integer sugarCompare;
-//
-//        double sugarlevel_1 = Double.parseDouble(foodObject1.getFoodTotalSugar());
-//        double sugarlevel_2 = Double.parseDouble(foodObject2.getFoodTotalSugar());
-//
-//        int comp = Double.compare(sugarlevel_1, sugarlevel_2);
-//        if (comp > 0){
-//            sugarCompare = 1;
-//        } else if (comp < 0){
-//            sugarCompare = 2;
-//        } else {
-//            sugarCompare = 0;
-//        }
-//        return sugarCompare;
-//    }
+        boolean highBetter = highIsBetter(highConditions,condition);
+
+        String line_1;
+        String line_2;
+        double level_1 = Double.parseDouble(foodNutrient1);
+        double level_2 = Double.parseDouble(foodNutrient2);
+        int result = compareObjects(level_1,level_2);
+
+        //default case: low is better
+        //case: high is better
+        if (result == 0){
+            line_1 = "NORMAL";
+            line_2 = "NORMAL";
+        }
+        else if(result == 1){
+            line_1 = "NORMAL";
+            line_2 = "BOLD";
+        }
+        else{ // result is 2
+            line_1 = "BOLD";
+            line_2 = "NORMAL";
+        }
+        if (highBetter == true){
+            return new String[]{line_2,line_1};
+        }
+        return new String[]{line_1, line_2};
+    }
 
     public static String[] sugarSeed(FoodDatabaseObject foodObject1, FoodDatabaseObject foodObject2, UserPreferencesObject userPreference){
         String sugarline_1;
@@ -129,7 +152,6 @@ public class DoubleItemRating{
         }
         return new String[]{transFatline_1, transFatline_2};
     }
-
 
 
     public static String[] saturatedFatSeed(FoodDatabaseObject foodObject1, FoodDatabaseObject foodObject2, UserPreferencesObject userPreference){
