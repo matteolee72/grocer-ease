@@ -40,6 +40,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
     Context context;
     LayoutInflater mInflater;
     DatabaseReference databaseReference;
+    FirebaseHelperFood firebaseHelperFood = new FirebaseHelperFood();
 
     /** CONSTRUCTOR **/
     public HistoryAdapter(Context context, UserHistoryObject userHistoryObject){
@@ -56,12 +57,14 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         View view = mInflater.inflate(R.layout.list_item,parent,false);
         return new ViewHolder(view);
     }
+
     @Override
     public void onBindViewHolder(@NonNull HistoryAdapter.ViewHolder holder, int position) {
-        databaseReference = FirebaseDatabase.getInstance().getReference();
-        FirebaseStorage storage = FirebaseStorage.getInstance();
         holder.setPosition(position);
-        databaseReference.child("Food").child(userHistoryObject.getID(position)).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+
+        /** Use firebaseHelperFood to separate firebase GET logic from adapter */
+        firebaseHelperFood.getFoodDatabaseObject(userHistoryObject.getID(position), new OnCompleteListener<DataSnapshot>() {
+            FirebaseStorage storage = FirebaseStorage.getInstance();
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if (!task.isSuccessful()) {
