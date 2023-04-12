@@ -128,10 +128,14 @@ public class QuizActivity extends AppCompatActivity {
                         || userObjectName.getText().toString().isEmpty()
                         || isDateChanged == false){
                     Toast.makeText(QuizActivity.this, "Please ensure that all fields have been filled", Toast.LENGTH_LONG).show();
+
                 }
                 if (userHeight.getText().toString().equals("0") || userWeight.getText().toString().equals("0")) {
                     Toast.makeText(QuizActivity.this, "Please ensure that you enter a valid height and weight", Toast.LENGTH_LONG).show();
-                }else{
+
+                }
+
+                else{
                     //setting all attributes of the UserPreference Object
                     bloodPressure = radioBloodPressureButton.getText().toString();
                     bloodSugarLevels = radioBloodSugarButton.getText().toString();
