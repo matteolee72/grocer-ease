@@ -19,7 +19,9 @@ import com.example.grocerease.Utils.PreferencesHelper;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
-
+/** DatabaseAddActivity serves as the activity to add non-existing items into the database. This is called when
+ *  the user scans the barcode which item does not exist in the database. This activity instantiates a fooddatabase object
+ *  to the database with the corresponding item id */
 public class DatabaseAddActivity extends AppCompatActivity {
     // Instantiate all the variables
     EditText foodID, foodName, foodCompany, foodMass, foodProtein, foodTotalFat, foodSaturatedFat, foodTransFat,
@@ -41,6 +43,7 @@ public class DatabaseAddActivity extends AppCompatActivity {
         String username = preferencesHelper.readString("username" , "error");
         userObject = gson.fromJson(userObjectString, UserDatabaseObject.class);
 
+        // call ids to fill up in the form
         foodID = findViewById(R.id.foodID);
         foodName = findViewById(R.id.foodName);
         foodCompany = findViewById(R.id.foodCompany);
@@ -70,6 +73,7 @@ public class DatabaseAddActivity extends AppCompatActivity {
         databaseReference = firebaseDatabase.getReference();
 
         addToDatabaseButton.setOnClickListener(new View.OnClickListener() {
+            /** toString methods*/
             @Override
             public void onClick(View view) {
                 String foodIDStr = foodID.getText().toString();
@@ -90,6 +94,7 @@ public class DatabaseAddActivity extends AppCompatActivity {
                 //----------------==DEBUG==------------------
                 String foodImageURL = "grocery_placeholder.png";
                 //--------------==END DEBUG==----------------
+                /** create new fooddatabaseobject */
                 FoodDatabaseObject foodItem = new FoodDatabaseObject(foodNameStr,
                                                                     foodMassStr,
                                                                     foodProteinStr,

@@ -48,7 +48,9 @@ import com.google.firebase.storage.StorageReference;
 import com.google.gson.Gson;
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
-
+/** SingleItemAnalyze will take in functions from singleitemrating to set the single item activity
+ *  This will be called when the barcode scanning/ clicking on favourites/ history returns an item that
+ *  already exists within the database */
 public class SingleItemAnalyzeActivity extends AppCompatActivity {
 
     //realtime database
@@ -187,6 +189,7 @@ public class SingleItemAnalyzeActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if (!task.isSuccessful()) {
                     Log.e("firebase", "Error getting data", task.getException());
+                    /** if the item does not exist within the database, prompt user to add it to database */
                 } else if (task.getResult().getValue(Object.class) == null) {
                     Log.e("firebase", "Item does not exist in database");
                     Toast.makeText(SingleItemAnalyzeActivity.this, barcodeNum + " is not in database", Toast.LENGTH_LONG).show();
@@ -211,6 +214,7 @@ public class SingleItemAnalyzeActivity extends AppCompatActivity {
                     AlertDialog dialog = builder.create();
                     dialog.show();
                 }
+                /** if the item exist in database, call the information from firebase and display it in the Single Item Page */
                 else {
                     foodObject = task.getResult().getValue(FoodDatabaseObject.class); // get food object from database
 
