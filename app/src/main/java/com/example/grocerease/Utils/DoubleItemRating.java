@@ -5,6 +5,9 @@ import com.example.grocerease.Objects.UserPreferencesObject;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.storage.FirebaseStorage;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 /** DoubleItemRating will be called once the user goes from singleitemanalyzeactivity to compare with another object
  *  This will call on userpreferences, and fooddatabaseobject to compare the nutrients of both foodobjects with
  *  userpreferences in mind. These functions output whether the nutrient from item 1 or 2 will be normal or bolded.
@@ -39,6 +42,48 @@ public class DoubleItemRating{
 //        }
 //        return sugarCompare;
 //    }
+
+    public static boolean highIsBetter(String[] highConditions, String condition){
+        ArrayList<String> highConditionsList = new ArrayList<>(Arrays.asList(highConditions));
+        if (highConditionsList.contains(condition)){
+            return true;
+        }
+        return false;
+    }
+    public static String[] Seed(String nutrient,
+                                String foodNutrient1,
+                                String foodNutrient2,
+                                String[] highConditions,
+                                String condition){
+
+        boolean highBetter = highIsBetter(highConditions,condition);
+
+        String line_1;
+        String line_2;
+        double level_1 = Double.parseDouble(foodNutrient1);
+        double level_2 = Double.parseDouble(foodNutrient2);
+        int result = compareObjects(level_1,level_2);
+
+        //default case: low is better
+        //case: high is better
+        if (result == 0){
+            line_1 = "NORMAL";
+            line_2 = "NORMAL";
+        }
+        else if(result == 1){
+            line_1 = "NORMAL";
+            line_2 = "BOLD";
+        }
+        else{ // result is 2
+            line_1 = "BOLD";
+            line_2 = "NORMAL";
+        }
+        if (highBetter == true){
+            return new String[]{line_2,line_1};
+        }
+        return new String[]{line_1, line_2};
+    }
+
 
     public static String[] sugarSeed(FoodDatabaseObject foodObject1, FoodDatabaseObject foodObject2, UserPreferencesObject userPreference){
         String sugarline_1;
