@@ -128,11 +128,12 @@ public class QuizActivity extends AppCompatActivity {
                         || userObjectName.getText().toString().isEmpty()
                         || isDateChanged == false){
                     Toast.makeText(QuizActivity.this, "Please ensure that all fields have been filled", Toast.LENGTH_LONG).show();
-
+                    Log.d("if block 1", "onClick: ");
                 }
-                if (userHeight.getText().toString().equals("0") || userWeight.getText().toString().equals("0")) {
-                    Toast.makeText(QuizActivity.this, "Please ensure that you enter a valid height and weight", Toast.LENGTH_LONG).show();
 
+                else if (userHeight.getText().toString().equals("0") || userWeight.getText().toString().equals("0")) {
+                    Toast.makeText(QuizActivity.this, "Please ensure that you enter a valid height and weight", Toast.LENGTH_LONG).show();
+                    Log.d("if block 2", "onClick: ");
                 }
 
                 else{
