@@ -8,36 +8,36 @@ import java.util.ArrayList;
  * It contains an arraylist of food IDs which users have added to their favourites.
  * We use it to interface with both our Adapters (for recyclerView) and our Database***/
 
-public class UserFavouritesObject implements Serializable {
+public class UserFavouritesObject implements Serializable,UserFoodInterface {
 
     /** Attribute: String Arraylist **/
-    private ArrayList<String> foodFavourites;
+    private ArrayList<String> foodList;
 
     /** NO ARG CONSTRUCTOR **/
     public UserFavouritesObject() {
-        this.foodFavourites = new ArrayList<>();
+        this.foodList = new ArrayList<>();
     }
 
     /** Getters for interfacing with FavouritesAdapter **/
     public String getID(int i){
-        return this.getFoodFavourites().get(i);
+        return this.getFoodList().get(i);
     }
     public int getSize(){
-        return foodFavourites.size();
+        return foodList.size();
     }
-    public ArrayList<String> getFoodFavourites() {return this.foodFavourites;}
+    public ArrayList<String> getFoodList() {return this.foodList;}
 
     /** Methods to modify Arraylist **/
     public ArrayList<String> addToFavourites(String foodItem){
-        if (!foodFavourites.contains(foodItem)) {
-            foodFavourites.add(foodItem);
+        if (!foodList.contains(foodItem)) {
+            foodList.add(foodItem);
         }
-        return foodFavourites;
+        return foodList;
     }
     public ArrayList<String> removeFromFavourites(String foodItem){
-        if (foodFavourites.contains(foodItem)) {
-            foodFavourites.remove(foodItem);
+        if (foodList.contains(foodItem)) {
+            foodList.remove(foodItem);
         }
-        return foodFavourites;
+        return foodList;
     }
 }

@@ -14,7 +14,7 @@ import android.view.MenuItem;
 import com.example.grocerease.Objects.FoodDatabaseObject;
 import com.example.grocerease.Objects.UserDatabaseObject;
 import com.example.grocerease.Utils.CaptureAct;
-import com.example.grocerease.Utils.HistoryAdapter;
+import com.example.grocerease.Utils.ListAdapter;
 import com.example.grocerease.Utils.PreferencesHelper;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.gson.Gson;
@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
 
         // Instantiating the recyclerView
         RecyclerView recyclerView = findViewById(R.id.historyRecyclerView);
-        RecyclerView.Adapter<HistoryAdapter.ViewHolder> historyAdapter = new HistoryAdapter(this, userObject.getUserHistory());
+        RecyclerView.Adapter<ListAdapter.ViewHolder> historyAdapter = new ListAdapter(this, userObject.getUserHistory());
         recyclerView.setAdapter(historyAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }

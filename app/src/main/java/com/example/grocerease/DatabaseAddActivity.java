@@ -126,7 +126,7 @@ public class DatabaseAddActivity extends AppCompatActivity {
                     preferencesHelper.writeString("userObject", jsonString);
                     databaseReference.child("Users").child(username).child("userHistory").setValue(userHistory);
 
-                    Log.d("userObject", "onCreate: "+userObject.getUserHistory().getFoodHistory());
+                    Log.d("userObject", "onCreate: "+userObject.getUserHistory().getFoodList());
 
                     Toast.makeText(DatabaseAddActivity.this, "Item has been successfully added", Toast.LENGTH_LONG).show();
                     AlertDialog.Builder builder = new AlertDialog.Builder(DatabaseAddActivity.this);

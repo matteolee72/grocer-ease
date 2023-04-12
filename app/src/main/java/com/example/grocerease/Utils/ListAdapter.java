@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.grocerease.Objects.FoodDatabaseObject;
 import com.example.grocerease.GlideApp;
 import com.example.grocerease.MainActivity;
+import com.example.grocerease.Objects.UserFoodInterface;
 import com.example.grocerease.R;
 import com.example.grocerease.SingleItemAnalyzeActivity;
 import com.example.grocerease.TwoItemCompareActivity;
@@ -23,8 +24,6 @@ import com.example.grocerease.Objects.UserHistoryObject;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -33,36 +32,36 @@ import java.util.ArrayList;
 /*** History Adapter
  * This Adapter is for the History Recycler View ***/
 
-public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder>{
+public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder>{
 
     /** ATTRIBUTES **/
-    UserHistoryObject userHistoryObject;
+    UserFoodInterface userFoodInterface;
     Context context;
     LayoutInflater mInflater;
     FirebaseHelperFood firebaseHelperFood = new FirebaseHelperFood();
 
     /** CONSTRUCTOR **/
-    public HistoryAdapter(Context context, UserHistoryObject userHistoryObject){
+    public ListAdapter(Context context, UserFoodInterface userFoodInterface){
         this.context = context;
-        this.userHistoryObject = userHistoryObject;
+        this.userFoodInterface = userFoodInterface;
         mInflater = LayoutInflater.from(context);
-        ArrayList<String> itemList = userHistoryObject.getFoodHistory();
+        ArrayList<String> itemList = userFoodInterface.getFoodList();
     }
 
     /** CONCRETE METHODS FOR RECYCLERVIEW (onCreateViewHolder, onBindViewHolder, getItemCount)**/
     @NonNull
     @Override
-    public HistoryAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = mInflater.inflate(R.layout.list_item,parent,false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull HistoryAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ListAdapter.ViewHolder holder, int position) {
         holder.setPosition(position);
 
         /** Use firebaseHelperFood to separate firebase GET logic from adapter */
-        firebaseHelperFood.getFoodDatabaseObject(userHistoryObject.getID(position), new OnCompleteListener<DataSnapshot>() {
+        firebaseHelperFood.getFoodDatabaseObject(userFoodInterface.getID(position), new OnCompleteListener<DataSnapshot>() {
             FirebaseStorage storage = FirebaseStorage.getInstance();
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
@@ -90,7 +89,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
     }
     @Override
     public int getItemCount() {
-        return userHistoryObject.getSize();
+        return userFoodInterface.getSize();
     }
 
     /** ViewHolder class **/
@@ -118,16 +117,17 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
                 @Override
                 public void onClick(View view) {
                     Log.d("activity parent", "onClick: " + ((Activity) context).getClass().getSimpleName());
-                    if(((Activity) context).getClass().getSimpleName().equals("ChooseHistoryActivity")){
+                    String activityParent = ((Activity) context).getClass().getSimpleName();
+                    if(activityParent.equals("ChooseHistoryActivity") || activityParent.equals("ChooseFavouritesActivity")){
                         FoodDatabaseObject foodObject1 = (FoodDatabaseObject) ((Activity) context).getIntent().getSerializableExtra(MainActivity.FIRSTBARCODEKEY);
                         Intent intent = new Intent(context, TwoItemCompareActivity.class);
-                        intent.putExtra(MainActivity.SECONDBARCODEKEY, userHistoryObject.getID(position));
+                        intent.putExtra(MainActivity.SECONDBARCODEKEY, userFoodInterface.getID(position));
                         intent.putExtra(MainActivity.FIRSTBARCODEKEY, foodObject1);
                         context.startActivity(intent);
                     }
                     else{
                         Intent intent = new Intent(context, SingleItemAnalyzeActivity.class);
-                        intent.putExtra(MainActivity.FIRSTBARCODEKEY, userHistoryObject.getID(position));
+                        intent.putExtra(MainActivity.FIRSTBARCODEKEY, userFoodInterface.getID(position));
                         context.startActivity(intent);
                     }
                 }
