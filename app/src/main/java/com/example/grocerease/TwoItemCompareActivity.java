@@ -141,7 +141,7 @@ public class TwoItemCompareActivity extends AppCompatActivity {
         //making sure to update local userObject so that it updates the database correctly
         String jsonString = gson.toJson(userObject); // returns a Json String object
         preferencesHelper.writeString("userObject", jsonString);
-        Log.d("userObject", "onCreate: "+userObject.getUserHistory().getFoodHistory());
+        Log.d("userObject", "onCreate: "+userObject.getUserHistory().getFoodList());
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
         databaseReference.child("Food").child(barcodeNum2).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
@@ -182,7 +182,7 @@ public class TwoItemCompareActivity extends AppCompatActivity {
                     //making sure to update local userObject so that it updates the database correctly
                     String jsonString = gson.toJson(userObject); // returns a Json String object
                     preferencesHelper.writeString("userObject", jsonString);
-                    Log.d("userObject", "onCreate: "+userObject.getUserHistory().getFoodHistory());
+                    Log.d("userObject", "onCreate: "+userObject.getUserHistory().getFoodList());
                     databaseReference.child("Users").child(username).child("userHistory").setValue(userHistory);
 
                     /** All compare functions */

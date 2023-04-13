@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.grocerease.Objects.UserDatabaseObject;
-import com.example.grocerease.Utils.FavouritesAdapter;
+import com.example.grocerease.Utils.ListAdapter;
 import com.example.grocerease.Utils.PreferencesHelper;
 import com.google.gson.Gson;
 
@@ -43,8 +43,8 @@ public class ChooseFavouritesActivity extends AppCompatActivity {
 
         // Instantiating the RecyclerView
         RecyclerView recyclerView = findViewById(R.id.favouritesRecyclerView);
-        RecyclerView.Adapter<FavouritesAdapter.ViewHolder> favouritesAdapter = new FavouritesAdapter(this, userObject.getUserFavourites());
-        recyclerView.setAdapter(favouritesAdapter);
+        RecyclerView.Adapter<ListAdapter.ViewHolder> listAdapter = new ListAdapter(this, userObject.getUserFavourites());
+        recyclerView.setAdapter(listAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 }

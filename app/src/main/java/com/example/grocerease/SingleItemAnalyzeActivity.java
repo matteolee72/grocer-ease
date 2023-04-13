@@ -148,7 +148,7 @@ public class SingleItemAnalyzeActivity extends AppCompatActivity {
         UserFavouritesObject favourites = userObject.getUserFavourites();
         UserHistoryObject userHistory = userObject.getUserHistory();
 
-        if(favourites.getFoodFavourites().contains(barcodeNum)){
+        if(favourites.getFoodList().contains(barcodeNum)){
             likeButton.setChecked(true);
         }
 
@@ -222,7 +222,7 @@ public class SingleItemAnalyzeActivity extends AppCompatActivity {
                     //making sure to update local userObject so that it updates the database correctly
                     String jsonString = gson.toJson(userObject); // returns a Json String object
                     preferencesHelper.writeString("userObject", jsonString);
-                    Log.d("userObject", "onCreate: "+userObject.getUserHistory().getFoodHistory());
+                    Log.d("userObject", "onCreate: "+userObject.getUserHistory().getFoodList());
                     databaseReference.child("Users").child(username).child("userHistory").setValue(userHistory);
 
                     // Get the result from the database and populate a foodObject of type FoodDatabaseObject

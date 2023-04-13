@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.grocerease.Objects.FoodDatabaseObject;
 import com.example.grocerease.Objects.UserDatabaseObject;
 import com.example.grocerease.Utils.CaptureAct;
-import com.example.grocerease.Utils.FavouritesAdapter;
+import com.example.grocerease.Utils.ListAdapter;
 import com.example.grocerease.Utils.PreferencesHelper;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.gson.Gson;
@@ -76,8 +76,8 @@ public class FavouritesActivity extends AppCompatActivity implements NavigationB
 
         // Instantiating the recyclerView
         RecyclerView recyclerView = findViewById(R.id.favouritesRecyclerView);
-        RecyclerView.Adapter<FavouritesAdapter.ViewHolder> favouritesAdapter = new FavouritesAdapter(this, userObject.getUserFavourites());
-        recyclerView.setAdapter(favouritesAdapter);
+        RecyclerView.Adapter<ListAdapter.ViewHolder> listAdapter = new ListAdapter(this, userObject.getUserFavourites());
+        recyclerView.setAdapter(listAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // Instantiating profileButton -> goes to profile activity
