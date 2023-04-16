@@ -190,7 +190,6 @@ public class TwoItemCompareActivity extends AppCompatActivity {
                     String[] highSugarConditions = {"Low"};
                     String sugarBold_1 = Seed("Sugar",foodObject1.getFoodTotalSugar(),foodObject2.getFoodTotalSugar(),highSugarConditions,userPreferences.getBloodSugarLevels())[0];
                     String sugarBold_2 = Seed("Sugar",foodObject1.getFoodTotalSugar(),foodObject2.getFoodTotalSugar(),highSugarConditions,userPreferences.getBloodSugarLevels())[1];
-
                     String sodiumBold_1 = sodiumSeed(foodObject1,foodObject2,userPreferences)[0];
                     String sodiumBold_2 = sodiumSeed(foodObject1,foodObject2,userPreferences)[1];
                     String saturatedFatBold_1 = saturatedFatSeed(foodObject1,foodObject2,userPreferences)[0];

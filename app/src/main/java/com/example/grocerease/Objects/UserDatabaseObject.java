@@ -28,7 +28,7 @@ public class UserDatabaseObject implements Serializable {
         this.userPassword = userPassword;
         this.userFavourites = new UserFavouritesObject();
         this.userHistory = new UserHistoryObject();
-        this.userPreferences = null;
+        this.userPreferences = new UserPreferencesObject();
     }
 
     /** COMPLETE ARG CONSTRUCTOR **/

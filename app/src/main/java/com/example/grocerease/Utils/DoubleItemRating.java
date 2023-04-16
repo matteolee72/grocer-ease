@@ -26,8 +26,6 @@ public class DoubleItemRating{
             return 0;
         }
     }
-
-
     public static boolean highIsBetter(String[] highConditions, String condition){
         ArrayList<String> highConditionsList = new ArrayList<>(Arrays.asList(highConditions));
         if (highConditionsList.contains(condition)){

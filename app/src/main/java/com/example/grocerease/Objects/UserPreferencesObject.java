@@ -22,7 +22,17 @@ public class UserPreferencesObject implements Serializable {
     private Date birthday;
 
     /** NO ARG CONSTRUCTOR **/
-    public UserPreferencesObject(){}
+    public UserPreferencesObject(){
+        this.bloodPressure = "Normal";
+        this.bloodSugarLevels = "Normal";
+        this.highCholesterol = "No";
+        this.weightGoals = "Maintain";
+        this.userWeight = 70;
+        this.userHeight = 165;
+        this.userObjectName = "-";
+        this.sex = "-";
+        this.birthday = null;
+    }
 
     /** COMPLETE ARG CONSTRUCTOR **/
     public UserPreferencesObject(String bloodPressure, String bloodSugarLevels, String highCholesterol, String weightGoals, String name, String sex, int height, int weight, Date birthday){

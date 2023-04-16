@@ -49,7 +49,7 @@ public class ProfileActivity extends AppCompatActivity implements NavigationBarV
 
         // Setting imageView - depending on user gender
         ImageView imageView = findViewById(R.id.photo);
-        if (userObject.getUserPreferences().getSex().equals("Male")){        
+        if (userObject.getUserPreferences().getSex().equals("Male") || userObject.getUserPreferences().getSex().equals("-")){
             imageView.setImageResource(R.drawable.boy_profile);
         } else {
             imageView.setImageResource(R.drawable.girl_profile);
@@ -67,13 +67,25 @@ public class ProfileActivity extends AppCompatActivity implements NavigationBarV
         TextView nameText = findViewById(R.id.name_text2);
         nameText.setText(userObject.getUserPreferences().getUserObjectName());
         TextView weightText = findViewById(R.id.weight_text);
-        weightText.setText(String.valueOf(userObject.getUserPreferences().getUserWeight()) + " kg");
         TextView heightText = findViewById(R.id.height_text);
-        heightText.setText(String.valueOf(userObject.getUserPreferences().getUserHeight()) + " cm");
+        // checking if user pref is default (no name)
+        if (!userObject.getUserPreferences().getUserObjectName().equals("-")) {
+            weightText.setText(String.valueOf(userObject.getUserPreferences().getUserWeight()) + " kg");
+            heightText.setText(String.valueOf(userObject.getUserPreferences().getUserHeight()) + " cm");
+        } else if (userObject.getUserPreferences().getUserObjectName().equals("-")) {
+            weightText.setText("- kg");
+            heightText.setText("- cm");
+        }
         TextView birthdayText = findViewById(R.id.birthday_text);
-        String birthday = userObject.getUserPreferences().getBirthday().toString();
-        String[] birthdaySplit = birthday.split(" ");
-        birthdayText.setText(birthdaySplit[1]+" "+birthdaySplit[2]+" "+birthdaySplit[5]);
+        //checking if birthday is null
+        if (userObject.getUserPreferences().getBirthday() != null) {
+            String birthday = userObject.getUserPreferences().getBirthday().toString();
+            String[] birthdaySplit = birthday.split(" ");
+            birthdayText.setText(birthdaySplit[1] + " " + birthdaySplit[2] + " " + birthdaySplit[5]);
+        } else if (userObject.getUserPreferences().getBirthday()==null) {
+            birthdayText.setText("-");
+        }
+
         TextView genderText = findViewById(R.id.sex_text);
         genderText.setText(userObject.getUserPreferences().getSex());
         TextView goalText = findViewById(R.id.goal_text);
